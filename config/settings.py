@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import sys
 from pathlib import Path
 
 import dj_database_url
@@ -83,11 +84,15 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"]
+
+TESTING = "PYTEST_CURRENT_TEST" in os.environ or "pytest" in " ".join(sys.argv)
+STATICFILES_BACKEND = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+if DEBUG or TESTING:
+    STATICFILES_BACKEND = "django.contrib.staticfiles.storage.StaticFilesStorage"
+
 STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"
-    },
+    "staticfiles": {"BACKEND": STATICFILES_BACKEND},
 }
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

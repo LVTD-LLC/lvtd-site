@@ -8,7 +8,7 @@ Minimal, production-ready Django org website with Tailwind CSS and background ta
 
 ```bash
 uv sync --extra dev
-npm install
+npm install --include=dev
 ```
 
 2. Configure environment:

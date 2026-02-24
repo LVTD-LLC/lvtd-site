@@ -26,7 +26,7 @@ jobs:
           node-version: "20"
 
       - name: Install Node dependencies
-        run: npm install
+        run: npm ci --include=dev
 
       - name: Build Tailwind CSS
         run: npm run build:css
