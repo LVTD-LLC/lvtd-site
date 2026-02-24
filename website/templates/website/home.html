@@ -1,0 +1,59 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LVTD</title>
+    <link rel="stylesheet" href="{% static 'css/app.css' %}" />
+  </head>
+  <body class="min-h-screen bg-slate-950 text-slate-100">
+    <main class="mx-auto flex w-full max-w-5xl flex-col gap-12 px-6 py-16">
+      <section class="flex flex-col gap-6">
+        <p class="text-sm uppercase tracking-[0.2em] text-slate-400">LVTD</p>
+        <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">
+          Building connective tissue for independent creators.
+        </h1>
+        <p class="muted max-w-2xl text-lg text-slate-300">
+          LVTD is an organization focused on thoughtful digital products, research,
+          and collaborations that help small teams ship with momentum.
+        </p>
+      </section>
+      <section class="section-panel rounded-3xl border border-slate-800 bg-slate-900/60 p-8">
+        <div class="flex flex-col gap-6">
+          <h2 class="text-2xl font-semibold">Projects</h2>
+          <div class="projects-grid grid gap-4 sm:grid-cols-2">
+            <div class="card rounded-2xl border border-slate-800 bg-slate-950/60 p-5">
+              <h3 class="text-lg font-semibold">LVTD Studio</h3>
+              <p class="muted mt-2 text-sm text-slate-400">
+                Rapid product strategy and execution for ambitious founders.
+              </p>
+            </div>
+            <div class="card rounded-2xl border border-slate-800 bg-slate-950/60 p-5">
+              <h3 class="text-lg font-semibold">Signals Lab</h3>
+              <p class="muted mt-2 text-sm text-slate-400">
+                Applied research on systems, communities, and sustainable growth.
+              </p>
+            </div>
+            <div class="card rounded-2xl border border-slate-800 bg-slate-950/60 p-5">
+              <h3 class="text-lg font-semibold">Open Shelf</h3>
+              <p class="muted mt-2 text-sm text-slate-400">
+                Curated tools, templates, and learning resources for small teams.
+              </p>
+            </div>
+            <div class="card rounded-2xl border border-slate-800 bg-slate-950/60 p-5">
+              <h3 class="text-lg font-semibold">Residency Network</h3>
+              <p class="muted mt-2 text-sm text-slate-400">
+                A quiet place for builders to collaborate and share momentum.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="flex flex-col gap-2 text-sm text-slate-400 muted">
+        <p>Contact: hello@lvtd.org</p>
+        <p>Based in the United States · Working globally</p>
+      </section>
+    </main>
+  </body>
+</html>
