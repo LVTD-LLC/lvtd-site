@@ -43,8 +43,7 @@ def hosted_openclaw_checkout(request: HttpRequest) -> HttpResponse:
         + "?hosted_openclaw_checkout=success"
     )
     cancel_url = (
-        request.build_absolute_uri(reverse("home"))
-        + "?hosted_openclaw_checkout=cancel"
+        request.build_absolute_uri(reverse("home")) + "?hosted_openclaw_checkout=cancel"
     )
 
     stripe_kwargs: dict[str, str] = {}

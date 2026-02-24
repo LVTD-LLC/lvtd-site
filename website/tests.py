@@ -63,7 +63,9 @@ class HostedOpenClawCheckoutTests(TestCase):
     )
     @patch("website.views.stripe.checkout.Session.create")
     def test_checkout_redirects_to_stripe(self, mock_create: Mock) -> None:
-        mock_create.return_value = SimpleNamespace(url="https://checkout.stripe.com/c/test")
+        mock_create.return_value = SimpleNamespace(
+            url="https://checkout.stripe.com/c/test"
+        )
 
         client = Client()
         response = client.post(reverse("hosted-openclaw-checkout"))
