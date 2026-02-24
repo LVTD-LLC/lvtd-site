@@ -1,0 +1,89 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hosted OpenClaw Service — LVTD</title>
+    <meta
+      name="description"
+      content="Hosted OpenClaw setup, management, and integrations by LVTD."
+    />
+    <link rel="stylesheet" href="{% static 'css/app.css' %}" />
+  </head>
+  <body class="min-h-screen bg-zinc-950 text-zinc-100 antialiased">
+    <div class="site-ambient" aria-hidden="true"></div>
+    <div class="fixed inset-0 z-0 flex justify-center sm:px-8">
+      <div class="flex w-full max-w-7xl lg:px-8">
+        <div
+          class="w-full bg-white ring-1 ring-zinc-100 dark:bg-zinc-900 dark:ring-zinc-300/20"
+        ></div>
+      </div>
+    </div>
+
+    <main class="relative z-20 pb-24">
+      <div class="sm:px-8">
+        <div class="mx-auto max-w-7xl lg:px-8">
+          <div class="relative px-4 sm:px-8 lg:px-12">
+            <div class="mx-auto max-w-3xl">
+              <section class="mt-12">
+                <p class="text-sm font-medium uppercase tracking-wide text-teal-400">
+                  Hosted OpenClaw Service
+                </p>
+                <h1 class="mt-4 text-4xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
+                  Managed OpenClaw infrastructure with hands-on engineering support.
+                </h1>
+                <p class="mt-6 text-base leading-7 text-zinc-300">
+                  LVTD sets up, hosts, and maintains a dedicated OpenClaw instance tailored to your
+                  team. You get reliable uptime, secure data handling, and fast iteration on the
+                  integrations that make OpenClaw useful inside your business.
+                </p>
+                <div class="mt-8 flex flex-wrap gap-3 text-sm font-medium">
+                  <a
+                    class="rounded-full border border-zinc-700 px-5 py-2.5 text-zinc-200 transition hover:border-zinc-500 hover:bg-zinc-800"
+                    href="{% url 'home' %}"
+                  >
+                    Back to home
+                  </a>
+                </div>
+              </section>
+
+              <section class="mt-14 grid gap-6 md:grid-cols-2">
+                <div class="rounded-2xl border border-zinc-700/40 p-6">
+                  <h2 class="text-lg font-semibold text-zinc-100">What’s included</h2>
+                  <ul class="mt-4 space-y-3 text-sm text-zinc-300">
+                    <li>Dedicated OpenClaw deployment with isolated infrastructure.</li>
+                    <li>Monitoring, backups, and ongoing updates.</li>
+                    <li>Custom integrations with your data sources, CRMs, or internal tools.</li>
+                    <li>Security reviews for access, tokens, and data handling.</li>
+                  </ul>
+                </div>
+                <div class="rounded-2xl border border-zinc-700/40 p-6">
+                  <h2 class="text-lg font-semibold text-zinc-100">What LVTD handles</h2>
+                  <ul class="mt-4 space-y-3 text-sm text-zinc-300">
+                    <li>Infrastructure provisioning and environment hardening.</li>
+                    <li>OpenClaw configuration, model routing, and tuning guidance.</li>
+                    <li>Ongoing maintenance, incident response, and upgrades.</li>
+                    <li>Implementation of new workflows as your team evolves.</li>
+                  </ul>
+                </div>
+              </section>
+
+              <section class="mt-10 rounded-2xl border border-zinc-700/40 p-6">
+                <h2 class="text-lg font-semibold text-zinc-100">Engagement flow</h2>
+                <ol class="mt-4 space-y-3 text-sm text-zinc-300">
+                  <li>1. You place the deposit to reserve build time.</li>
+                  <li>2. We align on goals, data sources, and the workflows that matter most.</li>
+                  <li>
+                    3. LVTD deploys OpenClaw, wires up integrations, and shares a working demo.
+                  </li>
+                  <li>4. We iterate until the service matches your desired outcomes.</li>
+                </ol>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

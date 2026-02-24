@@ -53,6 +53,7 @@ uv run python manage.py qcluster
 - `MVP_DEPOSIT_CHECKOUT_URL`: Stripe checkout/payment link for the MVP deposit CTA.
 - `MVP_DEPOSIT_AMOUNT`: display text for the deposit amount (default `$100`).
 - `MVP_FINAL_PRICE`: display text for the final MVP service price (default `$5,000`).
+- `HOSTED_OPENCLAW_DEPOSIT_PRICE_ID`: Stripe price id for Hosted OpenClaw $100 deposit checkout.
 - `STRIPE_API_KEY`: Stripe secret API key used to retrieve events by id.
 - `STRIPE_CONTEXT_ACCOUNT`: optional Stripe connected account id for event retrieval.
 - `STRIPE_MVP_DEPOSIT_PAYMENT_LINK_ID`: payment link id to match for the MVP deposit.
@@ -65,9 +66,10 @@ uv run python manage.py qcluster
 ## Stripe webhook
 
 Create a webhook endpoint in Stripe that points to `/api/stripe/webhook` and listens for
-`checkout.session.completed`. The handler retrieves the event from Stripe by id, validates
-it against the MVP deposit payment link (or fallback amount), and sends a Mailgun follow-up
-email to the buyer.
+`checkout.session.completed`. The handler retrieves the event from Stripe by id, then either:
+
+- sends the MVP follow-up email for matching MVP deposit sessions, or
+- sends the Hosted OpenClaw follow-up email for hosted deposit sessions created by this app.
 
 ## CI + deploy secrets
 
