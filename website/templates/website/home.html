@@ -81,6 +81,30 @@
                 </ul>
               </section>
 
+              <section class="mt-20 rounded-3xl border border-teal-500/30 bg-teal-500/10 p-8">
+                <div class="max-w-3xl">
+                  <p class="text-sm font-semibold uppercase tracking-wide text-teal-300">
+                    MVP done-for-you
+                  </p>
+                  <h2 class="mt-3 text-2xl font-bold tracking-tight text-zinc-100">
+                    Ship your MVP with a full-service build.
+                  </h2>
+                  <p class="mt-4 text-sm text-zinc-200">
+                    Pay a {{ mvp_deposit_amount }} deposit to show serious intent, and I’ll email you
+                    for project details. The final service price is
+                    <span class="font-semibold text-white">{{ mvp_final_price }}</span>.
+                  </p>
+                  <div class="mt-6 flex flex-wrap gap-3">
+                    <a
+                      class="rounded-full bg-teal-400 px-6 py-2.5 text-sm font-semibold text-zinc-900 transition hover:bg-teal-300"
+                      href="{{ mvp_deposit_checkout_url|default:'#' }}"
+                    >
+                      Pay {{ mvp_deposit_amount }} deposit
+                    </a>
+                  </div>
+                </div>
+              </section>
+
               <section class="mt-20">
                 <h2 class="text-2xl font-bold tracking-tight text-zinc-100">
                   Selected products I’ve built
