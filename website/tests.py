@@ -38,6 +38,44 @@ class HomePageTests(TestCase):
         ):
             self.assertContains(response, project_name)
 
+    def test_homepage_has_hosted_openclaw_actions(self) -> None:
+        client = Client()
+        response = client.get(reverse("home"))
+
+        self.assertContains(response, reverse("hosted-openclaw-checkout"))
+        self.assertContains(response, reverse("hosted-openclaw-learn-more"))
+
+
+class HostedOpenClawPagesTests(TestCase):
+    def test_learn_more_page_loads(self) -> None:
+        client = Client()
+        response = client.get(reverse("hosted-openclaw-learn-more"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Hosted OpenClaw Service")
+
+
+class HostedOpenClawCheckoutTests(TestCase):
+    @override_settings(
+        STRIPE_API_KEY="sk_test",
+        HOSTED_OPENCLAW_DEPOSIT_PRICE_ID="price_test_123",
+        STRIPE_CONTEXT_ACCOUNT="",
+    )
+    @patch("website.views.stripe.checkout.Session.create")
+    def test_checkout_redirects_to_stripe(self, mock_create: Mock) -> None:
+        mock_create.return_value = SimpleNamespace(url="https://checkout.stripe.com/c/test")
+
+        client = Client()
+        response = client.post(reverse("hosted-openclaw-checkout"))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response["Location"], "https://checkout.stripe.com/c/test")
+        self.assertEqual(mock_create.call_count, 1)
+
+        kwargs = mock_create.call_args.kwargs
+        self.assertEqual(kwargs["line_items"][0]["price"], "price_test_123")
+        self.assertEqual(kwargs["metadata"]["flow"], "hosted_openclaw_deposit")
+
 
 class StripeWebhookTests(TestCase):
     def _post_webhook(self, payload: dict) -> int:
@@ -79,6 +117,44 @@ class StripeWebhookTests(TestCase):
         self.assertEqual(mock_post.call_count, 1)
 
         status_code = self._post_webhook({"id": "evt_1"})
+        self.assertEqual(status_code, 200)
+        self.assertEqual(mock_post.call_count, 1)
+
+    @override_settings(
+        STRIPE_API_KEY="sk_test",
+        MAILGUN_API_KEY="mg_key",
+        MAILGUN_DOMAIN="mg.example.com",
+        MAILGUN_FROM_EMAIL="hello@example.com",
+        MAILGUN_REPLY_TO_EMAIL="reply@example.com",
+    )
+    @patch("website.views.requests.post")
+    @patch("website.views.stripe.Event.retrieve")
+    def test_webhook_sends_hosted_openclaw_followup(
+        self, mock_retrieve: Mock, mock_post: Mock
+    ) -> None:
+        session = {
+            "metadata": {"flow": "hosted_openclaw_deposit"},
+            "customer_details": {"email": "payer@example.com"},
+        }
+        mock_retrieve.return_value = SimpleNamespace(
+            type="checkout.session.completed",
+            data={"object": session},
+        )
+        mock_post.return_value = SimpleNamespace(status_code=200)
+
+        status_code = self._post_webhook({"id": "evt_hosted_1"})
+        self.assertEqual(status_code, 200)
+        self.assertEqual(mock_post.call_count, 1)
+        self.assertEqual(
+            mock_post.call_args.kwargs["data"]["subject"],
+            "Thanks for your Hosted OpenClaw deposit",
+        )
+        self.assertIn(
+            "Let's now discuss what exactly you want to achieve",
+            mock_post.call_args.kwargs["data"]["text"],
+        )
+
+        status_code = self._post_webhook({"id": "evt_hosted_1"})
         self.assertEqual(status_code, 200)
         self.assertEqual(mock_post.call_count, 1)
 

@@ -6,8 +6,11 @@ import requests
 import stripe
 from django.conf import settings
 from django.http import HttpRequest, HttpResponse, JsonResponse
+from django.shortcuts import redirect
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView, View
 
 from website.models import StripeWebhookEvent
@@ -22,6 +25,48 @@ class HomePageView(TemplateView):
         context["mvp_deposit_amount"] = settings.MVP_DEPOSIT_AMOUNT
         context["mvp_final_price"] = settings.MVP_FINAL_PRICE
         return context
+
+
+class HostedOpenClawLearnMoreView(TemplateView):
+    template_name = "website/hosted_openclaw.html"
+
+
+@require_POST
+def hosted_openclaw_checkout(request: HttpRequest) -> HttpResponse:
+    if not settings.STRIPE_API_KEY or not settings.HOSTED_OPENCLAW_DEPOSIT_PRICE_ID:
+        return HttpResponse("Stripe is not configured for checkout yet.", status=503)
+
+    stripe.api_key = settings.STRIPE_API_KEY
+
+    success_url = (
+        request.build_absolute_uri(reverse("home"))
+        + "?hosted_openclaw_checkout=success"
+    )
+    cancel_url = (
+        request.build_absolute_uri(reverse("home"))
+        + "?hosted_openclaw_checkout=cancel"
+    )
+
+    stripe_kwargs: dict[str, str] = {}
+    if settings.STRIPE_CONTEXT_ACCOUNT:
+        stripe_kwargs["stripe_account"] = settings.STRIPE_CONTEXT_ACCOUNT
+
+    try:
+        session = stripe.checkout.Session.create(
+            mode="payment",
+            line_items=[
+                {"price": settings.HOSTED_OPENCLAW_DEPOSIT_PRICE_ID, "quantity": 1}
+            ],
+            success_url=success_url,
+            cancel_url=cancel_url,
+            customer_creation="always",
+            metadata={"flow": "hosted_openclaw_deposit"},
+            **stripe_kwargs,
+        )
+    except Exception:
+        return HttpResponse("Unable to start Stripe Checkout right now.", status=503)
+
+    return redirect(session.url, code=303)
 
 
 @method_decorator(csrf_exempt, name="dispatch")
@@ -57,21 +102,42 @@ class StripeWebhookView(View):
             return JsonResponse({"status": "ignored"})
 
         session = event.data.get("object", {})
-        if not self._is_mvp_deposit_session(session):
+
+        if self._is_hosted_openclaw_deposit_session(session):
+            customer_email = self._extract_customer_email(session)
+            if not customer_email:
+                return JsonResponse({"error": "missing_customer_email"}, status=400)
+
+            if not self._send_hosted_openclaw_followup(customer_email):
+                return JsonResponse({"error": "email_failed"}, status=502)
+
             StripeWebhookEvent.objects.create(event_id=event_id)
-            return JsonResponse({"status": "ignored"})
+            return JsonResponse({"status": "sent"})
 
-        customer_email = (session.get("customer_details") or {}).get(
-            "email"
-        ) or session.get("customer_email")
-        if not customer_email:
-            return JsonResponse({"error": "missing_customer_email"}, status=400)
+        if self._is_mvp_deposit_session(session):
+            customer_email = self._extract_customer_email(session)
+            if not customer_email:
+                return JsonResponse({"error": "missing_customer_email"}, status=400)
 
-        if not self._send_mailgun_followup(customer_email):
-            return JsonResponse({"error": "email_failed"}, status=502)
+            if not self._send_mvp_followup(customer_email):
+                return JsonResponse({"error": "email_failed"}, status=502)
+
+            StripeWebhookEvent.objects.create(event_id=event_id)
+            return JsonResponse({"status": "sent"})
 
         StripeWebhookEvent.objects.create(event_id=event_id)
-        return JsonResponse({"status": "sent"})
+        return JsonResponse({"status": "ignored"})
+
+    @staticmethod
+    def _extract_customer_email(session: dict) -> str | None:
+        return (session.get("customer_details") or {}).get("email") or session.get(
+            "customer_email"
+        )
+
+    @staticmethod
+    def _is_hosted_openclaw_deposit_session(session: dict) -> bool:
+        metadata = session.get("metadata") or {}
+        return metadata.get("flow") == "hosted_openclaw_deposit"
 
     @staticmethod
     def _is_mvp_deposit_session(session: dict) -> bool:
@@ -86,19 +152,33 @@ class StripeWebhookView(View):
             and currency == "usd"
         )
 
-    @staticmethod
-    def _send_mailgun_followup(customer_email: str) -> bool:
-        if not settings.MAILGUN_API_KEY or not settings.MAILGUN_DOMAIN:
-            return False
-        if not settings.MAILGUN_FROM_EMAIL:
-            return False
-
+    @classmethod
+    def _send_mvp_followup(cls, customer_email: str) -> bool:
         subject = "Thanks for choosing the MVP done-for-you service"
         body = (
             "Thanks for choosing the MVP done-for-you service! "
             "Reply with your project details, goals, and any timelines. "
             f"The final service price is {settings.MVP_FINAL_PRICE}."
         )
+        return cls._send_mailgun_email(customer_email, subject, body)
+
+    @classmethod
+    def _send_hosted_openclaw_followup(cls, customer_email: str) -> bool:
+        subject = "Thanks for your Hosted OpenClaw deposit"
+        body = (
+            "Thanks for your payment. Let's now discuss what exactly you want to "
+            "achieve so we can get it as fast as possible.\n\n"
+            "Reply with a short overview of your goals, timelines, and any existing "
+            "infrastructure we should integrate with."
+        )
+        return cls._send_mailgun_email(customer_email, subject, body)
+
+    @staticmethod
+    def _send_mailgun_email(customer_email: str, subject: str, body: str) -> bool:
+        if not settings.MAILGUN_API_KEY or not settings.MAILGUN_DOMAIN:
+            return False
+        if not settings.MAILGUN_FROM_EMAIL:
+            return False
 
         response = requests.post(
             f"https://api.mailgun.net/v3/{settings.MAILGUN_DOMAIN}/messages",
