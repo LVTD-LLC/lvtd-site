@@ -19,6 +19,9 @@ jobs:
           ref: main
           fetch-depth: 0
 
+      - name: Ensure local branch exists for CapRover CLI
+        run: git checkout -B main
+
       - name: CapRover Deploy
         uses: caprover/deploy-from-github@main
         with:
