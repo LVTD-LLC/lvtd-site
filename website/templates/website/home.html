@@ -4,56 +4,329 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>LVTD</title>
+    <title>LVTD — Product engineering for founders &amp; teams</title>
+    <meta
+      name="description"
+      content="LVTD helps founders and teams design, build, and ship practical software products, automations, and growth tooling."
+    />
     <link rel="stylesheet" href="{% static 'css/app.css' %}" />
   </head>
-  <body class="min-h-screen bg-slate-950 text-slate-100">
-    <main class="mx-auto flex w-full max-w-5xl flex-col gap-12 px-6 py-16">
-      <section class="flex flex-col gap-6">
-        <p class="text-sm uppercase tracking-[0.2em] text-slate-400">LVTD</p>
-        <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">
-          Building connective tissue for independent creators.
-        </h1>
-        <p class="muted max-w-2xl text-lg text-slate-300">
-          LVTD is an organization focused on thoughtful digital products, research,
-          and collaborations that help small teams ship with momentum.
-        </p>
-      </section>
-      <section class="section-panel rounded-3xl border border-slate-800 bg-slate-900/60 p-8">
-        <div class="flex flex-col gap-6">
-          <h2 class="text-2xl font-semibold">Projects</h2>
-          <div class="projects-grid grid gap-4 sm:grid-cols-2">
-            <div class="card rounded-2xl border border-slate-800 bg-slate-950/60 p-5">
-              <h3 class="text-lg font-semibold">LVTD Studio</h3>
-              <p class="muted mt-2 text-sm text-slate-400">
-                Rapid product strategy and execution for ambitious founders.
-              </p>
-            </div>
-            <div class="card rounded-2xl border border-slate-800 bg-slate-950/60 p-5">
-              <h3 class="text-lg font-semibold">Signals Lab</h3>
-              <p class="muted mt-2 text-sm text-slate-400">
-                Applied research on systems, communities, and sustainable growth.
-              </p>
-            </div>
-            <div class="card rounded-2xl border border-slate-800 bg-slate-950/60 p-5">
-              <h3 class="text-lg font-semibold">Open Shelf</h3>
-              <p class="muted mt-2 text-sm text-slate-400">
-                Curated tools, templates, and learning resources for small teams.
-              </p>
-            </div>
-            <div class="card rounded-2xl border border-slate-800 bg-slate-950/60 p-5">
-              <h3 class="text-lg font-semibold">Residency Network</h3>
-              <p class="muted mt-2 text-sm text-slate-400">
-                A quiet place for builders to collaborate and share momentum.
-              </p>
+  <body class="min-h-screen bg-zinc-950 text-zinc-100 antialiased">
+    <div class="site-ambient" aria-hidden="true"></div>
+    <div class="fixed inset-0 z-0 flex justify-center sm:px-8">
+      <div class="flex w-full max-w-7xl lg:px-8">
+        <div class="w-full bg-white ring-1 ring-zinc-100 dark:bg-zinc-900 dark:ring-zinc-300/20"></div>
+      </div>
+    </div>
+
+    <main class="relative z-20 pb-24">
+      <div class="sm:px-8">
+        <div class="mx-auto max-w-7xl lg:px-8">
+          <div class="relative px-4 sm:px-8 lg:px-12">
+            <div class="mx-auto max-w-2xl lg:max-w-5xl">
+              <section class="mt-12">
+                <div class="max-w-3xl">
+                  <p class="text-sm font-medium uppercase tracking-wide text-teal-400">LVTD, LLC</p>
+                  <h1 class="mt-4 text-4xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
+                    I build practical software for founders, teams, and internet businesses.
+                  </h1>
+                  <p class="mt-6 text-base leading-7 text-zinc-300">
+                    I’m Rasul. I build products, automations, and growth tools — fast, with a strong
+                    backend foundation and a clear bias toward shipping. If you need a hands-on engineer
+                    to build something new or improve what already exists, I’m available for consulting.
+                  </p>
+                  <div class="mt-8 flex flex-wrap gap-3 text-sm font-medium">
+                    <a
+                      class="rounded-full bg-zinc-100 px-5 py-2.5 text-zinc-900 transition hover:bg-zinc-300"
+                      href="mailto:rasul@lvtd.dev?subject=Project%20inquiry"
+                    >
+                      Start a project
+                    </a>
+                    <a
+                      class="rounded-full border border-zinc-700 px-5 py-2.5 text-zinc-200 transition hover:border-zinc-500 hover:bg-zinc-800"
+                      href="https://twitter.com/rasulkireev"
+                    >
+                      DM on X / Twitter
+                    </a>
+                  </div>
+                </div>
+              </section>
+
+              <section class="mt-20">
+                <h2 class="text-2xl font-bold tracking-tight text-zinc-100">Services</h2>
+                <p class="mt-3 max-w-2xl text-sm text-zinc-400">
+                  Typical ways I help clients. If your project is adjacent, I can usually flex.
+                </p>
+                <ul class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
+                  <li class="rounded-2xl border border-zinc-700/40 p-6">
+                    <h3 class="text-base font-semibold text-zinc-100">MVPs &amp; Product Builds</h3>
+                    <p class="mt-3 text-sm text-zinc-400">
+                      From idea to shipped web product: architecture, backend, integrations, and launch.
+                    </p>
+                  </li>
+                  <li class="rounded-2xl border border-zinc-700/40 p-6">
+                    <h3 class="text-base font-semibold text-zinc-100">Automation &amp; Internal Tools</h3>
+                    <p class="mt-3 text-sm text-zinc-400">
+                      Custom automations, scraping pipelines, reporting, and workflow tools that save
+                      hours every week.
+                    </p>
+                  </li>
+                  <li class="rounded-2xl border border-zinc-700/40 p-6">
+                    <h3 class="text-base font-semibold text-zinc-100">Technical Audits &amp; Debugging</h3>
+                    <p class="mt-3 text-sm text-zinc-400">
+                      Performance bottlenecks, scaling issues, broken funnels, and “we need this fixed
+                      now” engineering support.
+                    </p>
+                  </li>
+                </ul>
+              </section>
+
+              <section class="mt-20">
+                <h2 class="text-2xl font-bold tracking-tight text-zinc-100">
+                  Selected products I’ve built
+                </h2>
+                <p class="mt-3 max-w-2xl text-sm text-zinc-400">
+                  A mix of SaaS tools, content engines, and open-source projects — built end to end.
+                </p>
+
+                <div class="mt-12">
+                  <ul role="list" class="grid grid-cols-1 gap-x-12 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
+                    <li class="group relative flex flex-col items-start">
+                      <div class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-800/40 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 sm:rounded-2xl"></div>
+                      <div class="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-zinc-800 ring-1 ring-zinc-700/50">
+                        <img src="{% static 'images/logos/rocket_take_off.png' %}" alt="Talent Leads logo" class="h-9 w-9 rounded-full" />
+                      </div>
+                      <h3 class="mt-6 text-base font-semibold text-zinc-100">
+                        <a href="https://gettalentleads.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+                          <span class="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
+                          <span class="relative z-10">Talent Leads</span>
+                        </a>
+                      </h3>
+                      <p class="relative z-10 mt-2 text-sm text-zinc-400">
+                        Lead generation product for startup hiring pipelines.
+                      </p>
+                      <p class="relative z-10 mt-6 flex text-sm font-medium text-zinc-300 transition group-hover:text-teal-400">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none">
+                          <path d="M15.712 11.823a.75.75 0 1 0 1.06 1.06l-1.06-1.06Zm-4.95 1.768a.75.75 0 0 0 1.06-1.06l-1.06 1.06Zm-2.475-1.414a.75.75 0 1 0-1.06-1.06l1.06 1.06Zm4.95-1.768a.75.75 0 1 0-1.06 1.06l1.06-1.06Zm3.359.53-.884.884 1.06 1.06.885-.883-1.061-1.06Zm-4.95-2.12 1.414-1.415L12 6.344l-1.415 1.413 1.061 1.061Zm0 3.535a2.5 2.5 0 0 1 0-3.536l-1.06-1.06a4 4 0 0 0 0 5.656l1.06-1.06Zm4.95-4.95a2.5 2.5 0 0 1 0 3.535L17.656 12a4 4 0 0 0 0-5.657l-1.06 1.06Zm1.06-1.06a4 4 0 0 0-5.656 0l1.06 1.06a2.5 2.5 0 0 1 3.536 0l1.06-1.06Zm-7.07 7.07.176.177 1.06-1.06-.176-.177-1.06 1.06Zm-3.183-.353.884-.884-1.06-1.06-.884.883 1.06 1.06Zm4.95 2.121-1.414 1.414 1.06 1.06 1.415-1.413-1.06-1.061Zm0-3.536a2.5 2.5 0 0 1 0 3.536l1.06 1.06a4 4 0 0 0 0-5.656l-1.06 1.06Zm-4.95 4.95a2.5 2.5 0 0 1 0-3.535L6.344 12a4 4 0 0 0 0 5.656l1.06-1.06Zm-1.06 1.06a4 4 0 0 0 5.657 0l-1.061-1.06a2.5 2.5 0 0 1-3.535 0l-1.061 1.06Zm7.07-7.07-.176-.177-1.06 1.06.176.178 1.06-1.061Z" fill="currentColor" />
+                        </svg>
+                        <span class="ml-2">gettalentleads.com</span>
+                      </p>
+                    </li>
+
+                    <li class="group relative flex flex-col items-start">
+                      <div class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-800/40 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 sm:rounded-2xl"></div>
+                      <div class="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-zinc-800 ring-1 ring-zinc-700/50">
+                        <img src="{% static 'images/logos/builtwithdjango.png' %}" alt="Built with Django logo" class="h-9 w-9 rounded-full" />
+                      </div>
+                      <h3 class="mt-6 text-base font-semibold text-zinc-100">
+                        <a href="https://builtwithdjango.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+                          <span class="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
+                          <span class="relative z-10">Built with Django</span>
+                        </a>
+                      </h3>
+                      <p class="relative z-10 mt-2 text-sm text-zinc-400">
+                        Developer education + discovery platform showcasing Django products.
+                      </p>
+                      <p class="relative z-10 mt-6 flex text-sm font-medium text-zinc-300 transition group-hover:text-teal-400">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none">
+                          <path d="M15.712 11.823a.75.75 0 1 0 1.06 1.06l-1.06-1.06Zm-4.95 1.768a.75.75 0 0 0 1.06-1.06l-1.06 1.06Zm-2.475-1.414a.75.75 0 1 0-1.06-1.06l1.06 1.06Zm4.95-1.768a.75.75 0 1 0-1.06 1.06l1.06-1.06Zm3.359.53-.884.884 1.06 1.06.885-.883-1.061-1.06Zm-4.95-2.12 1.414-1.415L12 6.344l-1.415 1.413 1.061 1.061Zm0 3.535a2.5 2.5 0 0 1 0-3.536l-1.06-1.06a4 4 0 0 0 0 5.656l1.06-1.06Zm4.95-4.95a2.5 2.5 0 0 1 0 3.535L17.656 12a4 4 0 0 0 0-5.657l-1.06 1.06Zm1.06-1.06a4 4 0 0 0-5.656 0l1.06 1.06a2.5 2.5 0 0 1 3.536 0l1.06-1.06Zm-7.07 7.07.176.177 1.06-1.06-.176-.177-1.06 1.06Zm-3.183-.353.884-.884-1.06-1.06-.884.883 1.06 1.06Zm4.95 2.121-1.414 1.414 1.06 1.06 1.415-1.413-1.06-1.061Zm0-3.536a2.5 2.5 0 0 1 0 3.536l1.06 1.06a4 4 0 0 0 0-5.656l-1.06 1.06Zm-4.95 4.95a2.5 2.5 0 0 1 0-3.535L6.344 12a4 4 0 0 0 0 5.656l1.06-1.06Zm-1.06 1.06a4 4 0 0 0 5.657 0l-1.061-1.06a2.5 2.5 0 0 1-3.535 0l-1.061 1.06Zm7.07-7.07-.176-.177-1.06 1.06.176.178 1.06-1.061Z" fill="currentColor" />
+                        </svg>
+                        <span class="ml-2">builtwithdjango.com</span>
+                      </p>
+                    </li>
+
+                    <li class="group relative flex flex-col items-start">
+                      <div class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-800/40 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 sm:rounded-2xl"></div>
+                      <div class="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-zinc-800 ring-1 ring-zinc-700/50">
+                        <img src="{% static 'images/logos/levreview.jpg' %}" alt="LevReview logo" class="h-9 w-9 rounded-full" />
+                      </div>
+                      <h3 class="mt-6 text-base font-semibold text-zinc-100">
+                        <a href="https://levreview.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+                          <span class="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
+                          <span class="relative z-10">LevReview</span>
+                        </a>
+                      </h3>
+                      <p class="relative z-10 mt-2 text-sm text-zinc-400">
+                        Review collection tool for local businesses.
+                      </p>
+                      <p class="relative z-10 mt-6 flex text-sm font-medium text-zinc-300 transition group-hover:text-teal-400">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none">
+                          <path d="M15.712 11.823a.75.75 0 1 0 1.06 1.06l-1.06-1.06Zm-4.95 1.768a.75.75 0 0 0 1.06-1.06l-1.06 1.06Zm-2.475-1.414a.75.75 0 1 0-1.06-1.06l1.06 1.06Zm4.95-1.768a.75.75 0 1 0-1.06 1.06l1.06-1.06Zm3.359.53-.884.884 1.06 1.06.885-.883-1.061-1.06Zm-4.95-2.12 1.414-1.415L12 6.344l-1.415 1.413 1.061 1.061Zm0 3.535a2.5 2.5 0 0 1 0-3.536l-1.06-1.06a4 4 0 0 0 0 5.656l1.06-1.06Zm4.95-4.95a2.5 2.5 0 0 1 0 3.535L17.656 12a4 4 0 0 0 0-5.657l-1.06 1.06Zm1.06-1.06a4 4 0 0 0-5.656 0l1.06 1.06a2.5 2.5 0 0 1 3.536 0l1.06-1.06Zm-7.07 7.07.176.177 1.06-1.06-.176-.177-1.06 1.06Zm-3.183-.353.884-.884-1.06-1.06-.884.883 1.06 1.06Zm4.95 2.121-1.414 1.414 1.06 1.06 1.415-1.413-1.06-1.061Zm0-3.536a2.5 2.5 0 0 1 0 3.536l1.06 1.06a4 4 0 0 0 0-5.656l-1.06 1.06Zm-4.95 4.95a2.5 2.5 0 0 1 0-3.535L6.344 12a4 4 0 0 0 0 5.656l1.06-1.06Zm-1.06 1.06a4 4 0 0 0 5.657 0l-1.061-1.06a2.5 2.5 0 0 1-3.535 0l-1.061 1.06Zm7.07-7.07-.176-.177-1.06 1.06.176.178 1.06-1.061Z" fill="currentColor" />
+                        </svg>
+                        <span class="ml-2">levreview.com</span>
+                      </p>
+                    </li>
+
+                    <li class="group relative flex flex-col items-start">
+                      <div class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-800/40 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 sm:rounded-2xl"></div>
+                      <div class="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-zinc-800 ring-1 ring-zinc-700/50">
+                        <img src="{% static 'images/logos/techjobalerts.png' %}" alt="Tech Job Alerts logo" class="h-9 w-9 rounded-full" />
+                      </div>
+                      <h3 class="mt-6 text-base font-semibold text-zinc-100">
+                        <a href="https://gettjalerts.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+                          <span class="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
+                          <span class="relative z-10">Tech Job Alerts</span>
+                        </a>
+                      </h3>
+                      <p class="relative z-10 mt-2 text-sm text-zinc-400">
+                        Automated job matching and notifications for tech roles.
+                      </p>
+                      <p class="relative z-10 mt-6 flex text-sm font-medium text-zinc-300 transition group-hover:text-teal-400">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none">
+                          <path d="M15.712 11.823a.75.75 0 1 0 1.06 1.06l-1.06-1.06Zm-4.95 1.768a.75.75 0 0 0 1.06-1.06l-1.06 1.06Zm-2.475-1.414a.75.75 0 1 0-1.06-1.06l1.06 1.06Zm4.95-1.768a.75.75 0 1 0-1.06 1.06l1.06-1.06Zm3.359.53-.884.884 1.06 1.06.885-.883-1.061-1.06Zm-4.95-2.12 1.414-1.415L12 6.344l-1.415 1.413 1.061 1.061Zm0 3.535a2.5 2.5 0 0 1 0-3.536l-1.06-1.06a4 4 0 0 0 0 5.656l1.06-1.06Zm4.95-4.95a2.5 2.5 0 0 1 0 3.535L17.656 12a4 4 0 0 0 0-5.657l-1.06 1.06Zm1.06-1.06a4 4 0 0 0-5.656 0l1.06 1.06a2.5 2.5 0 0 1 3.536 0l1.06-1.06Zm-7.07 7.07.176.177 1.06-1.06-.176-.177-1.06 1.06Zm-3.183-.353.884-.884-1.06-1.06-.884.883 1.06 1.06Zm4.95 2.121-1.414 1.414 1.06 1.06 1.415-1.413-1.06-1.061Zm0-3.536a2.5 2.5 0 0 1 0 3.536l1.06 1.06a4 4 0 0 0 0-5.656l-1.06 1.06Zm-4.95 4.95a2.5 2.5 0 0 1 0-3.535L6.344 12a4 4 0 0 0 0 5.656l1.06-1.06Zm-1.06 1.06a4 4 0 0 0 5.657 0l-1.061-1.06a2.5 2.5 0 0 1-3.535 0l-1.061 1.06Zm7.07-7.07-.176-.177-1.06 1.06.176.178 1.06-1.061Z" fill="currentColor" />
+                        </svg>
+                        <span class="ml-2">gettjalerts.com</span>
+                      </p>
+                    </li>
+
+                    <li class="group relative flex flex-col items-start">
+                      <div class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-800/40 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 sm:rounded-2xl"></div>
+                      <div class="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-zinc-800 ring-1 ring-zinc-700/50">
+                        <img src="{% static 'images/logos/isitketo.png' %}" alt="Is it Keto logo" class="h-9 w-9 rounded-full" />
+                      </div>
+                      <h3 class="mt-6 text-base font-semibold text-zinc-100">
+                        <a href="https://isitketo.org?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+                          <span class="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
+                          <span class="relative z-10">Is it Keto</span>
+                        </a>
+                      </h3>
+                      <p class="relative z-10 mt-2 text-sm text-zinc-400">
+                        Content + search product for diet and food decisions.
+                      </p>
+                      <p class="relative z-10 mt-6 flex text-sm font-medium text-zinc-300 transition group-hover:text-teal-400">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none">
+                          <path d="M15.712 11.823a.75.75 0 1 0 1.06 1.06l-1.06-1.06Zm-4.95 1.768a.75.75 0 0 0 1.06-1.06l-1.06 1.06Zm-2.475-1.414a.75.75 0 1 0-1.06-1.06l1.06 1.06Zm4.95-1.768a.75.75 0 1 0-1.06 1.06l1.06-1.06Zm3.359.53-.884.884 1.06 1.06.885-.883-1.061-1.06Zm-4.95-2.12 1.414-1.415L12 6.344l-1.415 1.413 1.061 1.061Zm0 3.535a2.5 2.5 0 0 1 0-3.536l-1.06-1.06a4 4 0 0 0 0 5.656l1.06-1.06Zm4.95-4.95a2.5 2.5 0 0 1 0 3.535L17.656 12a4 4 0 0 0 0-5.657l-1.06 1.06Zm1.06-1.06a4 4 0 0 0-5.656 0l1.06 1.06a2.5 2.5 0 0 1 3.536 0l1.06-1.06Zm-7.07 7.07.176.177 1.06-1.06-.176-.177-1.06 1.06Zm-3.183-.353.884-.884-1.06-1.06-.884.883 1.06 1.06Zm4.95 2.121-1.414 1.414 1.06 1.06 1.415-1.413-1.06-1.061Zm0-3.536a2.5 2.5 0 0 1 0 3.536l1.06 1.06a4 4 0 0 0 0-5.656l-1.06 1.06Zm-4.95 4.95a2.5 2.5 0 0 1 0-3.535L6.344 12a4 4 0 0 0 0 5.656l1.06-1.06Zm-1.06 1.06a4 4 0 0 0 5.657 0l-1.061-1.06a2.5 2.5 0 0 1-3.535 0l-1.061 1.06Zm7.07-7.07-.176-.177-1.06 1.06.176.178 1.06-1.061Z" fill="currentColor" />
+                        </svg>
+                        <span class="ml-2">isitketo.org</span>
+                      </p>
+                    </li>
+
+                    <li class="group relative flex flex-col items-start">
+                      <div class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-800/40 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 sm:rounded-2xl"></div>
+                      <div class="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-zinc-800 ring-1 ring-zinc-700/50">
+                        <img src="{% static 'images/logos/osig.png' %}" alt="OSIG logo" class="h-9 w-9 rounded-full" />
+                      </div>
+                      <h3 class="mt-6 text-base font-semibold text-zinc-100">
+                        <a href="https://osig.app?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+                          <span class="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
+                          <span class="relative z-10">OSIG</span>
+                        </a>
+                      </h3>
+                      <p class="relative z-10 mt-2 text-sm text-zinc-400">
+                        Open-source social image generation tool.
+                      </p>
+                      <p class="relative z-10 mt-6 flex text-sm font-medium text-zinc-300 transition group-hover:text-teal-400">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none">
+                          <path d="M15.712 11.823a.75.75 0 1 0 1.06 1.06l-1.06-1.06Zm-4.95 1.768a.75.75 0 0 0 1.06-1.06l-1.06 1.06Zm-2.475-1.414a.75.75 0 1 0-1.06-1.06l1.06 1.06Zm4.95-1.768a.75.75 0 1 0-1.06 1.06l1.06-1.06Zm3.359.53-.884.884 1.06 1.06.885-.883-1.061-1.06Zm-4.95-2.12 1.414-1.415L12 6.344l-1.415 1.413 1.061 1.061Zm0 3.535a2.5 2.5 0 0 1 0-3.536l-1.06-1.06a4 4 0 0 0 0 5.656l1.06-1.06Zm4.95-4.95a2.5 2.5 0 0 1 0 3.535L17.656 12a4 4 0 0 0 0-5.657l-1.06 1.06Zm1.06-1.06a4 4 0 0 0-5.656 0l1.06 1.06a2.5 2.5 0 0 1 3.536 0l1.06-1.06Zm-7.07 7.07.176.177 1.06-1.06-.176-.177-1.06 1.06Zm-3.183-.353.884-.884-1.06-1.06-.884.883 1.06 1.06Zm4.95 2.121-1.414 1.414 1.06 1.06 1.415-1.413-1.06-1.061Zm0-3.536a2.5 2.5 0 0 1 0 3.536l1.06 1.06a4 4 0 0 0 0-5.656l-1.06 1.06Zm-4.95 4.95a2.5 2.5 0 0 1 0-3.535L6.344 12a4 4 0 0 0 0 5.656l1.06-1.06Zm-1.06 1.06a4 4 0 0 0 5.657 0l-1.061-1.06a2.5 2.5 0 0 1-3.535 0l-1.061 1.06Zm7.07-7.07-.176-.177-1.06 1.06.176.178 1.06-1.061Z" fill="currentColor" />
+                        </svg>
+                        <span class="ml-2">osig.app</span>
+                      </p>
+                    </li>
+
+                    <li class="group relative flex flex-col items-start">
+                      <div class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-800/40 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 sm:rounded-2xl"></div>
+                      <div class="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-zinc-800 ring-1 ring-zinc-700/50">
+                        <img src="{% static 'images/logos/statushen.png' %}" alt="StatusHen logo" class="h-9 w-9 rounded-full" />
+                      </div>
+                      <h3 class="mt-6 text-base font-semibold text-zinc-100">
+                        <a href="https://statushen.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+                          <span class="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
+                          <span class="relative z-10">StatusHen</span>
+                        </a>
+                      </h3>
+                      <p class="relative z-10 mt-2 text-sm text-zinc-400">
+                        Open-source uptime monitoring and status pages.
+                      </p>
+                      <p class="relative z-10 mt-6 flex text-sm font-medium text-zinc-300 transition group-hover:text-teal-400">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none">
+                          <path d="M15.712 11.823a.75.75 0 1 0 1.06 1.06l-1.06-1.06Zm-4.95 1.768a.75.75 0 0 0 1.06-1.06l-1.06 1.06Zm-2.475-1.414a.75.75 0 1 0-1.06-1.06l1.06 1.06Zm4.95-1.768a.75.75 0 1 0-1.06 1.06l1.06-1.06Zm3.359.53-.884.884 1.06 1.06.885-.883-1.061-1.06Zm-4.95-2.12 1.414-1.415L12 6.344l-1.415 1.413 1.061 1.061Zm0 3.535a2.5 2.5 0 0 1 0-3.536l-1.06-1.06a4 4 0 0 0 0 5.656l1.06-1.06Zm4.95-4.95a2.5 2.5 0 0 1 0 3.535L17.656 12a4 4 0 0 0 0-5.657l-1.06 1.06Zm1.06-1.06a4 4 0 0 0-5.656 0l1.06 1.06a2.5 2.5 0 0 1 3.536 0l1.06-1.06Zm-7.07 7.07.176.177 1.06-1.06-.176-.177-1.06 1.06Zm-3.183-.353.884-.884-1.06-1.06-.884.883 1.06 1.06Zm4.95 2.121-1.414 1.414 1.06 1.06 1.415-1.413-1.06-1.061Zm0-3.536a2.5 2.5 0 0 1 0 3.536l1.06 1.06a4 4 0 0 0 0-5.656l-1.06 1.06Zm-4.95 4.95a2.5 2.5 0 0 1 0-3.535L6.344 12a4 4 0 0 0 0 5.656l1.06-1.06Zm-1.06 1.06a4 4 0 0 0 5.657 0l-1.061-1.06a2.5 2.5 0 0 1-3.535 0l-1.061 1.06Zm7.07-7.07-.176-.177-1.06 1.06.176.178 1.06-1.061Z" fill="currentColor" />
+                        </svg>
+                        <span class="ml-2">statushen.com</span>
+                      </p>
+                    </li>
+
+                    <li class="group relative flex flex-col items-start">
+                      <div class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-800/40 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 sm:rounded-2xl"></div>
+                      <div class="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-zinc-800 ring-1 ring-zinc-700/50">
+                        <img src="{% static 'images/logos/tuxseo.png' %}" alt="TuxSEO logo" class="h-9 w-9 rounded-full" />
+                      </div>
+                      <h3 class="mt-6 text-base font-semibold text-zinc-100">
+                        <a href="https://tuxseo.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+                          <span class="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
+                          <span class="relative z-10">TuxSEO</span>
+                        </a>
+                      </h3>
+                      <p class="relative z-10 mt-2 text-sm text-zinc-400">
+                        Programmatic SEO and blog automation tooling.
+                      </p>
+                      <p class="relative z-10 mt-6 flex text-sm font-medium text-zinc-300 transition group-hover:text-teal-400">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none">
+                          <path d="M15.712 11.823a.75.75 0 1 0 1.06 1.06l-1.06-1.06Zm-4.95 1.768a.75.75 0 0 0 1.06-1.06l-1.06 1.06Zm-2.475-1.414a.75.75 0 1 0-1.06-1.06l1.06 1.06Zm4.95-1.768a.75.75 0 1 0-1.06 1.06l1.06-1.06Zm3.359.53-.884.884 1.06 1.06.885-.883-1.061-1.06Zm-4.95-2.12 1.414-1.415L12 6.344l-1.415 1.413 1.061 1.061Zm0 3.535a2.5 2.5 0 0 1 0-3.536l-1.06-1.06a4 4 0 0 0 0 5.656l1.06-1.06Zm4.95-4.95a2.5 2.5 0 0 1 0 3.535L17.656 12a4 4 0 0 0 0-5.657l-1.06 1.06Zm1.06-1.06a4 4 0 0 0-5.656 0l1.06 1.06a2.5 2.5 0 0 1 3.536 0l1.06-1.06Zm-7.07 7.07.176.177 1.06-1.06-.176-.177-1.06 1.06Zm-3.183-.353.884-.884-1.06-1.06-.884.883 1.06 1.06Zm4.95 2.121-1.414 1.414 1.06 1.06 1.415-1.413-1.06-1.061Zm0-3.536a2.5 2.5 0 0 1 0 3.536l1.06 1.06a4 4 0 0 0 0-5.656l-1.06 1.06Zm-4.95 4.95a2.5 2.5 0 0 1 0-3.535L6.344 12a4 4 0 0 0 0 5.656l1.06-1.06Zm-1.06 1.06a4 4 0 0 0 5.657 0l-1.061-1.06a2.5 2.5 0 0 1-3.535 0l-1.061 1.06Zm7.07-7.07-.176-.177-1.06 1.06.176.178 1.06-1.061Z" fill="currentColor" />
+                        </svg>
+                        <span class="ml-2">tuxseo.com</span>
+                      </p>
+                    </li>
+
+                    <li class="group relative flex flex-col items-start">
+                      <div class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-800/40 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 sm:rounded-2xl"></div>
+                      <div class="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-zinc-800 ring-1 ring-zinc-700/50">
+                        <img src="{% static 'images/logos/cleanapp.png' %}" alt="Cleanapp logo" class="h-9 w-9 rounded-full" />
+                      </div>
+                      <h3 class="mt-6 text-base font-semibold text-zinc-100">
+                        <a href="https://cleanapp.dev?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+                          <span class="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
+                          <span class="relative z-10">Cleanapp</span>
+                        </a>
+                      </h3>
+                      <p class="relative z-10 mt-2 text-sm text-zinc-400">
+                        App Store maintenance and reminder workflow helper.
+                      </p>
+                      <p class="relative z-10 mt-6 flex text-sm font-medium text-zinc-300 transition group-hover:text-teal-400">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none">
+                          <path d="M15.712 11.823a.75.75 0 1 0 1.06 1.06l-1.06-1.06Zm-4.95 1.768a.75.75 0 0 0 1.06-1.06l-1.06 1.06Zm-2.475-1.414a.75.75 0 1 0-1.06-1.06l1.06 1.06Zm4.95-1.768a.75.75 0 1 0-1.06 1.06l1.06-1.06Zm3.359.53-.884.884 1.06 1.06.885-.883-1.061-1.06Zm-4.95-2.12 1.414-1.415L12 6.344l-1.415 1.413 1.061 1.061Zm0 3.535a2.5 2.5 0 0 1 0-3.536l-1.06-1.06a4 4 0 0 0 0 5.656l1.06-1.06Zm4.95-4.95a2.5 2.5 0 0 1 0 3.535L17.656 12a4 4 0 0 0 0-5.657l-1.06 1.06Zm1.06-1.06a4 4 0 0 0-5.656 0l1.06 1.06a2.5 2.5 0 0 1 3.536 0l1.06-1.06Zm-7.07 7.07.176.177 1.06-1.06-.176-.177-1.06 1.06Zm-3.183-.353.884-.884-1.06-1.06-.884.883 1.06 1.06Zm4.95 2.121-1.414 1.414 1.06 1.06 1.415-1.413-1.06-1.061Zm0-3.536a2.5 2.5 0 0 1 0 3.536l1.06 1.06a4 4 0 0 0 0-5.656l-1.06 1.06Zm-4.95 4.95a2.5 2.5 0 0 1 0-3.535L6.344 12a4 4 0 0 0 0 5.656l1.06-1.06Zm-1.06 1.06a4 4 0 0 0 5.657 0l-1.061-1.06a2.5 2.5 0 0 1-3.535 0l-1.061 1.06Zm7.07-7.07-.176-.177-1.06 1.06.176.178 1.06-1.061Z" fill="currentColor" />
+                        </svg>
+                        <span class="ml-2">cleanapp.dev</span>
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+              </section>
+
+              <section class="mb-24 mt-24">
+                <div class="rounded-2xl border border-zinc-700/40 p-8">
+                  <h2 class="text-2xl font-bold tracking-tight text-zinc-100">
+                    Need a builder who can ship?
+                  </h2>
+                  <p class="mt-3 max-w-2xl text-sm text-zinc-400">
+                    Send a short note with your project context, goals, and timeline. I’ll reply
+                    with fit, scope, and next steps.
+                  </p>
+                  <div class="mt-6 flex flex-wrap gap-3 text-sm font-medium">
+                    <a
+                      class="rounded-full bg-zinc-100 px-5 py-2.5 text-zinc-900 transition hover:bg-zinc-300"
+                      href="mailto:rasul@lvtd.dev?subject=Consulting%20project"
+                    >
+                      Email rasul@lvtd.dev
+                    </a>
+                    <a
+                      class="rounded-full border border-zinc-700 px-5 py-2.5 text-zinc-200 transition hover:border-zinc-500 hover:bg-zinc-800"
+                      href="https://github.com/rasulkireev"
+                    >
+                      View GitHub profile
+                    </a>
+                  </div>
+                </div>
+              </section>
+
+              <footer class="pb-10">
+                <div class="border-t border-zinc-700/40 pt-8">
+                  <p class="text-sm text-zinc-500">© 2026 LVTD, LLC. All rights reserved.</p>
+                </div>
+              </footer>
             </div>
           </div>
         </div>
-      </section>
-      <section class="flex flex-col gap-2 text-sm text-slate-400 muted">
-        <p>Contact: hello@lvtd.org</p>
-        <p>Based in the United States · Working globally</p>
-      </section>
+      </div>
     </main>
   </body>
 </html>

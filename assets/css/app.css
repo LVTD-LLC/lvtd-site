@@ -3,3 +3,46 @@
 :root {
   color-scheme: dark;
 }
+
+@layer base {
+  .site-ambient {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0.16;
+    background-image:
+      radial-gradient(34rem 30rem at 18% 16%, rgb(45 212 191 / 12%), transparent 70%),
+      radial-gradient(28rem 24rem at 82% 72%, rgb(34 211 238 / 9%), transparent 72%),
+      radial-gradient(22rem 20rem at 55% 52%, rgb(45 212 191 / 6%), transparent 75%);
+    mix-blend-mode: screen;
+    filter: blur(16px) saturate(110%);
+    transform-origin: 50% 50%;
+    animation: ambientDrift 24s ease-in-out infinite alternate;
+    will-change: transform, opacity;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-ambient {
+      animation: none;
+      opacity: 0.12;
+    }
+  }
+}
+
+@keyframes ambientDrift {
+  0% {
+    transform: translate3d(-1.5%, -0.8%, 0) scale(1);
+    opacity: 0.16;
+  }
+
+  50% {
+    transform: translate3d(1.2%, 1%, 0) scale(1.035);
+    opacity: 0.2;
+  }
+
+  100% {
+    transform: translate3d(-0.8%, 0.7%, 0) scale(1.02);
+    opacity: 0.17;
+  }
+}
