@@ -1,8 +1,6 @@
 @import "tailwindcss";
 
-:root {
-  color-scheme: dark;
-}
+@custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
   .site-ambient {
