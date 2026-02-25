@@ -11,9 +11,9 @@ from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
-from django.views.generic import TemplateView, View
+from django.views.generic import DetailView, ListView, TemplateView, View
 
-from website.models import StripeWebhookEvent
+from website.models import BlogPost, StripeWebhookEvent
 
 
 class HomePageView(TemplateView):
@@ -24,7 +24,24 @@ class HomePageView(TemplateView):
         context["mvp_deposit_checkout_url"] = settings.MVP_DEPOSIT_CHECKOUT_URL
         context["mvp_deposit_amount"] = settings.MVP_DEPOSIT_AMOUNT
         context["mvp_final_price"] = settings.MVP_FINAL_PRICE
+        context["latest_blog_posts"] = BlogPost.objects.filter(is_published=True)[:3]
         return context
+
+
+class BlogListView(ListView):
+    template_name = "website/blog_list.html"
+    context_object_name = "posts"
+
+    def get_queryset(self):
+        return BlogPost.objects.filter(is_published=True)
+
+
+class BlogDetailView(DetailView):
+    template_name = "website/blog_detail.html"
+    context_object_name = "post"
+
+    def get_queryset(self):
+        return BlogPost.objects.filter(is_published=True)
 
 
 class HostedOpenClawLearnMoreView(TemplateView):

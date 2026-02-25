@@ -4,6 +4,8 @@ from website import views
 
 urlpatterns = [
     path("", views.HomePageView.as_view(), name="home"),
+    path("blog/", views.BlogListView.as_view(), name="blog-list"),
+    path("blog/<slug:slug>/", views.BlogDetailView.as_view(), name="blog-detail"),
     path(
         "services/hosted-openclaw/",
         views.HostedOpenClawLearnMoreView.as_view(),
