@@ -5,6 +5,8 @@ from unittest.mock import Mock, patch
 from django.test import Client, TestCase, override_settings
 from django.urls import reverse
 
+from website.models import BlogPost
+
 
 class HomePageTests(TestCase):
     @override_settings(
@@ -44,6 +46,59 @@ class HomePageTests(TestCase):
 
         self.assertContains(response, reverse("hosted-openclaw-checkout"))
         self.assertContains(response, reverse("hosted-openclaw-learn-more"))
+
+    def test_homepage_has_blog_link(self) -> None:
+        client = Client()
+        response = client.get(reverse("home"))
+
+        self.assertContains(response, reverse("blog-list"))
+        self.assertContains(response, "Read the blog")
+
+
+class BlogPagesTests(TestCase):
+    def setUp(self) -> None:
+        self.published_post = BlogPost.objects.create(
+            title="Shipping with confidence",
+            slug="shipping-with-confidence",
+            summary="How we ship faster with fewer incidents.",
+            body="This is the post body.",
+        )
+        BlogPost.objects.create(
+            title="Draft post",
+            slug="draft-post",
+            summary="This is still in draft.",
+            body="Draft body.",
+            is_published=False,
+        )
+
+    def test_blog_index_lists_published_posts_only(self) -> None:
+        client = Client()
+        response = client.get(reverse("blog-list"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Shipping with confidence")
+        self.assertNotContains(response, "Draft post")
+        self.assertContains(
+            response,
+            reverse("blog-detail", kwargs={"slug": self.published_post.slug}),
+        )
+
+    def test_blog_detail_loads_for_published_post(self) -> None:
+        client = Client()
+        response = client.get(
+            reverse("blog-detail", kwargs={"slug": self.published_post.slug})
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Shipping with confidence")
+        self.assertContains(response, "How we ship faster with fewer incidents.")
+        self.assertContains(response, "This is the post body.")
+
+    def test_blog_detail_404_for_draft_post(self) -> None:
+        client = Client()
+        response = client.get(reverse("blog-detail", kwargs={"slug": "draft-post"}))
+
+        self.assertEqual(response.status_code, 404)
 
 
 class HostedOpenClawPagesTests(TestCase):
