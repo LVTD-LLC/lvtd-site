@@ -24,7 +24,9 @@ class HomePageTests(TestCase):
         self.assertContains(response, "Pay a $100 deposit")
         self.assertContains(response, "$5,000")
         self.assertContains(response, "Pay $100 deposit")
-        self.assertContains(response, "Selected products I’ve built")
+        self.assertContains(response, "Product engineering for founders")
+        self.assertContains(response, "Shipped work")
+        self.assertContains(response, "Real products, not portfolio theater.")
         self.assertContains(response, "Need a builder who can ship?")
 
         for project_name in (
@@ -52,7 +54,7 @@ class HomePageTests(TestCase):
         response = client.get(reverse("home"))
 
         self.assertContains(response, reverse("blog-list"))
-        self.assertContains(response, "Read the blog")
+        self.assertContains(response, "Read notes")
 
 
 class BlogPagesTests(TestCase):

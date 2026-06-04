@@ -1,506 +1,281 @@
+{% extends "website/base.html" %}
 {% load static %}
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>LVTD — Product engineering for founders &amp; teams</title>
-    <meta
-      name="description"
-      content="LVTD helps founders and teams design, build, and ship practical software products, automations, and growth tooling."
-    />
-    <script>
-      ;(() => {
-        try {
-          const storedTheme = localStorage.getItem('theme')
-          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-          const theme =
-            storedTheme === 'light' || storedTheme === 'dark'
-              ? storedTheme
-              : prefersDark
-                ? 'dark'
-                : 'light'
-          document.documentElement.classList.toggle('dark', theme === 'dark')
-          document.documentElement.style.colorScheme = theme
-        } catch (error) {
-          document.documentElement.classList.remove('dark')
-          document.documentElement.style.colorScheme = 'light'
-        }
-      })()
-    </script>
-    <style>
-      html {
-        color-scheme: light;
-      }
-      html.dark {
-        color-scheme: dark;
-      }
-    </style>
-    <link rel="stylesheet" href="{% static 'css/app.css' %}" />
-    <script defer data-domain="lvtd.dev" src="https://plausible-v2.cr.lvtd.dev/js/script.file-downloads.outbound-links.js"></script>
-    <script>
-      window.plausible =
-        window.plausible ||
-        function() {
-          (window.plausible.q = window.plausible.q || []).push(arguments)
-        }
-    </script>
-  </head>
-  <body class="min-h-screen bg-zinc-50 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100">
-    <div class="site-ambient" aria-hidden="true"></div>
-    <div class="fixed inset-0 z-0 flex justify-center sm:px-8">
-      <div class="flex w-full max-w-7xl lg:px-8">
-        <div class="w-full bg-white ring-1 ring-zinc-200 dark:bg-zinc-900 dark:ring-zinc-300/20"></div>
+
+{% block title %}LVTD - Product engineering for founders &amp; teams{% endblock %}
+{% block description %}LVTD helps founders and teams design, build, debug, and ship practical software products, automations, and growth tooling.{% endblock %}
+
+{% block content %}
+  <section class="grid gap-10 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-end lg:py-20">
+    <div class="max-w-4xl">
+      <p class="section-kicker">LVTD, LLC</p>
+      <h1 class="mt-5 max-w-4xl text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl" style="color: var(--lvtd-ink);">
+        Product engineering for founders who need the job done.
+      </h1>
+      <p class="mt-6 max-w-3xl text-lg leading-8 muted">
+        I'm Rasul. I design, build, debug, and ship practical software for teams that need
+        a capable engineer inside the work, not another strategy deck.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a class="btn btn-primary" href="mailto:rasul@lvtd.dev?subject=Project%20inquiry">
+          Start a project
+        </a>
+        <a class="btn btn-secondary" href="#work">See shipped work</a>
+        <a class="btn btn-secondary" href="{% url 'blog-list' %}">Read notes</a>
       </div>
     </div>
 
-    <main class="relative z-20 pb-24">
-      <div class="sm:px-8">
-        <div class="mx-auto max-w-7xl lg:px-8">
-          <div class="relative px-4 sm:px-8 lg:px-12">
-            <div class="mx-auto max-w-2xl lg:max-w-5xl">
-              <div class="mt-8 flex items-center justify-end">
-                <button
-                  id="theme-toggle"
-                  type="button"
-                  aria-label="Toggle theme"
-                  class="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-wide text-zinc-700 shadow-sm transition hover:border-zinc-300 hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:border-zinc-500 dark:hover:text-zinc-100"
-                >
-                  <span class="h-2 w-2 rounded-full bg-teal-500" aria-hidden="true"></span>
-                  <span data-theme-label>Dark mode</span>
-                </button>
-              </div>
-              <section class="mt-12">
-                <div class="max-w-3xl">
-                  <p class="text-sm font-medium uppercase tracking-wide text-teal-600 dark:text-teal-400">LVTD, LLC</p>
-                  <h1 class="mt-4 text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-5xl">
-                    I build practical software for founders, teams, and internet businesses.
-                  </h1>
-                  <p class="mt-6 text-base leading-7 text-zinc-700 dark:text-zinc-300">
-                    I’m Rasul. I build products, automations, and growth tools — fast, with a strong
-                    backend foundation and a clear bias toward shipping. If you need a hands-on engineer
-                    to build something new or improve what already exists, I’m available for consulting.
-                  </p>
-                  <div class="mt-8 flex flex-wrap gap-3 text-sm font-medium">
-                    <a
-                      class="rounded-full bg-zinc-900 px-5 py-2.5 text-white transition hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
-                      href="mailto:rasul@lvtd.dev?subject=Project%20inquiry"
-                    >
-                      Start a project
-                    </a>
-                    <a
-                      class="rounded-full border border-zinc-300 px-5 py-2.5 text-zinc-700 transition hover:border-zinc-400 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-200 dark:hover:border-zinc-500 dark:hover:bg-zinc-800"
-                      href="https://twitter.com/rasulkireev"
-                    >
-                      DM on X / Twitter
-                    </a>
-                    <a
-                      class="rounded-full border border-zinc-700 px-5 py-2.5 text-zinc-200 transition hover:border-zinc-500 hover:bg-zinc-800"
-                      href="{% url 'blog-list' %}"
-                    >
-                      Read the blog
-                    </a>
-                  </div>
-                </div>
-              </section>
-
-              <section class="mt-20">
-                <h2 class="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">Services</h2>
-                <p class="mt-3 max-w-2xl text-sm text-zinc-600 dark:text-zinc-400">
-                  Typical ways I help clients. If your project is adjacent, I can usually flex.
-                </p>
-                <ul class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-                  <li class="rounded-2xl border border-zinc-200 p-6 shadow-sm shadow-zinc-100/60 dark:border-zinc-700/40 dark:shadow-none">
-                    <h3 class="text-base font-semibold text-zinc-900 dark:text-zinc-100">MVPs &amp; Product Builds</h3>
-                    <p class="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
-                      From idea to shipped web product: architecture, backend, integrations, and launch.
-                    </p>
-                  </li>
-                  <li class="rounded-2xl border border-zinc-200 p-6 shadow-sm shadow-zinc-100/60 dark:border-zinc-700/40 dark:shadow-none">
-                    <h3 class="text-base font-semibold text-zinc-900 dark:text-zinc-100">Automation &amp; Internal Tools</h3>
-                    <p class="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
-                      Custom automations, scraping pipelines, reporting, and workflow tools that save
-                      hours every week.
-                    </p>
-                  </li>
-                  <li class="rounded-2xl border border-zinc-200 p-6 shadow-sm shadow-zinc-100/60 dark:border-zinc-700/40 dark:shadow-none">
-                    <h3 class="text-base font-semibold text-zinc-900 dark:text-zinc-100">Technical Audits &amp; Debugging</h3>
-                    <p class="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
-                      Performance bottlenecks, scaling issues, broken funnels, and “we need this fixed
-                      now” engineering support.
-                    </p>
-                  </li>
-                  <li class="rounded-2xl border border-zinc-200 p-6 shadow-sm shadow-zinc-100/60 dark:border-zinc-700/40 dark:shadow-none">
-                    <h3 class="text-base font-semibold text-zinc-900 dark:text-zinc-100">Hosted OpenClaw Service</h3>
-                    <p class="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
-                      Setup and ongoing management of a hosted OpenClaw instance, with updates,
-                      monitoring, and integrations tailored to your team.
-                    </p>
-                    <div class="mt-4 flex flex-wrap gap-3 text-sm font-medium">
-                      <form method="post" action="{% url 'hosted-openclaw-checkout' %}">
-                        {% csrf_token %}
-                        <button
-                          class="rounded-full bg-zinc-900 px-4 py-2 text-xs font-semibold text-white transition hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
-                          type="submit"
-                        >
-                          Pay $100 deposit
-                        </button>
-                      </form>
-                      <a
-                        class="rounded-full border border-zinc-300 px-4 py-2 text-xs font-semibold text-zinc-700 transition hover:border-zinc-400 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-200 dark:hover:border-zinc-500 dark:hover:bg-zinc-800"
-                        href="{% url 'hosted-openclaw-learn-more' %}"
-                      >
-                        Learn more
-                      </a>
-                    </div>
-                  </li>
-                </ul>
-              </section>
-
-              <section class="mt-20">
-                <div class="flex flex-wrap items-end justify-between gap-6">
-                  <div>
-                    <p class="text-sm font-semibold uppercase tracking-wide text-teal-700 dark:text-teal-300">Writing</p>
-                    <h2 class="mt-3 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">From the blog</h2>
-                    <p class="mt-3 max-w-2xl text-sm text-zinc-600 dark:text-zinc-400">
-                      Tactical notes on product execution, automation, and lessons from shipped projects.
-                    </p>
-                  </div>
-                  <a
-                    class="rounded-full border border-zinc-300 px-5 py-2.5 text-sm font-medium text-zinc-700 transition hover:border-zinc-400 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-200 dark:hover:border-zinc-500 dark:hover:bg-zinc-800"
-                    href="{% url 'blog-list' %}"
-                  >
-                    Read all posts
-                  </a>
-                </div>
-
-                {% if latest_blog_posts %}
-                  <ul class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
-                    {% for post in latest_blog_posts %}
-                      <li class="rounded-2xl border border-zinc-200 p-6 shadow-sm shadow-zinc-100/60 dark:border-zinc-700/40 dark:shadow-none">
-                        <p class="text-xs font-semibold uppercase tracking-wide text-teal-700 dark:text-teal-300">
-                          {{ post.published_at|date:"M j, Y" }}
-                        </p>
-                        <h3 class="mt-3 text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-                          <a class="transition hover:text-teal-700 dark:hover:text-teal-300" href="{% url 'blog-detail' slug=post.slug %}">
-                            {{ post.title }}
-                          </a>
-                        </h3>
-                        <p class="mt-3 text-sm text-zinc-600 dark:text-zinc-400">{{ post.summary }}</p>
-                      </li>
-                    {% endfor %}
-                  </ul>
-                {% else %}
-                  <div class="mt-8 rounded-2xl border border-zinc-200 p-6 shadow-sm shadow-zinc-100/60 dark:border-zinc-700/40 dark:shadow-none">
-                    <p class="text-sm text-zinc-700 dark:text-zinc-300">
-                      Blog posts are coming soon. For now, follow updates on X or reach out directly.
-                    </p>
-                  </div>
-                {% endif %}
-              </section>
-
-              <section class="mt-20 rounded-3xl border border-teal-500/30 bg-teal-500/10 p-8 dark:border-teal-400/30 dark:bg-teal-500/10">
-                <div class="max-w-3xl">
-                  <p class="text-sm font-semibold uppercase tracking-wide text-teal-700 dark:text-teal-300">
-                    MVP done-for-you
-                  </p>
-                  <h2 class="mt-3 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-                    Ship your MVP with a full-service build.
-                  </h2>
-                  <p class="mt-4 text-sm text-zinc-700 dark:text-zinc-200">
-                    Pay a {{ mvp_deposit_amount }} deposit to show serious intent, and I’ll email you
-                    for project details. The final service price is
-                    <span class="font-semibold text-zinc-900 dark:text-white">{{ mvp_final_price }}</span>.
-                  </p>
-                  <div class="mt-6 flex flex-wrap gap-3">
-                    <a
-                      class="inline-flex rounded-full bg-zinc-900 px-6 py-2.5 text-sm font-semibold text-white shadow-sm ring-1 ring-zinc-900/80 transition hover:bg-zinc-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:bg-white dark:text-zinc-900 dark:ring-white/80 dark:hover:bg-zinc-100 dark:focus-visible:ring-white"
-                      href="{{ mvp_deposit_checkout_url|default:'#' }}"
-                    >
-                      Pay {{ mvp_deposit_amount }} deposit
-                    </a>
-                  </div>
-                </div>
-              </section>
-
-              <section class="mt-20">
-                <h2 class="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-                  Selected products I’ve built
-                </h2>
-                <p class="mt-3 max-w-2xl text-sm text-zinc-600 dark:text-zinc-400">
-                  A mix of SaaS tools, content engines, and open-source projects — built end to end.
-                </p>
-
-                <div class="mt-12">
-                  <ul role="list" class="grid grid-cols-1 gap-x-12 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
-                    <li class="group relative flex flex-col items-start">
-                      <div class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-100/80 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 sm:rounded-2xl dark:bg-zinc-800/40"></div>
-                      <div class="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white ring-1 ring-zinc-200 shadow-sm dark:bg-zinc-800 dark:ring-zinc-700/50 dark:shadow-none">
-                        <img src="{% static 'images/logos/rocket_take_off.png' %}" alt="Talent Leads logo" class="h-9 w-9 rounded-full" />
-                      </div>
-                      <h3 class="mt-6 text-base font-semibold text-zinc-900 dark:text-zinc-100">
-                        <a href="https://gettalentleads.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-                          <span class="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
-                          <span class="relative z-10">Talent Leads</span>
-                        </a>
-                      </h3>
-                      <p class="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                        Lead generation product for startup hiring pipelines.
-                      </p>
-                      <p class="relative z-10 mt-6 flex text-sm font-medium text-zinc-600 transition group-hover:text-teal-600 dark:text-zinc-300 dark:group-hover:text-teal-400">
-                        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none">
-                          <path d="M15.712 11.823a.75.75 0 1 0 1.06 1.06l-1.06-1.06Zm-4.95 1.768a.75.75 0 0 0 1.06-1.06l-1.06 1.06Zm-2.475-1.414a.75.75 0 1 0-1.06-1.06l1.06 1.06Zm4.95-1.768a.75.75 0 1 0-1.06 1.06l1.06-1.06Zm3.359.53-.884.884 1.06 1.06.885-.883-1.061-1.06Zm-4.95-2.12 1.414-1.415L12 6.344l-1.415 1.413 1.061 1.061Zm0 3.535a2.5 2.5 0 0 1 0-3.536l-1.06-1.06a4 4 0 0 0 0 5.656l1.06-1.06Zm4.95-4.95a2.5 2.5 0 0 1 0 3.535L17.656 12a4 4 0 0 0 0-5.657l-1.06 1.06Zm1.06-1.06a4 4 0 0 0-5.656 0l1.06 1.06a2.5 2.5 0 0 1 3.536 0l1.06-1.06Zm-7.07 7.07.176.177 1.06-1.06-.176-.177-1.06 1.06Zm-3.183-.353.884-.884-1.06-1.06-.884.883 1.06 1.06Zm4.95 2.121-1.414 1.414 1.06 1.06 1.415-1.413-1.06-1.061Zm0-3.536a2.5 2.5 0 0 1 0 3.536l1.06 1.06a4 4 0 0 0 0-5.656l-1.06 1.06Zm-4.95 4.95a2.5 2.5 0 0 1 0-3.535L6.344 12a4 4 0 0 0 0 5.656l1.06-1.06Zm-1.06 1.06a4 4 0 0 0 5.657 0l-1.061-1.06a2.5 2.5 0 0 1-3.535 0l-1.061 1.06Zm7.07-7.07-.176-.177-1.06 1.06.176.178 1.06-1.061Z" fill="currentColor" />
-                        </svg>
-                        <span class="ml-2">gettalentleads.com</span>
-                      </p>
-                    </li>
-
-                    <li class="group relative flex flex-col items-start">
-                      <div class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-100/80 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 sm:rounded-2xl dark:bg-zinc-800/40"></div>
-                      <div class="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white ring-1 ring-zinc-200 shadow-sm dark:bg-zinc-800 dark:ring-zinc-700/50 dark:shadow-none">
-                        <img src="{% static 'images/logos/builtwithdjango.png' %}" alt="Built with Django logo" class="h-9 w-9 rounded-full" />
-                      </div>
-                      <h3 class="mt-6 text-base font-semibold text-zinc-900 dark:text-zinc-100">
-                        <a href="https://builtwithdjango.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-                          <span class="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
-                          <span class="relative z-10">Built with Django</span>
-                        </a>
-                      </h3>
-                      <p class="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                        Developer education + discovery platform showcasing Django products.
-                      </p>
-                      <p class="relative z-10 mt-6 flex text-sm font-medium text-zinc-600 transition group-hover:text-teal-600 dark:text-zinc-300 dark:group-hover:text-teal-400">
-                        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none">
-                          <path d="M15.712 11.823a.75.75 0 1 0 1.06 1.06l-1.06-1.06Zm-4.95 1.768a.75.75 0 0 0 1.06-1.06l-1.06 1.06Zm-2.475-1.414a.75.75 0 1 0-1.06-1.06l1.06 1.06Zm4.95-1.768a.75.75 0 1 0-1.06 1.06l1.06-1.06Zm3.359.53-.884.884 1.06 1.06.885-.883-1.061-1.06Zm-4.95-2.12 1.414-1.415L12 6.344l-1.415 1.413 1.061 1.061Zm0 3.535a2.5 2.5 0 0 1 0-3.536l-1.06-1.06a4 4 0 0 0 0 5.656l1.06-1.06Zm4.95-4.95a2.5 2.5 0 0 1 0 3.535L17.656 12a4 4 0 0 0 0-5.657l-1.06 1.06Zm1.06-1.06a4 4 0 0 0-5.656 0l1.06 1.06a2.5 2.5 0 0 1 3.536 0l1.06-1.06Zm-7.07 7.07.176.177 1.06-1.06-.176-.177-1.06 1.06Zm-3.183-.353.884-.884-1.06-1.06-.884.883 1.06 1.06Zm4.95 2.121-1.414 1.414 1.06 1.06 1.415-1.413-1.06-1.061Zm0-3.536a2.5 2.5 0 0 1 0 3.536l1.06 1.06a4 4 0 0 0 0-5.656l-1.06 1.06Zm-4.95 4.95a2.5 2.5 0 0 1 0-3.535L6.344 12a4 4 0 0 0 0 5.656l1.06-1.06Zm-1.06 1.06a4 4 0 0 0 5.657 0l-1.061-1.06a2.5 2.5 0 0 1-3.535 0l-1.061 1.06Zm7.07-7.07-.176-.177-1.06 1.06.176.178 1.06-1.061Z" fill="currentColor" />
-                        </svg>
-                        <span class="ml-2">builtwithdjango.com</span>
-                      </p>
-                    </li>
-
-                    <li class="group relative flex flex-col items-start">
-                      <div class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-100/80 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 sm:rounded-2xl dark:bg-zinc-800/40"></div>
-                      <div class="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white ring-1 ring-zinc-200 shadow-sm dark:bg-zinc-800 dark:ring-zinc-700/50 dark:shadow-none">
-                        <img src="{% static 'images/logos/levreview.jpg' %}" alt="LevReview logo" class="h-9 w-9 rounded-full" />
-                      </div>
-                      <h3 class="mt-6 text-base font-semibold text-zinc-900 dark:text-zinc-100">
-                        <a href="https://levreview.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-                          <span class="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
-                          <span class="relative z-10">LevReview</span>
-                        </a>
-                      </h3>
-                      <p class="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                        Review collection tool for local businesses.
-                      </p>
-                      <p class="relative z-10 mt-6 flex text-sm font-medium text-zinc-600 transition group-hover:text-teal-600 dark:text-zinc-300 dark:group-hover:text-teal-400">
-                        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none">
-                          <path d="M15.712 11.823a.75.75 0 1 0 1.06 1.06l-1.06-1.06Zm-4.95 1.768a.75.75 0 0 0 1.06-1.06l-1.06 1.06Zm-2.475-1.414a.75.75 0 1 0-1.06-1.06l1.06 1.06Zm4.95-1.768a.75.75 0 1 0-1.06 1.06l1.06-1.06Zm3.359.53-.884.884 1.06 1.06.885-.883-1.061-1.06Zm-4.95-2.12 1.414-1.415L12 6.344l-1.415 1.413 1.061 1.061Zm0 3.535a2.5 2.5 0 0 1 0-3.536l-1.06-1.06a4 4 0 0 0 0 5.656l1.06-1.06Zm4.95-4.95a2.5 2.5 0 0 1 0 3.535L17.656 12a4 4 0 0 0 0-5.657l-1.06 1.06Zm1.06-1.06a4 4 0 0 0-5.656 0l1.06 1.06a2.5 2.5 0 0 1 3.536 0l1.06-1.06Zm-7.07 7.07.176.177 1.06-1.06-.176-.177-1.06 1.06Zm-3.183-.353.884-.884-1.06-1.06-.884.883 1.06 1.06Zm4.95 2.121-1.414 1.414 1.06 1.06 1.415-1.413-1.06-1.061Zm0-3.536a2.5 2.5 0 0 1 0 3.536l1.06 1.06a4 4 0 0 0 0-5.656l-1.06 1.06Zm-4.95 4.95a2.5 2.5 0 0 1 0-3.535L6.344 12a4 4 0 0 0 0 5.656l1.06-1.06Zm-1.06 1.06a4 4 0 0 0 5.657 0l-1.061-1.06a2.5 2.5 0 0 1-3.535 0l-1.061 1.06Zm7.07-7.07-.176-.177-1.06 1.06.176.178 1.06-1.061Z" fill="currentColor" />
-                        </svg>
-                        <span class="ml-2">levreview.com</span>
-                      </p>
-                    </li>
-
-                    <li class="group relative flex flex-col items-start">
-                      <div class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-100/80 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 sm:rounded-2xl dark:bg-zinc-800/40"></div>
-                      <div class="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white ring-1 ring-zinc-200 shadow-sm dark:bg-zinc-800 dark:ring-zinc-700/50 dark:shadow-none">
-                        <img src="{% static 'images/logos/techjobalerts.png' %}" alt="Tech Job Alerts logo" class="h-9 w-9 rounded-full" />
-                      </div>
-                      <h3 class="mt-6 text-base font-semibold text-zinc-900 dark:text-zinc-100">
-                        <a href="https://gettjalerts.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-                          <span class="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
-                          <span class="relative z-10">Tech Job Alerts</span>
-                        </a>
-                      </h3>
-                      <p class="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                        Automated job matching and notifications for tech roles.
-                      </p>
-                      <p class="relative z-10 mt-6 flex text-sm font-medium text-zinc-600 transition group-hover:text-teal-600 dark:text-zinc-300 dark:group-hover:text-teal-400">
-                        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none">
-                          <path d="M15.712 11.823a.75.75 0 1 0 1.06 1.06l-1.06-1.06Zm-4.95 1.768a.75.75 0 0 0 1.06-1.06l-1.06 1.06Zm-2.475-1.414a.75.75 0 1 0-1.06-1.06l1.06 1.06Zm4.95-1.768a.75.75 0 1 0-1.06 1.06l1.06-1.06Zm3.359.53-.884.884 1.06 1.06.885-.883-1.061-1.06Zm-4.95-2.12 1.414-1.415L12 6.344l-1.415 1.413 1.061 1.061Zm0 3.535a2.5 2.5 0 0 1 0-3.536l-1.06-1.06a4 4 0 0 0 0 5.656l1.06-1.06Zm4.95-4.95a2.5 2.5 0 0 1 0 3.535L17.656 12a4 4 0 0 0 0-5.657l-1.06 1.06Zm1.06-1.06a4 4 0 0 0-5.656 0l1.06 1.06a2.5 2.5 0 0 1 3.536 0l1.06-1.06Zm-7.07 7.07.176.177 1.06-1.06-.176-.177-1.06 1.06Zm-3.183-.353.884-.884-1.06-1.06-.884.883 1.06 1.06Zm4.95 2.121-1.414 1.414 1.06 1.06 1.415-1.413-1.06-1.061Zm0-3.536a2.5 2.5 0 0 1 0 3.536l1.06 1.06a4 4 0 0 0 0-5.656l-1.06 1.06Zm-4.95 4.95a2.5 2.5 0 0 1 0-3.535L6.344 12a4 4 0 0 0 0 5.656l1.06-1.06Zm-1.06 1.06a4 4 0 0 0 5.657 0l-1.061-1.06a2.5 2.5 0 0 1-3.535 0l-1.061 1.06Zm7.07-7.07-.176-.177-1.06 1.06.176.178 1.06-1.061Z" fill="currentColor" />
-                        </svg>
-                        <span class="ml-2">gettjalerts.com</span>
-                      </p>
-                    </li>
-
-                    <li class="group relative flex flex-col items-start">
-                      <div class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-100/80 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 sm:rounded-2xl dark:bg-zinc-800/40"></div>
-                      <div class="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white ring-1 ring-zinc-200 shadow-sm dark:bg-zinc-800 dark:ring-zinc-700/50 dark:shadow-none">
-                        <img src="{% static 'images/logos/isitketo.png' %}" alt="Is it Keto logo" class="h-9 w-9 rounded-full" />
-                      </div>
-                      <h3 class="mt-6 text-base font-semibold text-zinc-900 dark:text-zinc-100">
-                        <a href="https://isitketo.org?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-                          <span class="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
-                          <span class="relative z-10">Is it Keto</span>
-                        </a>
-                      </h3>
-                      <p class="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                        Content + search product for diet and food decisions.
-                      </p>
-                      <p class="relative z-10 mt-6 flex text-sm font-medium text-zinc-600 transition group-hover:text-teal-600 dark:text-zinc-300 dark:group-hover:text-teal-400">
-                        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none">
-                          <path d="M15.712 11.823a.75.75 0 1 0 1.06 1.06l-1.06-1.06Zm-4.95 1.768a.75.75 0 0 0 1.06-1.06l-1.06 1.06Zm-2.475-1.414a.75.75 0 1 0-1.06-1.06l1.06 1.06Zm4.95-1.768a.75.75 0 1 0-1.06 1.06l1.06-1.06Zm3.359.53-.884.884 1.06 1.06.885-.883-1.061-1.06Zm-4.95-2.12 1.414-1.415L12 6.344l-1.415 1.413 1.061 1.061Zm0 3.535a2.5 2.5 0 0 1 0-3.536l-1.06-1.06a4 4 0 0 0 0 5.656l1.06-1.06Zm4.95-4.95a2.5 2.5 0 0 1 0 3.535L17.656 12a4 4 0 0 0 0-5.657l-1.06 1.06Zm1.06-1.06a4 4 0 0 0-5.656 0l1.06 1.06a2.5 2.5 0 0 1 3.536 0l1.06-1.06Zm-7.07 7.07.176.177 1.06-1.06-.176-.177-1.06 1.06Zm-3.183-.353.884-.884-1.06-1.06-.884.883 1.06 1.06Zm4.95 2.121-1.414 1.414 1.06 1.06 1.415-1.413-1.06-1.061Zm0-3.536a2.5 2.5 0 0 1 0 3.536l1.06 1.06a4 4 0 0 0 0-5.656l-1.06 1.06Zm-4.95 4.95a2.5 2.5 0 0 1 0-3.535L6.344 12a4 4 0 0 0 0 5.656l1.06-1.06Zm-1.06 1.06a4 4 0 0 0 5.657 0l-1.061-1.06a2.5 2.5 0 0 1-3.535 0l-1.061 1.06Zm7.07-7.07-.176-.177-1.06 1.06.176.178 1.06-1.061Z" fill="currentColor" />
-                        </svg>
-                        <span class="ml-2">isitketo.org</span>
-                      </p>
-                    </li>
-
-                    <li class="group relative flex flex-col items-start">
-                      <div class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-100/80 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 sm:rounded-2xl dark:bg-zinc-800/40"></div>
-                      <div class="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white ring-1 ring-zinc-200 shadow-sm dark:bg-zinc-800 dark:ring-zinc-700/50 dark:shadow-none">
-                        <img src="{% static 'images/logos/osig.png' %}" alt="OSIG logo" class="h-9 w-9 rounded-full" />
-                      </div>
-                      <h3 class="mt-6 text-base font-semibold text-zinc-900 dark:text-zinc-100">
-                        <a href="https://osig.app?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-                          <span class="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
-                          <span class="relative z-10">OSIG</span>
-                        </a>
-                      </h3>
-                      <p class="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                        Open-source social image generation tool.
-                      </p>
-                      <p class="relative z-10 mt-6 flex text-sm font-medium text-zinc-600 transition group-hover:text-teal-600 dark:text-zinc-300 dark:group-hover:text-teal-400">
-                        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none">
-                          <path d="M15.712 11.823a.75.75 0 1 0 1.06 1.06l-1.06-1.06Zm-4.95 1.768a.75.75 0 0 0 1.06-1.06l-1.06 1.06Zm-2.475-1.414a.75.75 0 1 0-1.06-1.06l1.06 1.06Zm4.95-1.768a.75.75 0 1 0-1.06 1.06l1.06-1.06Zm3.359.53-.884.884 1.06 1.06.885-.883-1.061-1.06Zm-4.95-2.12 1.414-1.415L12 6.344l-1.415 1.413 1.061 1.061Zm0 3.535a2.5 2.5 0 0 1 0-3.536l-1.06-1.06a4 4 0 0 0 0 5.656l1.06-1.06Zm4.95-4.95a2.5 2.5 0 0 1 0 3.535L17.656 12a4 4 0 0 0 0-5.657l-1.06 1.06Zm1.06-1.06a4 4 0 0 0-5.656 0l1.06 1.06a2.5 2.5 0 0 1 3.536 0l1.06-1.06Zm-7.07 7.07.176.177 1.06-1.06-.176-.177-1.06 1.06Zm-3.183-.353.884-.884-1.06-1.06-.884.883 1.06 1.06Zm4.95 2.121-1.414 1.414 1.06 1.06 1.415-1.413-1.06-1.061Zm0-3.536a2.5 2.5 0 0 1 0 3.536l1.06 1.06a4 4 0 0 0 0-5.656l-1.06 1.06Zm-4.95 4.95a2.5 2.5 0 0 1 0-3.535L6.344 12a4 4 0 0 0 0 5.656l1.06-1.06Zm-1.06 1.06a4 4 0 0 0 5.657 0l-1.061-1.06a2.5 2.5 0 0 1-3.535 0l-1.061 1.06Zm7.07-7.07-.176-.177-1.06 1.06.176.178 1.06-1.061Z" fill="currentColor" />
-                        </svg>
-                        <span class="ml-2">osig.app</span>
-                      </p>
-                    </li>
-
-                    <li class="group relative flex flex-col items-start">
-                      <div class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-100/80 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 sm:rounded-2xl dark:bg-zinc-800/40"></div>
-                      <div class="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white ring-1 ring-zinc-200 shadow-sm dark:bg-zinc-800 dark:ring-zinc-700/50 dark:shadow-none">
-                        <img src="{% static 'images/logos/statushen.png' %}" alt="StatusHen logo" class="h-9 w-9 rounded-full" />
-                      </div>
-                      <h3 class="mt-6 text-base font-semibold text-zinc-900 dark:text-zinc-100">
-                        <a href="https://statushen.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-                          <span class="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
-                          <span class="relative z-10">StatusHen</span>
-                        </a>
-                      </h3>
-                      <p class="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                        Open-source uptime monitoring and status pages.
-                      </p>
-                      <p class="relative z-10 mt-6 flex text-sm font-medium text-zinc-600 transition group-hover:text-teal-600 dark:text-zinc-300 dark:group-hover:text-teal-400">
-                        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none">
-                          <path d="M15.712 11.823a.75.75 0 1 0 1.06 1.06l-1.06-1.06Zm-4.95 1.768a.75.75 0 0 0 1.06-1.06l-1.06 1.06Zm-2.475-1.414a.75.75 0 1 0-1.06-1.06l1.06 1.06Zm4.95-1.768a.75.75 0 1 0-1.06 1.06l1.06-1.06Zm3.359.53-.884.884 1.06 1.06.885-.883-1.061-1.06Zm-4.95-2.12 1.414-1.415L12 6.344l-1.415 1.413 1.061 1.061Zm0 3.535a2.5 2.5 0 0 1 0-3.536l-1.06-1.06a4 4 0 0 0 0 5.656l1.06-1.06Zm4.95-4.95a2.5 2.5 0 0 1 0 3.535L17.656 12a4 4 0 0 0 0-5.657l-1.06 1.06Zm1.06-1.06a4 4 0 0 0-5.656 0l1.06 1.06a2.5 2.5 0 0 1 3.536 0l1.06-1.06Zm-7.07 7.07.176.177 1.06-1.06-.176-.177-1.06 1.06Zm-3.183-.353.884-.884-1.06-1.06-.884.883 1.06 1.06Zm4.95 2.121-1.414 1.414 1.06 1.06 1.415-1.413-1.06-1.061Zm0-3.536a2.5 2.5 0 0 1 0 3.536l1.06 1.06a4 4 0 0 0 0-5.656l-1.06 1.06Zm-4.95 4.95a2.5 2.5 0 0 1 0-3.535L6.344 12a4 4 0 0 0 0 5.656l1.06-1.06Zm-1.06 1.06a4 4 0 0 0 5.657 0l-1.061-1.06a2.5 2.5 0 0 1-3.535 0l-1.061 1.06Zm7.07-7.07-.176-.177-1.06 1.06.176.178 1.06-1.061Z" fill="currentColor" />
-                        </svg>
-                        <span class="ml-2">statushen.com</span>
-                      </p>
-                    </li>
-
-                    <li class="group relative flex flex-col items-start">
-                      <div class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-100/80 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 sm:rounded-2xl dark:bg-zinc-800/40"></div>
-                      <div class="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white ring-1 ring-zinc-200 shadow-sm dark:bg-zinc-800 dark:ring-zinc-700/50 dark:shadow-none">
-                        <img src="{% static 'images/logos/tuxseo.png' %}" alt="TuxSEO logo" class="h-9 w-9 rounded-full" />
-                      </div>
-                      <h3 class="mt-6 text-base font-semibold text-zinc-900 dark:text-zinc-100">
-                        <a href="https://tuxseo.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-                          <span class="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
-                          <span class="relative z-10">TuxSEO</span>
-                        </a>
-                      </h3>
-                      <p class="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                        Programmatic SEO and blog automation tooling.
-                      </p>
-                      <p class="relative z-10 mt-6 flex text-sm font-medium text-zinc-600 transition group-hover:text-teal-600 dark:text-zinc-300 dark:group-hover:text-teal-400">
-                        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none">
-                          <path d="M15.712 11.823a.75.75 0 1 0 1.06 1.06l-1.06-1.06Zm-4.95 1.768a.75.75 0 0 0 1.06-1.06l-1.06 1.06Zm-2.475-1.414a.75.75 0 1 0-1.06-1.06l1.06 1.06Zm4.95-1.768a.75.75 0 1 0-1.06 1.06l1.06-1.06Zm3.359.53-.884.884 1.06 1.06.885-.883-1.061-1.06Zm-4.95-2.12 1.414-1.415L12 6.344l-1.415 1.413 1.061 1.061Zm0 3.535a2.5 2.5 0 0 1 0-3.536l-1.06-1.06a4 4 0 0 0 0 5.656l1.06-1.06Zm4.95-4.95a2.5 2.5 0 0 1 0 3.535L17.656 12a4 4 0 0 0 0-5.657l-1.06 1.06Zm1.06-1.06a4 4 0 0 0-5.656 0l1.06 1.06a2.5 2.5 0 0 1 3.536 0l1.06-1.06Zm-7.07 7.07.176.177 1.06-1.06-.176-.177-1.06 1.06Zm-3.183-.353.884-.884-1.06-1.06-.884.883 1.06 1.06Zm4.95 2.121-1.414 1.414 1.06 1.06 1.415-1.413-1.06-1.061Zm0-3.536a2.5 2.5 0 0 1 0 3.536l1.06 1.06a4 4 0 0 0 0-5.656l-1.06 1.06Zm-4.95 4.95a2.5 2.5 0 0 1 0-3.535L6.344 12a4 4 0 0 0 0 5.656l1.06-1.06Zm-1.06 1.06a4 4 0 0 0 5.657 0l-1.061-1.06a2.5 2.5 0 0 1-3.535 0l-1.061 1.06Zm7.07-7.07-.176-.177-1.06 1.06.176.178 1.06-1.061Z" fill="currentColor" />
-                        </svg>
-                        <span class="ml-2">tuxseo.com</span>
-                      </p>
-                    </li>
-
-                    <li class="group relative flex flex-col items-start">
-                      <div class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-100/80 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 sm:rounded-2xl dark:bg-zinc-800/40"></div>
-                      <div class="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white ring-1 ring-zinc-200 shadow-sm dark:bg-zinc-800 dark:ring-zinc-700/50 dark:shadow-none">
-                        <img src="{% static 'images/logos/cleanapp.png' %}" alt="Cleanapp logo" class="h-9 w-9 rounded-full" />
-                      </div>
-                      <h3 class="mt-6 text-base font-semibold text-zinc-900 dark:text-zinc-100">
-                        <a href="https://cleanapp.dev?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-                          <span class="absolute -inset-x-4 -inset-y-6 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
-                          <span class="relative z-10">Cleanapp</span>
-                        </a>
-                      </h3>
-                      <p class="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                        App Store maintenance and reminder workflow helper.
-                      </p>
-                      <p class="relative z-10 mt-6 flex text-sm font-medium text-zinc-600 transition group-hover:text-teal-600 dark:text-zinc-300 dark:group-hover:text-teal-400">
-                        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 flex-none">
-                          <path d="M15.712 11.823a.75.75 0 1 0 1.06 1.06l-1.06-1.06Zm-4.95 1.768a.75.75 0 0 0 1.06-1.06l-1.06 1.06Zm-2.475-1.414a.75.75 0 1 0-1.06-1.06l1.06 1.06Zm4.95-1.768a.75.75 0 1 0-1.06 1.06l1.06-1.06Zm3.359.53-.884.884 1.06 1.06.885-.883-1.061-1.06Zm-4.95-2.12 1.414-1.415L12 6.344l-1.415 1.413 1.061 1.061Zm0 3.535a2.5 2.5 0 0 1 0-3.536l-1.06-1.06a4 4 0 0 0 0 5.656l1.06-1.06Zm4.95-4.95a2.5 2.5 0 0 1 0 3.535L17.656 12a4 4 0 0 0 0-5.657l-1.06 1.06Zm1.06-1.06a4 4 0 0 0-5.656 0l1.06 1.06a2.5 2.5 0 0 1 3.536 0l1.06-1.06Zm-7.07 7.07.176.177 1.06-1.06-.176-.177-1.06 1.06Zm-3.183-.353.884-.884-1.06-1.06-.884.883 1.06 1.06Zm4.95 2.121-1.414 1.414 1.06 1.06 1.415-1.413-1.06-1.061Zm0-3.536a2.5 2.5 0 0 1 0 3.536l1.06 1.06a4 4 0 0 0 0-5.656l-1.06 1.06Zm-4.95 4.95a2.5 2.5 0 0 1 0-3.535L6.344 12a4 4 0 0 0 0 5.656l1.06-1.06Zm-1.06 1.06a4 4 0 0 0 5.657 0l-1.061-1.06a2.5 2.5 0 0 1-3.535 0l-1.061 1.06Zm7.07-7.07-.176-.177-1.06 1.06.176.178 1.06-1.061Z" fill="currentColor" />
-                        </svg>
-                        <span class="ml-2">cleanapp.dev</span>
-                      </p>
-                    </li>
-                  </ul>
-                </div>
-              </section>
-
-              <section class="mb-24 mt-24">
-                <div class="rounded-2xl border border-zinc-200 p-8 shadow-sm shadow-zinc-100/60 dark:border-zinc-700/40 dark:shadow-none">
-                  <h2 class="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-                    Need a builder who can ship?
-                  </h2>
-                  <p class="mt-3 max-w-2xl text-sm text-zinc-600 dark:text-zinc-400">
-                    Send a short note with your project context, goals, and timeline. I’ll reply
-                    with fit, scope, and next steps.
-                  </p>
-                  <div class="mt-6 flex flex-wrap gap-3 text-sm font-medium">
-                    <a
-                      class="rounded-full bg-zinc-900 px-5 py-2.5 text-white transition hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
-                      href="mailto:rasul@lvtd.dev?subject=Consulting%20project"
-                    >
-                      Email rasul@lvtd.dev
-                    </a>
-                    <a
-                      class="rounded-full border border-zinc-300 px-5 py-2.5 text-zinc-700 transition hover:border-zinc-400 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-200 dark:hover:border-zinc-500 dark:hover:bg-zinc-800"
-                      href="https://github.com/rasulkireev"
-                    >
-                      View GitHub profile
-                    </a>
-                  </div>
-                </div>
-              </section>
-
-              <footer class="pb-10">
-                <div class="border-t border-zinc-200 pt-8 dark:border-zinc-700/40">
-                  <p class="text-sm text-zinc-500 dark:text-zinc-500">© 2026 LVTD, LLC. All rights reserved.</p>
-                </div>
-              </footer>
-            </div>
-          </div>
+    <aside class="confidence-panel p-6">
+      <p class="section-kicker">Built for operating pressure</p>
+      <h2 class="mt-4 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">
+        New products, internal tools, messy integrations, urgent fixes.
+      </h2>
+      <p class="mt-4 text-sm leading-7 muted">
+        You get one accountable builder for scope, architecture, implementation,
+        deployment, and the sharp edges after launch.
+      </p>
+      <dl class="mt-6 grid grid-cols-2 gap-4 text-sm">
+        <div>
+          <dt class="font-semibold" style="color: var(--lvtd-ink);">Focus</dt>
+          <dd class="mt-1 soft">Useful software</dd>
         </div>
+        <div>
+          <dt class="font-semibold" style="color: var(--lvtd-ink);">Default</dt>
+          <dd class="mt-1 soft">Ship, then improve</dd>
+        </div>
+      </dl>
+    </aside>
+  </section>
+
+  <section id="work" class="border-t py-12 sm:py-14" style="border-color: var(--lvtd-border);">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="section-kicker">Shipped work</p>
+        <h2 class="mt-3 text-3xl font-bold tracking-tight" style="color: var(--lvtd-ink);">
+          Real products, not portfolio theater.
+        </h2>
       </div>
-    </main>
-    <script>
-      ;(() => {
-        const toggleButton = document.getElementById('theme-toggle')
-        if (!toggleButton) return
-        const label = toggleButton.querySelector('[data-theme-label]')
+      <p class="max-w-2xl text-sm leading-7 muted">
+        SaaS tools, content engines, open-source products, automation systems, and
+        operational software built end to end.
+      </p>
+    </div>
 
-        const setTheme = (theme) => {
-          document.documentElement.classList.toggle('dark', theme === 'dark')
-          document.documentElement.style.colorScheme = theme
-          try {
-            localStorage.setItem('theme', theme)
-          } catch (error) {
-            // Ignore storage errors (e.g. private mode restrictions).
-          }
-          if (label) {
-            label.textContent = theme === 'dark' ? 'Dark mode' : 'Light mode'
-          }
-        }
+    <ul class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <li>
+        <a class="proof-link" href="https://gettalentleads.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+          <img src="{% static 'images/logos/rocket_take_off.png' %}" alt="" class="proof-logo" />
+          <span>
+            <span class="block font-semibold" style="color: var(--lvtd-ink);">Talent Leads</span>
+            <span class="mt-1 block text-sm soft">Lead generation for startup hiring.</span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="proof-link" href="https://builtwithdjango.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+          <img src="{% static 'images/logos/builtwithdjango.png' %}" alt="" class="proof-logo" />
+          <span>
+            <span class="block font-semibold" style="color: var(--lvtd-ink);">Built with Django</span>
+            <span class="mt-1 block text-sm soft">Developer education and discovery.</span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="proof-link" href="https://levreview.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+          <img src="{% static 'images/logos/levreview.jpg' %}" alt="" class="proof-logo" />
+          <span>
+            <span class="block font-semibold" style="color: var(--lvtd-ink);">LevReview</span>
+            <span class="mt-1 block text-sm soft">Review collection for local businesses.</span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="proof-link" href="https://gettjalerts.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+          <img src="{% static 'images/logos/techjobalerts.png' %}" alt="" class="proof-logo" />
+          <span>
+            <span class="block font-semibold" style="color: var(--lvtd-ink);">Tech Job Alerts</span>
+            <span class="mt-1 block text-sm soft">Automated job matching and alerts.</span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="proof-link" href="https://osig.app?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+          <img src="{% static 'images/logos/osig.png' %}" alt="" class="proof-logo" />
+          <span>
+            <span class="block font-semibold" style="color: var(--lvtd-ink);">OSIG</span>
+            <span class="mt-1 block text-sm soft">Open-source social image generation.</span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="proof-link" href="https://statushen.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+          <img src="{% static 'images/logos/statushen.png' %}" alt="" class="proof-logo" />
+          <span>
+            <span class="block font-semibold" style="color: var(--lvtd-ink);">StatusHen</span>
+            <span class="mt-1 block text-sm soft">Uptime monitoring and status pages.</span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="proof-link" href="https://tuxseo.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+          <img src="{% static 'images/logos/tuxseo.png' %}" alt="" class="proof-logo" />
+          <span>
+            <span class="block font-semibold" style="color: var(--lvtd-ink);">TuxSEO</span>
+            <span class="mt-1 block text-sm soft">Programmatic SEO tooling.</span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="proof-link" href="https://cleanapp.dev?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+          <img src="{% static 'images/logos/cleanapp.png' %}" alt="" class="proof-logo" />
+          <span>
+            <span class="block font-semibold" style="color: var(--lvtd-ink);">Cleanapp</span>
+            <span class="mt-1 block text-sm soft">App Store maintenance workflows.</span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="proof-link" href="https://isitketo.org?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+          <img src="{% static 'images/logos/isitketo.png' %}" alt="" class="proof-logo" />
+          <span>
+            <span class="block font-semibold" style="color: var(--lvtd-ink);">Is it Keto</span>
+            <span class="mt-1 block text-sm soft">Search product for food decisions.</span>
+          </span>
+        </a>
+      </li>
+    </ul>
+  </section>
 
-        const getTheme = () =>
-          document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+  <section class="py-12 sm:py-14">
+    <div class="grid gap-8 lg:grid-cols-[0.82fr_1fr] lg:items-start">
+      <div>
+        <p class="section-kicker">How I help</p>
+        <h2 class="mt-3 text-3xl font-bold tracking-tight" style="color: var(--lvtd-ink);">
+          Bring the problem. Leave with working software.
+        </h2>
+        <p class="mt-4 text-base leading-8 muted">
+          I am strongest when the work crosses product judgment, backend systems,
+          integrations, data flows, and the last-mile polish needed to actually launch.
+        </p>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <article class="surface-card p-6">
+          <h3 class="text-lg font-bold" style="color: var(--lvtd-ink);">MVPs and product builds</h3>
+          <p class="mt-3 text-sm leading-7 muted">
+            Turn an idea, workflow, or market test into a shipped web product with
+            real architecture underneath it.
+          </p>
+        </article>
+        <article class="surface-card p-6">
+          <h3 class="text-lg font-bold" style="color: var(--lvtd-ink);">Automation and internal tools</h3>
+          <p class="mt-3 text-sm leading-7 muted">
+            Replace manual work with reporting, scraping, dashboards, and workflow
+            tools that fit the way your team already operates.
+          </p>
+        </article>
+        <article class="surface-card p-6">
+          <h3 class="text-lg font-bold" style="color: var(--lvtd-ink);">Debugging and rescue work</h3>
+          <p class="mt-3 text-sm leading-7 muted">
+            Find bottlenecks, fix broken funnels, stabilize unreliable jobs, and
+            make systems easier to reason about.
+          </p>
+        </article>
+        <article class="surface-card p-6">
+          <h3 class="text-lg font-bold" style="color: var(--lvtd-ink);">Hosted OpenClaw support</h3>
+          <p class="mt-3 text-sm leading-7 muted">
+            Dedicated OpenClaw setup, hosting, monitoring, updates, and integrations
+            for teams that want managed AI infrastructure.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
 
-        if (label) {
-          label.textContent = getTheme() === 'dark' ? 'Dark mode' : 'Light mode'
-        }
+  <section class="grid gap-4 py-12 sm:grid-cols-2 sm:py-14">
+    <article class="confidence-panel p-6 sm:p-8">
+      <p class="section-kicker">MVP done-for-you</p>
+      <h2 class="mt-3 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">
+        Reserve a focused full-service build.
+      </h2>
+      <p class="mt-4 text-sm leading-7 muted">
+        Pay a {{ mvp_deposit_amount }} deposit to show serious intent. I will follow
+        up for project context, goals, and timeline. Final service price:
+        <span class="font-semibold" style="color: var(--lvtd-ink);">{{ mvp_final_price }}</span>.
+      </p>
+      <div class="mt-6">
+        {% if mvp_deposit_checkout_url %}
+          <a class="btn btn-primary" href="{{ mvp_deposit_checkout_url }}">Pay {{ mvp_deposit_amount }} deposit</a>
+        {% else %}
+          <a class="btn btn-primary" href="mailto:rasul@lvtd.dev?subject=MVP%20build%20inquiry">Ask about an MVP build</a>
+        {% endif %}
+      </div>
+    </article>
+    <article class="surface-muted p-6 sm:p-8">
+      <p class="section-kicker">Managed OpenClaw</p>
+      <h2 class="mt-3 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">
+        Get OpenClaw running without owning the infrastructure work.
+      </h2>
+      <p class="mt-4 text-sm leading-7 muted">
+        I handle deployment, access, monitoring, updates, and custom integrations
+        so your team can focus on the workflows it needs.
+      </p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <form method="post" action="{% url 'hosted-openclaw-checkout' %}">
+          {% csrf_token %}
+          <button class="btn btn-primary" type="submit">Pay $100 deposit</button>
+        </form>
+        <a class="btn btn-secondary" href="{% url 'hosted-openclaw-learn-more' %}">Learn more</a>
+      </div>
+    </article>
+  </section>
 
-        toggleButton.addEventListener('click', () => {
-          const nextTheme = getTheme() === 'dark' ? 'light' : 'dark'
-          setTheme(nextTheme)
-        })
-      })()
-    </script>
-  </body>
-</html>
+  <section class="border-t py-12 sm:py-14" style="border-color: var(--lvtd-border);">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="section-kicker">Writing</p>
+        <h2 class="mt-3 text-3xl font-bold tracking-tight" style="color: var(--lvtd-ink);">
+          Notes from shipped work.
+        </h2>
+      </div>
+      <a class="btn btn-secondary" href="{% url 'blog-list' %}">Read all posts</a>
+    </div>
+
+    {% if latest_blog_posts %}
+      <ul class="mt-8 grid gap-4 md:grid-cols-3">
+        {% for post in latest_blog_posts %}
+          <li class="surface-card p-6">
+            <p class="section-kicker">{{ post.published_at|date:"M j, Y" }}</p>
+            <h3 class="mt-3 text-xl font-bold tracking-tight" style="color: var(--lvtd-ink);">
+              <a class="transition hover:opacity-75" href="{% url 'blog-detail' slug=post.slug %}">
+                {{ post.title }}
+              </a>
+            </h3>
+            <p class="mt-3 text-sm leading-7 muted">{{ post.summary }}</p>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <div class="surface-card mt-8 p-6">
+        <p class="text-sm muted">Blog posts are coming soon. For now, reach out directly with project context.</p>
+      </div>
+    {% endif %}
+  </section>
+
+  <section class="py-12 sm:py-16">
+    <div class="surface-muted p-6 sm:p-8 lg:flex lg:items-center lg:justify-between lg:gap-10">
+      <div>
+        <p class="section-kicker">Ready when the work is real</p>
+        <h2 class="mt-3 text-3xl font-bold tracking-tight" style="color: var(--lvtd-ink);">
+          Need a builder who can ship?
+        </h2>
+        <p class="mt-4 max-w-2xl text-sm leading-7 muted">
+          Send a short note with your project context, goals, and timeline. I will
+          reply with fit, scope, and next steps.
+        </p>
+      </div>
+      <div class="mt-6 flex flex-wrap gap-3 lg:mt-0">
+        <a class="btn btn-primary" href="mailto:rasul@lvtd.dev?subject=Consulting%20project">Email Rasul</a>
+        <a class="btn btn-secondary" href="https://github.com/rasulkireev">View GitHub</a>
+      </div>
+    </div>
+  </section>
+{% endblock %}
