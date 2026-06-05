@@ -59,27 +59,23 @@
               id="theme-toggle"
               class="theme-toggle"
               type="button"
-              aria-label="Use dark mode"
+              aria-label="Toggle theme"
             >
               <span class="theme-dot" aria-hidden="true"></span>
-              <span data-theme-label>Use dark</span>
+              <span data-theme-label>Theme</span>
             </button>
           </div>
         </nav>
       </header>
 
       <main class="site-container pb-20 sm:pb-24">
-        <div class="site-pad">
-          {% block content %}{% endblock %}
-        </div>
+        {% block content %}{% endblock %}
       </main>
 
       <footer class="site-container pb-10">
-        <div class="site-pad">
-          <div class="flex flex-col gap-3 border-t pt-6 text-sm sm:flex-row sm:items-center sm:justify-between" style="border-color: var(--lvtd-border); color: var(--lvtd-soft);">
-            <p>&copy; 2026 LVTD, LLC. Product engineering for founders and teams.</p>
-            <a class="font-semibold transition hover:opacity-75" href="mailto:rasul@lvtd.dev?subject=Project%20inquiry">rasul@lvtd.dev</a>
-          </div>
+        <div class="flex flex-col gap-3 border-t pt-6 text-sm sm:flex-row sm:items-center sm:justify-between" style="border-color: var(--lvtd-border); color: var(--lvtd-soft);">
+          <p>&copy; 2026 LVTD, LLC. Product engineering for founders and teams.</p>
+          <a class="font-semibold transition hover:opacity-75" href="mailto:rasul@lvtd.dev?subject=Project%20inquiry">rasul@lvtd.dev</a>
         </div>
       </footer>
     </div>

@@ -111,10 +111,6 @@
     padding-inline: 1rem;
   }
 
-  .site-pad {
-    padding-inline: 1rem;
-  }
-
   .top-nav {
     display: flex;
     align-items: center;
@@ -176,7 +172,7 @@
     padding: 0.625rem 0.875rem;
     color: var(--lvtd-muted);
     font-size: 0.875rem;
-    font-weight: 650;
+    font-weight: 600;
   }
 
   .nav-link:hover,
@@ -256,7 +252,7 @@
   .section-kicker {
     color: var(--lvtd-accent-strong);
     font-size: 0.8125rem;
-    font-weight: 750;
+    font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
   }
@@ -333,17 +329,10 @@
       padding-inline: 2rem;
     }
 
-    .site-pad {
-      padding-inline: 2rem;
-    }
   }
 
   @media (min-width: 1024px) {
     .site-container {
-      padding-inline: 4rem;
-    }
-
-    .site-pad {
       padding-inline: 4rem;
     }
   }
