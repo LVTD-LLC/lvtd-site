@@ -3,44 +3,351 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
+  :root {
+    color-scheme: light;
+    --lvtd-bg: oklch(0.985 0.002 255);
+    --lvtd-panel: oklch(1 0 0);
+    --lvtd-panel-muted: oklch(0.97 0.006 255);
+    --lvtd-panel-strong: oklch(0.21 0.012 255);
+    --lvtd-ink: oklch(0.18 0.012 255);
+    --lvtd-muted: oklch(0.42 0.018 255);
+    --lvtd-soft: oklch(0.57 0.018 255);
+    --lvtd-border: oklch(0.88 0.01 255);
+    --lvtd-border-strong: oklch(0.78 0.014 255);
+    --lvtd-accent: oklch(0.56 0.118 184);
+    --lvtd-accent-strong: oklch(0.46 0.112 184);
+    --lvtd-accent-soft: oklch(0.94 0.055 184);
+    --lvtd-focus: oklch(0.61 0.13 184);
+  }
+
+  html.dark {
+    color-scheme: dark;
+    --lvtd-bg: oklch(0.13 0.008 255);
+    --lvtd-panel: oklch(0.18 0.01 255);
+    --lvtd-panel-muted: oklch(0.22 0.012 255);
+    --lvtd-panel-strong: oklch(0.92 0.006 255);
+    --lvtd-ink: oklch(0.94 0.006 255);
+    --lvtd-muted: oklch(0.74 0.012 255);
+    --lvtd-soft: oklch(0.62 0.014 255);
+    --lvtd-border: oklch(0.35 0.014 255);
+    --lvtd-border-strong: oklch(0.46 0.016 255);
+    --lvtd-accent: oklch(0.76 0.13 184);
+    --lvtd-accent-strong: oklch(0.83 0.12 184);
+    --lvtd-accent-soft: oklch(0.24 0.045 184);
+    --lvtd-focus: oklch(0.78 0.13 184);
+  }
+
+  body {
+    min-height: 100vh;
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in oklab, var(--lvtd-accent) 8%, transparent) 0%,
+        transparent 34rem
+      ),
+      var(--lvtd-bg);
+    color: var(--lvtd-ink);
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--lvtd-accent) 24%, transparent);
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p,
+  li {
+    text-wrap: pretty;
+  }
+
   .site-ambient {
     position: fixed;
     inset: 0;
     pointer-events: none;
-    z-index: 10;
-    opacity: 0.16;
-    background-image:
-      radial-gradient(34rem 30rem at 18% 16%, rgb(45 212 191 / 12%), transparent 70%),
-      radial-gradient(28rem 24rem at 82% 72%, rgb(34 211 238 / 9%), transparent 72%),
-      radial-gradient(22rem 20rem at 55% 52%, rgb(45 212 191 / 6%), transparent 75%);
-    mix-blend-mode: screen;
-    filter: blur(16px) saturate(110%);
-    transform-origin: 50% 50%;
-    animation: ambientDrift 24s ease-in-out infinite alternate;
-    will-change: transform, opacity;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .site-ambient {
-      animation: none;
-      opacity: 0.12;
-    }
+    z-index: 1;
+    background:
+      linear-gradient(
+        90deg,
+        transparent,
+        color-mix(in oklab, var(--lvtd-accent) 12%, transparent),
+        transparent
+      );
+    opacity: 0.42;
+    mask-image: linear-gradient(180deg, black, transparent 28rem);
   }
 }
 
-@keyframes ambientDrift {
-  0% {
-    transform: translate3d(-1.5%, -0.8%, 0) scale(1);
-    opacity: 0.16;
+@layer components {
+  .site-frame {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
   }
 
-  50% {
-    transform: translate3d(1.2%, 1%, 0) scale(1.035);
-    opacity: 0.2;
+  .site-frame-inner {
+    width: 100%;
+    max-width: 80rem;
+    background: var(--lvtd-panel);
+    border-inline: 1px solid var(--lvtd-border);
   }
 
-  100% {
-    transform: translate3d(-0.8%, 0.7%, 0) scale(1.02);
-    opacity: 0.17;
+  .site-content {
+    position: relative;
+    z-index: 20;
+    min-height: 100vh;
+  }
+
+  .site-container {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+
+  .top-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 1.25rem;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .brand-link,
+  .nav-link,
+  .theme-toggle {
+    min-height: 2.75rem;
+    border-radius: 999px;
+    transition:
+      background-color 160ms ease,
+      border-color 160ms ease,
+      color 160ms ease,
+      transform 160ms ease;
+  }
+
+  .brand-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    color: var(--lvtd-ink);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .brand-mark {
+    display: inline-flex;
+    width: 2.25rem;
+    height: 2.25rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: var(--lvtd-panel-strong);
+    color: var(--lvtd-panel);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0;
+  }
+
+  .nav-link,
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    padding: 0.625rem 0.875rem;
+    color: var(--lvtd-muted);
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .nav-link:hover,
+  .theme-toggle:hover {
+    border-color: var(--lvtd-border);
+    background: var(--lvtd-panel-muted);
+    color: var(--lvtd-ink);
+  }
+
+  .theme-toggle {
+    gap: 0.5rem;
+    background: var(--lvtd-panel);
+    border-color: var(--lvtd-border);
+  }
+
+  .theme-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    background: var(--lvtd-accent);
+  }
+
+  .btn {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    padding: 0.75rem 1.125rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1;
+    transition:
+      background-color 160ms ease,
+      border-color 160ms ease,
+      color 160ms ease,
+      transform 160ms ease;
+  }
+
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .btn-primary {
+    background: var(--lvtd-panel-strong);
+    color: var(--lvtd-panel);
+    border: 1px solid var(--lvtd-panel-strong);
+  }
+
+  .btn-secondary {
+    background: var(--lvtd-panel);
+    color: var(--lvtd-ink);
+    border: 1px solid var(--lvtd-border-strong);
+  }
+
+  .btn-secondary:hover,
+  .btn-soft:hover {
+    background: var(--lvtd-panel-muted);
+  }
+
+  .btn-soft {
+    background: var(--lvtd-accent-soft);
+    color: var(--lvtd-accent-strong);
+    border: 1px solid color-mix(in oklab, var(--lvtd-accent) 28%, transparent);
+  }
+
+  .btn:focus-visible,
+  .nav-link:focus-visible,
+  .theme-toggle:focus-visible,
+  .brand-link:focus-visible,
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--lvtd-focus);
+    outline-offset: 3px;
+  }
+
+  .section-kicker {
+    color: var(--lvtd-accent-strong);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .muted {
+    color: var(--lvtd-muted);
+  }
+
+  .soft {
+    color: var(--lvtd-soft);
+  }
+
+  .surface-card {
+    border: 1px solid var(--lvtd-border);
+    border-radius: 1rem;
+    background: var(--lvtd-panel);
+  }
+
+  .surface-muted {
+    border: 1px solid var(--lvtd-border);
+    border-radius: 1rem;
+    background: var(--lvtd-panel-muted);
+  }
+
+  .confidence-panel {
+    border: 1px solid color-mix(in oklab, var(--lvtd-accent) 24%, var(--lvtd-border));
+    border-radius: 1rem;
+    background:
+      linear-gradient(
+        135deg,
+        color-mix(in oklab, var(--lvtd-accent-soft) 78%, var(--lvtd-panel)),
+        var(--lvtd-panel)
+      );
+  }
+
+  .proof-link {
+    position: relative;
+    display: flex;
+    min-height: 100%;
+    align-items: center;
+    gap: 0.875rem;
+    border: 1px solid var(--lvtd-border);
+    border-radius: 0.875rem;
+    background: var(--lvtd-panel);
+    padding: 0.875rem;
+    transition:
+      background-color 160ms ease,
+      border-color 160ms ease,
+      transform 160ms ease;
+  }
+
+  .proof-link:hover {
+    border-color: var(--lvtd-border-strong);
+    background: var(--lvtd-panel-muted);
+    transform: translateY(-1px);
+  }
+
+  .proof-logo {
+    width: 2.5rem;
+    height: 2.5rem;
+    flex: none;
+    border-radius: 999px;
+    border: 1px solid var(--lvtd-border);
+    background: var(--lvtd-panel);
+    padding: 0.25rem;
+  }
+
+  .article-body p + p {
+    margin-top: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .site-container {
+      padding-inline: 2rem;
+    }
+
+  }
+
+  @media (min-width: 1024px) {
+    .site-container {
+      padding-inline: 4rem;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .top-nav {
+      align-items: flex-start;
+    }
+
+    .nav-links {
+      max-width: 11rem;
+    }
+
+    .nav-link {
+      display: none;
+    }
   }
 }

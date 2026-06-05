@@ -1,0 +1,116 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}LVTD{% endblock %}</title>
+    <meta
+      name="description"
+      content="{% block description %}LVTD helps founders and teams design, build, and ship practical software products, automations, and growth tooling.{% endblock %}"
+    />
+    <script>
+      ;(() => {
+        try {
+          const storedTheme = localStorage.getItem('theme')
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const theme =
+            storedTheme === 'light' || storedTheme === 'dark'
+              ? storedTheme
+              : prefersDark
+                ? 'dark'
+                : 'light'
+          document.documentElement.classList.toggle('dark', theme === 'dark')
+          document.documentElement.style.colorScheme = theme
+        } catch (error) {
+          document.documentElement.classList.remove('dark')
+          document.documentElement.style.colorScheme = 'light'
+        }
+      })()
+    </script>
+    <link rel="stylesheet" href="{% static 'css/app.css' %}" />
+    <script defer data-domain="lvtd.dev" src="https://plausible-v2.cr.lvtd.dev/js/script.file-downloads.outbound-links.js"></script>
+    <script>
+      window.plausible =
+        window.plausible ||
+        function() {
+          (window.plausible.q = window.plausible.q || []).push(arguments)
+        }
+    </script>
+  </head>
+  <body class="antialiased">
+    <div class="site-ambient" aria-hidden="true"></div>
+    <div class="site-frame" aria-hidden="true">
+      <div class="site-frame-inner"></div>
+    </div>
+
+    <div class="site-content">
+      <header class="site-container">
+        <nav class="top-nav" aria-label="Primary navigation">
+          <a class="brand-link" href="{% url 'home' %}">
+            <span class="brand-mark" aria-hidden="true">LV</span>
+            <span>LVTD</span>
+          </a>
+          <div class="nav-links">
+            <a class="nav-link" href="{% url 'blog-list' %}">Writing</a>
+            <a class="nav-link" href="{% url 'hosted-openclaw-learn-more' %}">OpenClaw</a>
+            <a class="nav-link" href="mailto:rasul@lvtd.dev?subject=Project%20inquiry">Contact</a>
+            <button
+              id="theme-toggle"
+              class="theme-toggle"
+              type="button"
+              aria-label="Toggle theme"
+            >
+              <span class="theme-dot" aria-hidden="true"></span>
+              <span data-theme-label>Theme</span>
+            </button>
+          </div>
+        </nav>
+      </header>
+
+      <main class="site-container pb-20 sm:pb-24">
+        {% block content %}{% endblock %}
+      </main>
+
+      <footer class="site-container pb-10">
+        <div class="flex flex-col gap-3 border-t pt-6 text-sm sm:flex-row sm:items-center sm:justify-between" style="border-color: var(--lvtd-border); color: var(--lvtd-soft);">
+          <p>&copy; 2026 LVTD, LLC. Product engineering for founders and teams.</p>
+          <a class="font-semibold transition hover:opacity-75" href="mailto:rasul@lvtd.dev?subject=Project%20inquiry">rasul@lvtd.dev</a>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      ;(() => {
+        const toggleButton = document.getElementById('theme-toggle')
+        if (!toggleButton) return
+        const label = toggleButton.querySelector('[data-theme-label]')
+
+        const setTheme = (theme) => {
+          document.documentElement.classList.toggle('dark', theme === 'dark')
+          document.documentElement.style.colorScheme = theme
+          try {
+            localStorage.setItem('theme', theme)
+          } catch (error) {
+            // Private browsing can block storage writes.
+          }
+          if (label) {
+            label.textContent = theme === 'dark' ? 'Use light' : 'Use dark'
+          }
+          toggleButton.setAttribute(
+            'aria-label',
+            theme === 'dark' ? 'Use light mode' : 'Use dark mode',
+          )
+        }
+
+        const getTheme = () =>
+          document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+
+        setTheme(getTheme())
+        toggleButton.addEventListener('click', () => {
+          setTheme(getTheme() === 'dark' ? 'light' : 'dark')
+        })
+      })()
+    </script>
+  </body>
+</html>
