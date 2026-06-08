@@ -108,6 +108,7 @@ class CrawlEndpointTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response["Content-Type"], "application/xml")
         content = response.content.decode()
+        self.assertTrue(content.startswith("<?xml version='1.0' encoding='utf-8'?>"))
         self.assertIn("<loc>https://lvtd.test/</loc>", content)
         self.assertIn("<loc>https://lvtd.test/blog/</loc>", content)
         self.assertIn("<loc>https://lvtd.test/services/hosted-openclaw/</loc>", content)

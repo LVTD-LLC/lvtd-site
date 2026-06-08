@@ -18,7 +18,7 @@ from website.models import BlogPost, StripeWebhookEvent
 
 
 def _absolute_url(path: str) -> str:
-    return f"{settings.SITE_URL.rstrip('/')}{path}"
+    return f"{settings.SITE_URL}{path}"
 
 
 def robots_txt(request: HttpRequest) -> HttpResponse:
@@ -58,8 +58,8 @@ def sitemap_xml(request: HttpRequest) -> HttpResponse:
         ElementTree.SubElement(url, "changefreq").text = "monthly"
         ElementTree.SubElement(url, "priority").text = "0.6"
 
-    xml = ElementTree.tostring(urlset, encoding="unicode", xml_declaration=True)
-    return HttpResponse(xml, content_type="application/xml")
+    xml_bytes = ElementTree.tostring(urlset, encoding="utf-8", xml_declaration=True)
+    return HttpResponse(xml_bytes, content_type="application/xml")
 
 
 class HomePageView(TemplateView):
