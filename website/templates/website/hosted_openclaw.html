@@ -1,7 +1,62 @@
 {% extends "website/base.html" %}
 
-{% block title %}Hosted OpenClaw Service - LVTD{% endblock %}
-{% block description %}Hosted OpenClaw setup, management, monitoring, and integrations by LVTD.{% endblock %}
+{% block title %}Hosted OpenClaw Service - Managed OpenClaw by LVTD{% endblock %}
+{% block description %}Hosted OpenClaw setup, management, monitoring, security, and integrations for teams that want a dedicated OpenClaw instance without operating it themselves.{% endblock %}
+{% block og_title %}Hosted OpenClaw Service - Managed OpenClaw by LVTD{% endblock %}
+{% block og_description %}Hosted OpenClaw setup, management, monitoring, security, and integrations for teams that want a dedicated OpenClaw instance without operating it themselves.{% endblock %}
+{% block twitter_title %}Hosted OpenClaw Service - Managed OpenClaw by LVTD{% endblock %}
+{% block twitter_description %}Hosted OpenClaw setup, management, monitoring, security, and integrations for teams that want a dedicated OpenClaw instance without operating it themselves.{% endblock %}
+{% block structured_data %}
+  {{ block.super }}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Hosted OpenClaw Service",
+      "url": "{{ canonical_url }}",
+      "provider": {
+        "@type": "Organization",
+        "name": "LVTD",
+        "url": "{{ site_url }}/"
+      },
+      "serviceType": "Managed OpenClaw hosting and integration",
+      "description": "Hosted OpenClaw setup, management, monitoring, security, and integrations for teams that want a dedicated OpenClaw instance without operating it themselves.",
+      "areaServed": "Worldwide"
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Who is the Hosted OpenClaw service for?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is for teams that want a dedicated OpenClaw instance, custom integrations, and ongoing operational support without managing hosting, updates, backups, and monitoring themselves."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does LVTD manage?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "LVTD manages deployment, environment hardening, monitoring, backups, OpenClaw configuration, workflow integration, maintenance, incident response, and upgrade work."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the engagement start?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You place a deposit to reserve build time, then LVTD aligns with you on goals, data sources, workflows, access needs, and deployment requirements before building the first working setup."
+          }
+        }
+      ]
+    }
+  </script>
+{% endblock %}
 
 {% block content %}
   <section class="grid gap-10 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-end">
@@ -11,9 +66,10 @@
         Managed OpenClaw infrastructure with hands-on engineering support.
       </h1>
       <p class="mt-6 max-w-3xl text-base leading-8 muted">
-        LVTD sets up, hosts, and maintains a dedicated OpenClaw instance tailored to
-        your team. You get reliable uptime, secure data handling, and fast iteration
-        on the integrations that make OpenClaw useful inside your business.
+        LVTD sets up, hosts, monitors, and maintains a dedicated OpenClaw instance
+        for teams that want useful AI workflows without taking on the operational
+        burden. You get a hardened deployment, practical integrations, and a
+        technical partner who can keep improving the system after the first launch.
       </p>
       <div class="mt-8 flex flex-wrap gap-3">
         <form method="post" action="{% url 'hosted-openclaw-checkout' %}">
@@ -44,21 +100,53 @@
         </h2>
         <ul class="mt-5 space-y-3 text-sm leading-7 muted">
           <li>Dedicated OpenClaw deployment with isolated infrastructure.</li>
-          <li>Monitoring, backups, and ongoing updates.</li>
+          <li>Monitoring, backups, update handling, and operational checks.</li>
           <li>Custom integrations with your data sources, CRMs, or internal tools.</li>
-          <li>Security review for access, tokens, and data handling.</li>
+          <li>Security review for access, tokens, secrets, and data handling.</li>
         </ul>
       </article>
       <article class="surface-card p-6 sm:p-8">
         <h2 class="text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">
-          What LVTD handles
+          Best fit
         </h2>
         <ul class="mt-5 space-y-3 text-sm leading-7 muted">
-          <li>Infrastructure provisioning and environment hardening.</li>
-          <li>OpenClaw configuration, model routing, and tuning guidance.</li>
-          <li>Maintenance, incident response, and upgrades.</li>
-          <li>New workflows as your team learns what it needs next.</li>
+          <li>Teams that want OpenClaw running privately for internal workflows.</li>
+          <li>Founders who need working automation before hiring an internal platform team.</li>
+          <li>Operators who need AI workflows connected to real business systems.</li>
+          <li>Companies that want one accountable engineer for setup and iteration.</li>
         </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="border-t py-12 sm:py-14" style="border-color: var(--lvtd-border);">
+    <div>
+      <p class="section-kicker">Managed operations</p>
+      <h2 class="mt-3 text-3xl font-bold tracking-tight" style="color: var(--lvtd-ink);">
+        What LVTD handles.
+      </h2>
+    </div>
+    <div class="mt-8 grid gap-4 md:grid-cols-3">
+      <article class="surface-card p-6">
+        <h3 class="text-lg font-bold" style="color: var(--lvtd-ink);">Deployment</h3>
+        <p class="mt-3 text-sm leading-7 muted">
+          Provisioning, environment setup, configuration, secrets, access controls,
+          and a first working OpenClaw instance.
+        </p>
+      </article>
+      <article class="surface-card p-6">
+        <h3 class="text-lg font-bold" style="color: var(--lvtd-ink);">Operations</h3>
+        <p class="mt-3 text-sm leading-7 muted">
+          Monitoring, backup checks, update planning, incident response, and
+          practical maintenance as OpenClaw changes.
+        </p>
+      </article>
+      <article class="surface-card p-6">
+        <h3 class="text-lg font-bold" style="color: var(--lvtd-ink);">Integrations</h3>
+        <p class="mt-3 text-sm leading-7 muted">
+          Workflow design and connections to the tools, databases, CRMs, docs, or
+          reporting systems your team already uses.
+        </p>
       </article>
     </div>
   </section>
@@ -76,11 +164,11 @@
         </li>
         <li class="surface-card p-5">
           <p class="text-sm font-bold" style="color: var(--lvtd-accent-strong);">2. Align</p>
-          <p class="mt-2 text-sm leading-7 muted">We map goals, data sources, access, and constraints.</p>
+          <p class="mt-2 text-sm leading-7 muted">We map goals, data sources, access needs, and constraints.</p>
         </li>
         <li class="surface-card p-5">
           <p class="text-sm font-bold" style="color: var(--lvtd-accent-strong);">3. Deploy</p>
-          <p class="mt-2 text-sm leading-7 muted">LVTD sets up OpenClaw and wires up integrations.</p>
+          <p class="mt-2 text-sm leading-7 muted">LVTD sets up OpenClaw and wires up the first integrations.</p>
         </li>
         <li class="surface-card p-5">
           <p class="text-sm font-bold" style="color: var(--lvtd-accent-strong);">4. Iterate</p>
@@ -93,6 +181,41 @@
           <button class="btn btn-primary" type="submit">Pay $100 deposit</button>
         </form>
         <a class="btn btn-secondary" href="{% url 'home' %}">Back to LVTD</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t py-12 sm:py-14" style="border-color: var(--lvtd-border);">
+    <div class="surface-card p-6 sm:p-8">
+      <p class="section-kicker">FAQ</p>
+      <h2 class="mt-3 text-3xl font-bold tracking-tight" style="color: var(--lvtd-ink);">
+        Frequently asked questions.
+      </h2>
+      <div class="mt-8 grid gap-6 md:grid-cols-3">
+        <article>
+          <h3 class="font-bold" style="color: var(--lvtd-ink);">Who is this for?</h3>
+          <p class="mt-3 text-sm leading-7 muted">
+            Teams that want a dedicated OpenClaw instance, custom integrations, and
+            ongoing operational support without managing hosting, updates, backups,
+            and monitoring themselves.
+          </p>
+        </article>
+        <article>
+          <h3 class="font-bold" style="color: var(--lvtd-ink);">What does LVTD manage?</h3>
+          <p class="mt-3 text-sm leading-7 muted">
+            Deployment, environment hardening, monitoring, backups, OpenClaw
+            configuration, workflow integration, maintenance, incident response, and
+            upgrade work.
+          </p>
+        </article>
+        <article>
+          <h3 class="font-bold" style="color: var(--lvtd-ink);">How does it start?</h3>
+          <p class="mt-3 text-sm leading-7 muted">
+            You place a deposit to reserve build time, then we align on goals, data
+            sources, workflows, access needs, and deployment requirements before
+            building the first working setup.
+          </p>
+        </article>
       </div>
     </div>
   </section>

@@ -49,6 +49,7 @@ uv run python manage.py qcluster
 - `DJANGO_DEBUG`: set to `true` for local debug.
 - `DJANGO_ALLOWED_HOSTS`: comma-separated hostnames.
 - `DJANGO_CSRF_TRUSTED_ORIGINS`: comma-separated origins.
+- `SITE_URL`: canonical public origin used for canonical tags and sitemap URLs (default `https://lvtd.dev`).
 - `DATABASE_URL`: PostgreSQL connection string (defaults to local SQLite when unset).
 - `MVP_DEPOSIT_CHECKOUT_URL`: Stripe checkout/payment link for the MVP deposit CTA.
 - `MVP_DEPOSIT_AMOUNT`: display text for the deposit amount (default `$100`).

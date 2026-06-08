@@ -1,7 +1,23 @@
 {% extends "website/base.html" %}
 
-{% block title %}LVTD Blog{% endblock %}
-{% block description %}Practical notes from LVTD on product engineering, shipping, and automation.{% endblock %}
+{% block title %}LVTD Blog - Product engineering notes{% endblock %}
+{% block description %}Practical notes from LVTD on product engineering, shipping, automation, and building useful software products.{% endblock %}
+{% block og_title %}LVTD Blog - Product engineering notes{% endblock %}
+{% block og_description %}Practical notes from LVTD on product engineering, shipping, automation, and building useful software products.{% endblock %}
+{% block twitter_title %}LVTD Blog - Product engineering notes{% endblock %}
+{% block twitter_description %}Practical notes from LVTD on product engineering, shipping, automation, and building useful software products.{% endblock %}
+{% block structured_data %}
+  {{ block.super }}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "LVTD Blog",
+      "url": "{{ canonical_url }}",
+      "description": "Practical notes from LVTD on product engineering, shipping, automation, and building useful software products."
+    }
+  </script>
+{% endblock %}
 
 {% block content %}
   <section class="py-12 sm:py-16">

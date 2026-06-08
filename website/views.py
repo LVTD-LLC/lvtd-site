@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from xml.etree import ElementTree
 
 import requests
 import stripe
@@ -14,6 +15,51 @@ from django.views.decorators.http import require_POST
 from django.views.generic import DetailView, ListView, TemplateView, View
 
 from website.models import BlogPost, StripeWebhookEvent
+
+
+def _absolute_url(path: str) -> str:
+    return f"{settings.SITE_URL.rstrip('/')}{path}"
+
+
+def robots_txt(request: HttpRequest) -> HttpResponse:
+    lines = [
+        "User-agent: *",
+        "Allow: /",
+        "Disallow: /admin/",
+        "Disallow: /api/",
+        "Disallow: /services/hosted-openclaw/checkout/",
+        f"Sitemap: {_absolute_url(reverse('sitemap'))}",
+    ]
+    return HttpResponse("\n".join(lines) + "\n", content_type="text/plain")
+
+
+def sitemap_xml(request: HttpRequest) -> HttpResponse:
+    urlset = ElementTree.Element(
+        "urlset", xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+    )
+
+    static_urls = [
+        (reverse("home"), "weekly", "1.0"),
+        (reverse("blog-list"), "weekly", "0.7"),
+        (reverse("hosted-openclaw-learn-more"), "monthly", "0.8"),
+    ]
+    for path, changefreq, priority in static_urls:
+        url = ElementTree.SubElement(urlset, "url")
+        ElementTree.SubElement(url, "loc").text = _absolute_url(path)
+        ElementTree.SubElement(url, "changefreq").text = changefreq
+        ElementTree.SubElement(url, "priority").text = priority
+
+    for post in BlogPost.objects.filter(is_published=True):
+        url = ElementTree.SubElement(urlset, "url")
+        ElementTree.SubElement(url, "loc").text = _absolute_url(
+            reverse("blog-detail", kwargs={"slug": post.slug})
+        )
+        ElementTree.SubElement(url, "lastmod").text = post.updated_at.date().isoformat()
+        ElementTree.SubElement(url, "changefreq").text = "monthly"
+        ElementTree.SubElement(url, "priority").text = "0.6"
+
+    xml = ElementTree.tostring(urlset, encoding="unicode", xml_declaration=True)
+    return HttpResponse(xml, content_type="application/xml")
 
 
 class HomePageView(TemplateView):

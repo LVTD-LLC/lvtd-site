@@ -58,6 +58,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "website.context_processors.seo",
             ],
         },
     }
@@ -98,6 +99,8 @@ STORAGES = {
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+SITE_URL = os.getenv("SITE_URL", "https://lvtd.dev").rstrip("/")
 
 Q_CLUSTER = {
     "name": "lvtd",
