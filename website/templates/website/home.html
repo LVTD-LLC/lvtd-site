@@ -1,12 +1,12 @@
 {% extends "website/base.html" %}
 {% load static %}
 
-{% block title %}LVTD - Product engineering for founders &amp; teams{% endblock %}
-{% block description %}LVTD helps founders and teams design, build, debug, and ship practical software products, automations, and growth tooling.{% endblock %}
-{% block og_title %}LVTD - Product engineering for founders &amp; teams{% endblock %}
-{% block og_description %}LVTD helps founders and teams design, build, debug, and ship practical software products, automations, and growth tooling.{% endblock %}
-{% block twitter_title %}LVTD - Product engineering for founders &amp; teams{% endblock %}
-{% block twitter_description %}LVTD helps founders and teams design, build, debug, and ship practical software products, automations, and growth tooling.{% endblock %}
+{% block title %}LVTD - Tools, sites, apps, and MVPs{% endblock %}
+{% block description %}LVTD builds practical tools, sites, apps, MVPs, automations, and hosted infrastructure for founders and small teams.{% endblock %}
+{% block og_title %}LVTD - Tools, sites, apps, and MVPs{% endblock %}
+{% block og_description %}LVTD builds practical tools, sites, apps, MVPs, automations, and hosted infrastructure for founders and small teams.{% endblock %}
+{% block twitter_title %}LVTD - Tools, sites, apps, and MVPs{% endblock %}
+{% block twitter_description %}LVTD builds practical tools, sites, apps, MVPs, automations, and hosted infrastructure for founders and small teams.{% endblock %}
 {% block structured_data %}
   {{ block.super }}
   <script type="application/ld+json">
@@ -15,7 +15,7 @@
       "@type": "ProfessionalService",
       "name": "LVTD",
       "url": "{{ site_url }}/",
-      "description": "Product engineering, automation, technical debugging, and growth tooling for founders and teams.",
+      "description": "Tools, sites, apps, MVPs, automations, and hosted infrastructure for founders and small teams.",
       "email": "rasul@lvtd.dev",
       "founder": {
         "@type": "Person",
@@ -24,6 +24,7 @@
       "serviceType": [
         "MVP product builds",
         "Automation and internal tools",
+        "Marketing and content systems",
         "Technical audits and debugging",
         "Hosted OpenClaw service"
       ],
@@ -33,277 +34,369 @@
 {% endblock %}
 
 {% block content %}
-  <section class="grid gap-10 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-end lg:py-20">
-    <div class="max-w-4xl">
-      <p class="section-kicker">LVTD, LLC</p>
-      <h1 class="mt-5 max-w-4xl text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl" style="color: var(--lvtd-ink);">
-        Product engineering for founders who need the job done.
+  <section class="home-hero">
+    <div class="hero-copy">
+      <p class="hero-label">LVTD / product engineering</p>
+      <h1 class="hero-title">
+        Tools, sites, apps, and MVPs that feel finished.
       </h1>
-      <p class="mt-6 max-w-3xl text-lg leading-8 muted">
-        I'm Rasul. I design, build, debug, and ship practical software for teams that need
-        a capable engineer inside the work, not another strategy deck.
+      <p class="hero-text">
+        LVTD builds practical software for founders who need careful execution and visible shipping momentum.
       </p>
-      <div class="mt-8 flex flex-wrap gap-3">
-        <a class="btn btn-primary" href="mailto:rasul@lvtd.dev?subject=Project%20inquiry">
-          Start a project
-        </a>
-        <a class="btn btn-secondary" href="#work">See shipped work</a>
-        <a class="btn btn-secondary" href="{% url 'blog-list' %}">Read notes</a>
+      <div class="hero-actions" aria-label="Primary actions">
+        <a class="btn btn-primary" href="mailto:rasul@lvtd.dev?subject=Project%20inquiry">Start a build</a>
+        <a class="btn btn-secondary" href="#work">View work</a>
       </div>
     </div>
 
-    <aside class="confidence-panel p-6">
-      <p class="section-kicker">Built for operating pressure</p>
-      <h2 class="mt-4 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">
-        New products, internal tools, messy integrations, urgent fixes.
-      </h2>
-      <p class="mt-4 text-sm leading-7 muted">
-        You get one accountable builder for scope, architecture, implementation,
-        deployment, and the sharp edges after launch.
-      </p>
-      <dl class="mt-6 grid grid-cols-2 gap-4 text-sm">
-        <div>
-          <dt class="font-semibold" style="color: var(--lvtd-ink);">Focus</dt>
-          <dd class="mt-1 soft">Useful software</dd>
+    <aside class="lab-console" aria-label="LVTD shipped work snapshot">
+      <div class="console-top">
+        <span class="console-title">lvtd.ship</span>
+        <span class="console-state">active</span>
+      </div>
+      <div class="console-command">
+        <span aria-hidden="true">$</span>
+        <span>ship scope:mvp finish:the-edges</span>
+        <span class="console-cursor" aria-hidden="true"></span>
+      </div>
+      <div class="console-matrix" aria-label="Software LVTD builds">
+        <div class="console-cell">
+          <span>tools</span>
+          <strong>Talent Leads</strong>
+          <em>lead engine</em>
         </div>
-        <div>
-          <dt class="font-semibold" style="color: var(--lvtd-ink);">Default</dt>
-          <dd class="mt-1 soft">Ship, then improve</dd>
+        <div class="console-cell">
+          <span>sites</span>
+          <strong>Built with Django</strong>
+          <em>developer discovery</em>
         </div>
-      </dl>
+        <div class="console-cell">
+          <span>apps</span>
+          <strong>Cleanapp</strong>
+          <em>store ops</em>
+        </div>
+        <div class="console-cell">
+          <span>infra</span>
+          <strong>OpenClaw</strong>
+          <em>managed hosting</em>
+        </div>
+      </div>
+      <div class="console-log" aria-label="LVTD build qualities">
+        <p><span>01</span> real architecture, not a throwaway demo</p>
+        <p><span>02</span> tidy interfaces and fewer launch surprises</p>
+        <p><span>03</span> shipping notes, source links, and next steps</p>
+      </div>
     </aside>
   </section>
 
-  <section id="work" class="border-t py-12 sm:py-14" style="border-color: var(--lvtd-border);">
-    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+  <section id="work" class="work-section">
+    <div class="section-head">
       <div>
-        <p class="section-kicker">Shipped work</p>
-        <h2 class="mt-3 text-3xl font-bold tracking-tight" style="color: var(--lvtd-ink);">
-          Real products, not portfolio theater.
-        </h2>
+        <p class="section-label">Selected work</p>
+        <h2>Proof that ships.</h2>
       </div>
-      <p class="max-w-2xl text-sm leading-7 muted">
-        SaaS tools, content engines, open-source products, automation systems, and
-        operational software built end to end.
+      <p>
+        A mix of SaaS tools, discovery sites, automation systems, open-source utilities, and operational products built end to end.
       </p>
     </div>
 
-    <ul class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-      <li>
-        <a class="proof-link" href="https://gettalentleads.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-          <img src="{% static 'images/logos/rocket_take_off.png' %}" alt="" class="proof-logo" />
-          <span>
-            <span class="block font-semibold" style="color: var(--lvtd-ink);">Talent Leads</span>
-            <span class="mt-1 block text-sm soft">Lead generation for startup hiring.</span>
-          </span>
-        </a>
+    <ul class="project-grid">
+      <li class="project-card-slot project-card-featured">
+      <a class="project-card" href="https://gettalentleads.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+        <span class="project-media">
+          <img src="{% static 'images/logos/rocket_take_off.png' %}" alt="Talent Leads logo" class="project-logo" />
+        </span>
+        <span class="project-copy">
+          <span class="project-meta">Lead generation / hiring</span>
+          <strong>Talent Leads</strong>
+          <span>Lead generation for startup hiring teams that need targeted outreach inputs.</span>
+        </span>
+        <span class="project-tags" aria-label="Talent Leads categories">
+          <span>growth tool</span>
+          <span>automation</span>
+        </span>
+      </a>
       </li>
-      <li>
-        <a class="proof-link" href="https://builtwithdjango.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-          <img src="{% static 'images/logos/builtwithdjango.png' %}" alt="" class="proof-logo" />
-          <span>
-            <span class="block font-semibold" style="color: var(--lvtd-ink);">Built with Django</span>
-            <span class="mt-1 block text-sm soft">Developer education and discovery.</span>
-          </span>
-        </a>
+
+      <li class="project-card-slot">
+      <a class="project-card" href="https://builtwithdjango.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+        <span class="project-media">
+          <img src="{% static 'images/logos/builtwithdjango.png' %}" alt="Built with Django logo" class="project-logo" />
+        </span>
+        <span class="project-copy">
+          <span class="project-meta">Developer site</span>
+          <strong>Built with Django</strong>
+          <span>Developer education, product discovery, and useful examples for Django builders.</span>
+        </span>
+        <span class="project-tags" aria-label="Built with Django categories">
+          <span>content</span>
+          <span>community</span>
+        </span>
+      </a>
       </li>
-      <li>
-        <a class="proof-link" href="https://levreview.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-          <img src="{% static 'images/logos/levreview.jpg' %}" alt="" class="proof-logo" />
-          <span>
-            <span class="block font-semibold" style="color: var(--lvtd-ink);">LevReview</span>
-            <span class="mt-1 block text-sm soft">Review collection for local businesses.</span>
-          </span>
-        </a>
+
+      <li class="project-card-slot">
+      <a class="project-card" href="https://levreview.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+        <span class="project-media">
+          <img src="{% static 'images/logos/levreview.jpg' %}" alt="LevReview logo" class="project-logo" />
+        </span>
+        <span class="project-copy">
+          <span class="project-meta">Local business SaaS</span>
+          <strong>LevReview</strong>
+          <span>Review collection workflows for operators who need better customer proof.</span>
+        </span>
+        <span class="project-tags" aria-label="LevReview categories">
+          <span>SaaS</span>
+          <span>reviews</span>
+        </span>
+      </a>
       </li>
-      <li>
-        <a class="proof-link" href="https://gettjalerts.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-          <img src="{% static 'images/logos/techjobalerts.png' %}" alt="" class="proof-logo" />
-          <span>
-            <span class="block font-semibold" style="color: var(--lvtd-ink);">Tech Job Alerts</span>
-            <span class="mt-1 block text-sm soft">Automated job matching and alerts.</span>
-          </span>
-        </a>
+
+      <li class="project-card-slot">
+      <a class="project-card" href="https://gettjalerts.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+        <span class="project-media">
+          <img src="{% static 'images/logos/techjobalerts.png' %}" alt="Tech Job Alerts logo" class="project-logo" />
+        </span>
+        <span class="project-copy">
+          <span class="project-meta">Automation product</span>
+          <strong>Tech Job Alerts</strong>
+          <span>Automated matching and alerts for people tracking technical roles.</span>
+        </span>
+        <span class="project-tags" aria-label="Tech Job Alerts categories">
+          <span>alerts</span>
+          <span>jobs</span>
+        </span>
+      </a>
       </li>
-      <li>
-        <a class="proof-link" href="https://osig.app?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-          <img src="{% static 'images/logos/osig.png' %}" alt="" class="proof-logo" />
-          <span>
-            <span class="block font-semibold" style="color: var(--lvtd-ink);">OSIG</span>
-            <span class="mt-1 block text-sm soft">Open-source social image generation.</span>
-          </span>
-        </a>
+
+      <li class="project-card-slot project-card-wide">
+      <a class="project-card" href="https://osig.app?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+        <span class="project-media">
+          <img src="{% static 'images/logos/osig.png' %}" alt="OSIG logo" class="project-logo" />
+        </span>
+        <span class="project-copy">
+          <span class="project-meta">Open-source utility</span>
+          <strong>OSIG</strong>
+          <span>Open-source social image generation for shipping shareable pages and previews.</span>
+        </span>
+        <span class="project-tags" aria-label="OSIG categories">
+          <span>open source</span>
+          <span>images</span>
+        </span>
+      </a>
       </li>
-      <li>
-        <a class="proof-link" href="https://statushen.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-          <img src="{% static 'images/logos/statushen.png' %}" alt="" class="proof-logo" />
-          <span>
-            <span class="block font-semibold" style="color: var(--lvtd-ink);">StatusHen</span>
-            <span class="mt-1 block text-sm soft">Uptime monitoring and status pages.</span>
-          </span>
-        </a>
+
+      <li class="project-card-slot">
+      <a class="project-card" href="https://statushen.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+        <span class="project-media">
+          <img src="{% static 'images/logos/statushen.png' %}" alt="StatusHen logo" class="project-logo" />
+        </span>
+        <span class="project-copy">
+          <span class="project-meta">Infrastructure product</span>
+          <strong>StatusHen</strong>
+          <span>Uptime monitoring and status pages for teams that need clear incident surfaces.</span>
+        </span>
+        <span class="project-tags" aria-label="StatusHen categories">
+          <span>monitoring</span>
+          <span>status</span>
+        </span>
+      </a>
       </li>
-      <li>
-        <a class="proof-link" href="https://tuxseo.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-          <img src="{% static 'images/logos/tuxseo.png' %}" alt="" class="proof-logo" />
-          <span>
-            <span class="block font-semibold" style="color: var(--lvtd-ink);">TuxSEO</span>
-            <span class="mt-1 block text-sm soft">Programmatic SEO tooling.</span>
-          </span>
-        </a>
+
+      <li class="project-card-slot">
+      <a class="project-card" href="https://tuxseo.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+        <span class="project-media">
+          <img src="{% static 'images/logos/tuxseo.png' %}" alt="TuxSEO logo" class="project-logo" />
+        </span>
+        <span class="project-copy">
+          <span class="project-meta">Growth system</span>
+          <strong>TuxSEO</strong>
+          <span>Programmatic SEO tooling for creating and maintaining search surfaces.</span>
+        </span>
+        <span class="project-tags" aria-label="TuxSEO categories">
+          <span>SEO</span>
+          <span>programmatic</span>
+        </span>
+      </a>
       </li>
-      <li>
-        <a class="proof-link" href="https://cleanapp.dev?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-          <img src="{% static 'images/logos/cleanapp.png' %}" alt="" class="proof-logo" />
-          <span>
-            <span class="block font-semibold" style="color: var(--lvtd-ink);">Cleanapp</span>
-            <span class="mt-1 block text-sm soft">App Store maintenance workflows.</span>
-          </span>
-        </a>
+
+      <li class="project-card-slot">
+      <a class="project-card" href="https://cleanapp.dev?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+        <span class="project-media">
+          <img src="{% static 'images/logos/cleanapp.png' %}" alt="Cleanapp logo" class="project-logo" />
+        </span>
+        <span class="project-copy">
+          <span class="project-meta">App operations</span>
+          <strong>Cleanapp</strong>
+          <span>App Store maintenance workflows for keeping releases and metadata in order.</span>
+        </span>
+        <span class="project-tags" aria-label="Cleanapp categories">
+          <span>ops</span>
+          <span>apps</span>
+        </span>
+      </a>
       </li>
-      <li>
-        <a class="proof-link" href="https://isitketo.org?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-          <img src="{% static 'images/logos/isitketo.png' %}" alt="" class="proof-logo" />
-          <span>
-            <span class="block font-semibold" style="color: var(--lvtd-ink);">Is it Keto</span>
-            <span class="mt-1 block text-sm soft">Search product for food decisions.</span>
-          </span>
-        </a>
+
+      <li class="project-card-slot">
+      <a class="project-card" href="https://isitketo.org?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+        <span class="project-media">
+          <img src="{% static 'images/logos/isitketo.png' %}" alt="Is it Keto logo" class="project-logo" />
+        </span>
+        <span class="project-copy">
+          <span class="project-meta">Consumer search</span>
+          <strong>Is it Keto</strong>
+          <span>Search product for fast food decisions and structured nutrition lookup.</span>
+        </span>
+        <span class="project-tags" aria-label="Is it Keto categories">
+          <span>search</span>
+          <span>consumer</span>
+        </span>
+      </a>
       </li>
     </ul>
   </section>
 
-  <section class="py-12 sm:py-14">
-    <div class="grid gap-8 lg:grid-cols-[0.82fr_1fr] lg:items-start">
-      <div>
-        <p class="section-kicker">How I help</p>
-        <h2 class="mt-3 text-3xl font-bold tracking-tight" style="color: var(--lvtd-ink);">
-          Bring the problem. Leave with working software.
-        </h2>
-        <p class="mt-4 text-base leading-8 muted">
-          I am strongest when the work crosses product judgment, backend systems,
-          integrations, data flows, and the last-mile polish needed to actually launch.
-        </p>
+  <section id="services" class="capability-section">
+    <div class="capability-intro">
+      <p class="section-label">What LVTD builds</p>
+      <h2>Bring the messy version. Leave with working software.</h2>
+      <p>
+        The work can start as a market test, a broken workflow, an internal spreadsheet, a stalled app, or a product idea that needs a real first version.
+      </p>
+    </div>
+
+    <div class="capability-list">
+      <article class="capability-item">
+        <span>MVPs</span>
+        <h3>First versions with the hard parts included.</h3>
+        <p>Product scope, data model, backend, UI, deployment, analytics, and the plain decisions needed to launch.</p>
+      </article>
+      <article class="capability-item">
+        <span>Tools</span>
+        <h3>Internal systems that replace manual work.</h3>
+        <p>Dashboards, scrapers, reporting flows, enrichment jobs, alerts, admin tools, and integrations that fit your operators.</p>
+      </article>
+      <article class="capability-item">
+        <span>Sites</span>
+        <h3>Marketing and content systems with real mechanics.</h3>
+        <p>Fast sites, programmatic pages, CMS-backed publishing, SEO surfaces, lead capture, and conversion paths.</p>
+      </article>
+      <article class="capability-item">
+        <span>Rescue</span>
+        <h3>Debugging when the product is already in motion.</h3>
+        <p>Slow pages, broken jobs, unreliable APIs, fragile deployments, confusing UI, and systems nobody wants to touch.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="offers-section" aria-label="Ways to start">
+    <div class="offer-card offer-card-primary">
+      <p class="section-label">MVP done for you</p>
+      <h2>Reserve a focused full-service build.</h2>
+      <p>
+        Pay a {{ mvp_deposit_amount }} deposit to show serious intent. I follow up for project context, goals, and timeline. Final service price:
+        <strong>{{ mvp_final_price }}</strong>.
+      </p>
+      <div class="offer-actions">
+        {% if mvp_deposit_checkout_url %}
+          <a class="btn btn-primary" href="{{ mvp_deposit_checkout_url }}">Reserve MVP</a>
+        {% else %}
+          <a class="btn btn-primary" href="mailto:rasul@lvtd.dev?subject=MVP%20build%20inquiry">Reserve MVP</a>
+        {% endif %}
+        <a class="btn btn-secondary" href="#process">See process</a>
       </div>
-      <div class="grid gap-4 sm:grid-cols-2">
-        <article class="surface-card p-6">
-          <h3 class="text-lg font-bold" style="color: var(--lvtd-ink);">MVPs and product builds</h3>
-          <p class="mt-3 text-sm leading-7 muted">
-            Turn an idea, workflow, or market test into a shipped web product with
-            real architecture underneath it.
-          </p>
-        </article>
-        <article class="surface-card p-6">
-          <h3 class="text-lg font-bold" style="color: var(--lvtd-ink);">Automation and internal tools</h3>
-          <p class="mt-3 text-sm leading-7 muted">
-            Replace manual work with reporting, scraping, dashboards, and workflow
-            tools that fit the way your team already operates.
-          </p>
-        </article>
-        <article class="surface-card p-6">
-          <h3 class="text-lg font-bold" style="color: var(--lvtd-ink);">Debugging and rescue work</h3>
-          <p class="mt-3 text-sm leading-7 muted">
-            Find bottlenecks, fix broken funnels, stabilize unreliable jobs, and
-            make systems easier to reason about.
-          </p>
-        </article>
-        <article class="surface-card p-6">
-          <h3 class="text-lg font-bold" style="color: var(--lvtd-ink);">Hosted OpenClaw support</h3>
-          <p class="mt-3 text-sm leading-7 muted">
-            Dedicated OpenClaw setup, hosting, monitoring, updates, and integrations
-            for teams that want managed AI infrastructure.
-          </p>
-        </article>
+    </div>
+
+    <div class="offer-card">
+      <p class="section-label">Managed OpenClaw</p>
+      <h2>Run OpenClaw without owning the infrastructure work.</h2>
+      <p>
+        LVTD handles setup, access, monitoring, updates, and custom integrations so your team can use OpenClaw inside real workflows.
+      </p>
+      <div class="offer-actions">
+        <form method="post" action="{% url 'hosted-openclaw-checkout' %}">
+          {% csrf_token %}
+          <button class="btn btn-primary" type="submit">Pay {{ hosted_openclaw_deposit_amount }} deposit</button>
+        </form>
+        <a class="btn btn-secondary" href="{% url 'hosted-openclaw-learn-more' %}">View details</a>
       </div>
     </div>
   </section>
 
-  <section class="grid gap-4 py-12 sm:grid-cols-2 sm:py-14">
-    <article class="confidence-panel p-6 sm:p-8">
-      <p class="section-kicker">MVP done-for-you</p>
-      <h2 class="mt-3 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">
-        Reserve a focused full-service build.
-      </h2>
-      <p class="mt-4 text-sm leading-7 muted">
-        Pay a {{ mvp_deposit_amount }} deposit to show serious intent. I will follow
-        up for project context, goals, and timeline. Final service price:
-        <span class="font-semibold" style="color: var(--lvtd-ink);">{{ mvp_final_price }}</span>.
-      </p>
-      <div class="mt-6">
-        {% if mvp_deposit_checkout_url %}
-          <a class="btn btn-primary" href="{{ mvp_deposit_checkout_url }}">Pay {{ mvp_deposit_amount }} deposit</a>
-        {% else %}
-          <a class="btn btn-primary" href="mailto:rasul@lvtd.dev?subject=MVP%20build%20inquiry">Ask about an MVP build</a>
-        {% endif %}
+  <section id="process" class="process-section">
+    <div class="section-head section-head-compact">
+      <div>
+        <p class="section-label">How a build moves</p>
+        <h2>Small loop, visible progress.</h2>
       </div>
-    </article>
-    <article class="surface-muted p-6 sm:p-8">
-      <p class="section-kicker">Managed OpenClaw</p>
-      <h2 class="mt-3 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">
-        Get OpenClaw running without owning the infrastructure work.
-      </h2>
-      <p class="mt-4 text-sm leading-7 muted">
-        I handle deployment, access, monitoring, updates, and custom integrations
-        so your team can focus on the workflows it needs.
+      <p>
+        The process is intentionally direct because early software changes shape once it touches users, data, and edge cases.
       </p>
-      <div class="mt-6 flex flex-wrap gap-3">
-        <form method="post" action="{% url 'hosted-openclaw-checkout' %}">
-          {% csrf_token %}
-          <button class="btn btn-primary" type="submit">Pay $100 deposit</button>
-        </form>
-        <a class="btn btn-secondary" href="{% url 'hosted-openclaw-learn-more' %}">Learn more</a>
-      </div>
-    </article>
+    </div>
+
+    <ol class="process-list">
+      <li>
+        <span>01</span>
+        <strong>Map the job</strong>
+        <p>Clarify the user, workflow, constraints, and first useful release.</p>
+      </li>
+      <li>
+        <span>02</span>
+        <strong>Build the spine</strong>
+        <p>Set architecture, data flow, deployment, and the core product path.</p>
+      </li>
+      <li>
+        <span>03</span>
+        <strong>Finish the edges</strong>
+        <p>Tighten UI states, copy, errors, logging, speed, and operating notes.</p>
+      </li>
+      <li>
+        <span>04</span>
+        <strong>Ship and learn</strong>
+        <p>Launch, watch what happens, fix the sharp parts, and decide the next move.</p>
+      </li>
+    </ol>
   </section>
 
-  <section class="border-t py-12 sm:py-14" style="border-color: var(--lvtd-border);">
-    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+  <section class="writing-section">
+    <div class="section-head section-head-compact">
       <div>
-        <p class="section-kicker">Writing</p>
-        <h2 class="mt-3 text-3xl font-bold tracking-tight" style="color: var(--lvtd-ink);">
-          Notes from shipped work.
-        </h2>
+        <p class="section-label">Writing</p>
+        <h2>Notes from the workbench.</h2>
       </div>
-      <a class="btn btn-secondary" href="{% url 'blog-list' %}">Read all posts</a>
+      <a class="btn btn-secondary" href="{% url 'blog-list' %}">Read notes</a>
     </div>
 
     {% if latest_blog_posts %}
-      <ul class="mt-8 grid gap-4 md:grid-cols-3">
+      <div class="article-grid">
         {% for post in latest_blog_posts %}
-          <li class="surface-card p-6">
-            <p class="section-kicker">{{ post.published_at|date:"M j, Y" }}</p>
-            <h3 class="mt-3 text-xl font-bold tracking-tight" style="color: var(--lvtd-ink);">
-              <a class="transition hover:opacity-75" href="{% url 'blog-detail' slug=post.slug %}">
-                {{ post.title }}
-              </a>
+          <article class="article-card">
+            <time datetime="{{ post.published_at|date:'Y-m-d' }}">{{ post.published_at|date:"M j, Y" }}</time>
+            <h3>
+              <a href="{% url 'blog-detail' slug=post.slug %}">{{ post.title }}</a>
             </h3>
-            <p class="mt-3 text-sm leading-7 muted">{{ post.summary }}</p>
-          </li>
+            <p>{{ post.summary }}</p>
+          </article>
         {% endfor %}
-      </ul>
+      </div>
     {% else %}
-      <div class="surface-card mt-8 p-6">
-        <p class="text-sm muted">Blog posts are coming soon. For now, reach out directly with project context.</p>
+      <div class="article-empty">
+        <p>Posts are coming soon. The project archive above is the best place to start today.</p>
       </div>
     {% endif %}
   </section>
 
-  <section class="py-12 sm:py-16">
-    <div class="surface-muted p-6 sm:p-8 lg:flex lg:items-center lg:justify-between lg:gap-10">
-      <div>
-        <p class="section-kicker">Ready when the work is real</p>
-        <h2 class="mt-3 text-3xl font-bold tracking-tight" style="color: var(--lvtd-ink);">
-          Need a builder who can ship?
-        </h2>
-        <p class="mt-4 max-w-2xl text-sm leading-7 muted">
-          Send a short note with your project context, goals, and timeline. I will
-          reply with fit, scope, and next steps.
-        </p>
-      </div>
-      <div class="mt-6 flex flex-wrap gap-3 lg:mt-0">
-        <a class="btn btn-primary" href="mailto:rasul@lvtd.dev?subject=Consulting%20project">Email Rasul</a>
-        <a class="btn btn-secondary" href="https://github.com/rasulkireev">View GitHub</a>
-      </div>
+  <section class="closing-panel">
+    <div>
+      <p class="section-label">Start here</p>
+      <h2>Send the version you can explain in five minutes.</h2>
+      <p>
+        A short note with context, constraints, timeline, and what you want shipped is enough to begin.
+      </p>
+    </div>
+    <div class="closing-actions">
+      <a class="btn btn-primary" href="mailto:rasul@lvtd.dev?subject=Project%20inquiry">Start a build</a>
+      <a class="btn btn-secondary" href="https://github.com/rasulkireev">Follow work</a>
     </div>
   </section>
 {% endblock %}

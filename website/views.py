@@ -70,6 +70,9 @@ class HomePageView(TemplateView):
         context["mvp_deposit_checkout_url"] = settings.MVP_DEPOSIT_CHECKOUT_URL
         context["mvp_deposit_amount"] = settings.MVP_DEPOSIT_AMOUNT
         context["mvp_final_price"] = settings.MVP_FINAL_PRICE
+        context["hosted_openclaw_deposit_amount"] = (
+            settings.HOSTED_OPENCLAW_DEPOSIT_AMOUNT
+        )
         context["latest_blog_posts"] = BlogPost.objects.filter(is_published=True)[:3]
         return context
 
@@ -92,6 +95,13 @@ class BlogDetailView(DetailView):
 
 class HostedOpenClawLearnMoreView(TemplateView):
     template_name = "website/hosted_openclaw.html"
+
+    def get_context_data(self, **kwargs: object) -> dict[str, object]:
+        context = super().get_context_data(**kwargs)
+        context["hosted_openclaw_deposit_amount"] = (
+            settings.HOSTED_OPENCLAW_DEPOSIT_AMOUNT
+        )
+        return context
 
 
 @require_POST

@@ -13,6 +13,7 @@ class HomePageTests(TestCase):
         MVP_DEPOSIT_CHECKOUT_URL="https://example.com/pay",
         MVP_DEPOSIT_AMOUNT="$100",
         MVP_FINAL_PRICE="$5,000",
+        HOSTED_OPENCLAW_DEPOSIT_AMOUNT="$125",
     )
     def test_homepage_loads(self) -> None:
         client = Client()
@@ -20,14 +21,19 @@ class HomePageTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "LVTD, LLC")
-        self.assertContains(response, "MVP done-for-you")
+        self.assertContains(
+            response, "Tools, sites, apps, and MVPs that feel finished."
+        )
+        self.assertContains(response, "MVP done for you")
         self.assertContains(response, "Pay a $100 deposit")
         self.assertContains(response, "$5,000")
-        self.assertContains(response, "Pay $100 deposit")
-        self.assertContains(response, "Product engineering for founders")
-        self.assertContains(response, "Shipped work")
-        self.assertContains(response, "Real products, not portfolio theater.")
-        self.assertContains(response, "Need a builder who can ship?")
+        self.assertContains(response, "Reserve MVP")
+        self.assertContains(response, "Pay $125 deposit")
+        self.assertContains(response, "Selected work")
+        self.assertContains(response, "Proof that ships.")
+        self.assertContains(
+            response, "Send the version you can explain in five minutes."
+        )
 
         for project_name in (
             "Talent Leads",
@@ -169,6 +175,7 @@ class BlogPagesTests(TestCase):
 
 
 class HostedOpenClawPagesTests(TestCase):
+    @override_settings(HOSTED_OPENCLAW_DEPOSIT_AMOUNT="$150")
     def test_learn_more_page_loads(self) -> None:
         client = Client()
         response = client.get(reverse("hosted-openclaw-learn-more"))
@@ -177,6 +184,7 @@ class HostedOpenClawPagesTests(TestCase):
         self.assertContains(response, "Hosted OpenClaw Service")
         self.assertContains(response, "Best fit")
         self.assertContains(response, "Frequently asked questions")
+        self.assertContains(response, "Pay $150 deposit")
         self.assertContains(response, '"@type": "Service"')
         self.assertContains(response, '"@type": "FAQPage"')
 

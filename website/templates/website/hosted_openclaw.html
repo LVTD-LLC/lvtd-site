@@ -74,7 +74,7 @@
       <div class="mt-8 flex flex-wrap gap-3">
         <form method="post" action="{% url 'hosted-openclaw-checkout' %}">
           {% csrf_token %}
-          <button class="btn btn-primary" type="submit">Pay $100 deposit</button>
+          <button class="btn btn-primary" type="submit">Pay {{ hosted_openclaw_deposit_amount }} deposit</button>
         </form>
         <a class="btn btn-secondary" href="mailto:rasul@lvtd.dev?subject=Hosted%20OpenClaw%20inquiry">Ask a question</a>
       </div>
@@ -178,7 +178,7 @@
       <div class="mt-8 flex flex-wrap gap-3">
         <form method="post" action="{% url 'hosted-openclaw-checkout' %}">
           {% csrf_token %}
-          <button class="btn btn-primary" type="submit">Pay $100 deposit</button>
+          <button class="btn btn-primary" type="submit">Pay {{ hosted_openclaw_deposit_amount }} deposit</button>
         </form>
         <a class="btn btn-secondary" href="{% url 'home' %}">Back to LVTD</a>
       </div>
