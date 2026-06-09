@@ -3,6 +3,34 @@
 
 {% block title %}LVTD - Product engineering for founders &amp; teams{% endblock %}
 {% block description %}LVTD helps founders and teams design, build, debug, and ship practical software products, automations, and growth tooling.{% endblock %}
+{% block og_title %}LVTD - Product engineering for founders &amp; teams{% endblock %}
+{% block og_description %}LVTD helps founders and teams design, build, debug, and ship practical software products, automations, and growth tooling.{% endblock %}
+{% block twitter_title %}LVTD - Product engineering for founders &amp; teams{% endblock %}
+{% block twitter_description %}LVTD helps founders and teams design, build, debug, and ship practical software products, automations, and growth tooling.{% endblock %}
+{% block structured_data %}
+  {{ block.super }}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "LVTD",
+      "url": "{{ site_url }}/",
+      "description": "Product engineering, automation, technical debugging, and growth tooling for founders and teams.",
+      "email": "rasul@lvtd.dev",
+      "founder": {
+        "@type": "Person",
+        "name": "Rasul Kireev"
+      },
+      "serviceType": [
+        "MVP product builds",
+        "Automation and internal tools",
+        "Technical audits and debugging",
+        "Hosted OpenClaw service"
+      ],
+      "areaServed": "Worldwide"
+    }
+  </script>
+{% endblock %}
 
 {% block content %}
   <section class="grid gap-10 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-end lg:py-20">

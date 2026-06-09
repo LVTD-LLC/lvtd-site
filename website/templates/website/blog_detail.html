@@ -2,6 +2,35 @@
 
 {% block title %}{{ post.title }} | LVTD Blog{% endblock %}
 {% block description %}{{ post.summary }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_title %}{{ post.title }} | LVTD Blog{% endblock %}
+{% block og_description %}{{ post.summary }}{% endblock %}
+{% block twitter_title %}{{ post.title }} | LVTD Blog{% endblock %}
+{% block twitter_description %}{{ post.summary }}{% endblock %}
+{% block structured_data %}
+  {{ block.super }}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "{{ post.title|escapejs }}",
+      "description": "{{ post.summary|escapejs }}",
+      "url": "{{ canonical_url }}",
+      "datePublished": "{{ post.published_at|date:'c' }}",
+      "dateModified": "{{ post.updated_at|date:'c' }}",
+      "author": {
+        "@type": "Person",
+        "name": "Rasul Kireev",
+        "url": "{{ site_url }}/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "LVTD",
+        "url": "{{ site_url }}/"
+      }
+    }
+  </script>
+{% endblock %}
 
 {% block content %}
   <article class="mx-auto max-w-4xl py-12 sm:py-16">

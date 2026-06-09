@@ -9,6 +9,15 @@
       name="description"
       content="{% block description %}LVTD helps founders and teams design, build, and ship practical software products, automations, and growth tooling.{% endblock %}"
     />
+    <link rel="canonical" href="{{ canonical_url }}" />
+    <meta property="og:site_name" content="LVTD" />
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}" />
+    <meta property="og:title" content="{% block og_title %}LVTD - Product engineering for founders and teams{% endblock %}" />
+    <meta property="og:description" content="{% block og_description %}LVTD helps founders and teams design, build, and ship practical software products, automations, and growth tooling.{% endblock %}" />
+    <meta property="og:url" content="{{ canonical_url }}" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="{% block twitter_title %}LVTD - Product engineering for founders and teams{% endblock %}" />
+    <meta name="twitter:description" content="{% block twitter_description %}LVTD helps founders and teams design, build, and ship practical software products, automations, and growth tooling.{% endblock %}" />
     <script>
       ;(() => {
         try {
@@ -28,6 +37,22 @@
         }
       })()
     </script>
+    {% block structured_data %}
+      <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "LVTD",
+          "url": "{{ site_url }}/",
+          "email": "rasul@lvtd.dev",
+          "founder": {
+            "@type": "Person",
+            "name": "Rasul Kireev",
+            "url": "{{ site_url }}/"
+          }
+        }
+      </script>
+    {% endblock %}
     <link rel="stylesheet" href="{% static 'css/app.css' %}" />
     <script defer data-domain="lvtd.dev" src="https://plausible-v2.cr.lvtd.dev/js/script.file-downloads.outbound-links.js"></script>
     <script>

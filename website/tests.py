@@ -56,6 +56,70 @@ class HomePageTests(TestCase):
         self.assertContains(response, reverse("blog-list"))
         self.assertContains(response, "Read notes")
 
+    @override_settings(SITE_URL="https://lvtd.test")
+    def test_homepage_has_shared_seo_metadata(self) -> None:
+        client = Client()
+        response = client.get(reverse("home"))
+
+        self.assertContains(
+            response,
+            '<link rel="canonical" href="https://lvtd.test/" />',
+            html=True,
+        )
+        self.assertContains(response, 'property="og:title"')
+        self.assertContains(response, 'name="twitter:card"')
+        self.assertContains(response, 'type="application/ld+json"')
+
+
+class CrawlEndpointTests(TestCase):
+    @override_settings(SITE_URL="https://lvtd.test")
+    def test_robots_txt_allows_public_site_and_points_to_sitemap(self) -> None:
+        client = Client()
+        response = client.get(reverse("robots"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response["Content-Type"], "text/plain")
+        content = response.content.decode()
+        self.assertIn("User-agent: *", content)
+        self.assertIn("Allow: /", content)
+        self.assertIn("Disallow: /admin/", content)
+        self.assertIn("Disallow: /api/", content)
+        self.assertIn("Sitemap: https://lvtd.test/sitemap.xml", content)
+
+    @override_settings(SITE_URL="https://lvtd.test")
+    def test_sitemap_includes_public_indexable_urls_only(self) -> None:
+        published_post = BlogPost.objects.create(
+            title="Shipping with confidence",
+            slug="shipping-with-confidence",
+            summary="How we ship faster with fewer incidents.",
+            body="This is the post body.",
+        )
+        BlogPost.objects.create(
+            title="Draft post",
+            slug="draft-post",
+            summary="This is still in draft.",
+            body="Draft body.",
+            is_published=False,
+        )
+
+        client = Client()
+        response = client.get(reverse("sitemap"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response["Content-Type"], "application/xml")
+        content = response.content.decode()
+        self.assertTrue(content.startswith("<?xml version='1.0' encoding='utf-8'?>"))
+        self.assertIn("<loc>https://lvtd.test/</loc>", content)
+        self.assertIn("<loc>https://lvtd.test/blog/</loc>", content)
+        self.assertIn("<loc>https://lvtd.test/services/hosted-openclaw/</loc>", content)
+        self.assertIn(
+            f"<loc>https://lvtd.test/blog/{published_post.slug}/</loc>", content
+        )
+        self.assertIn("<lastmod>", content)
+        self.assertNotIn("draft-post", content)
+        self.assertNotIn("checkout", content)
+        self.assertNotIn("api/stripe", content)
+
 
 class BlogPagesTests(TestCase):
     def setUp(self) -> None:
@@ -95,6 +159,7 @@ class BlogPagesTests(TestCase):
         self.assertContains(response, "Shipping with confidence")
         self.assertContains(response, "How we ship faster with fewer incidents.")
         self.assertContains(response, "This is the post body.")
+        self.assertContains(response, '"@type": "Article"')
 
     def test_blog_detail_404_for_draft_post(self) -> None:
         client = Client()
@@ -110,6 +175,10 @@ class HostedOpenClawPagesTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Hosted OpenClaw Service")
+        self.assertContains(response, "Best fit")
+        self.assertContains(response, "Frequently asked questions")
+        self.assertContains(response, '"@type": "Service"')
+        self.assertContains(response, '"@type": "FAQPage"')
 
 
 class HostedOpenClawCheckoutTests(TestCase):
