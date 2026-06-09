@@ -9,7 +9,7 @@
       name="description"
       content="{% block description %}LVTD helps founders and teams design, build, and ship practical software products, automations, and growth tooling.{% endblock %}"
     />
-    <meta name="theme-color" content="#f8faf7" />
+    <meta name="theme-color" content="#f8faf7" data-theme-color />
     <link rel="canonical" href="{{ canonical_url }}" />
     <meta property="og:site_name" content="LVTD" />
     <meta property="og:type" content="{% block og_type %}website{% endblock %}" />
@@ -32,6 +32,9 @@
                 : 'light'
           document.documentElement.classList.toggle('dark', theme === 'dark')
           document.documentElement.style.colorScheme = theme
+          document
+            .querySelector('[data-theme-color]')
+            ?.setAttribute('content', theme === 'dark' ? '#07120b' : '#f8faf7')
         } catch (error) {
           document.documentElement.classList.remove('dark')
           document.documentElement.style.colorScheme = 'light'
@@ -133,6 +136,9 @@
           if (label) {
             label.textContent = theme === 'dark' ? 'Use light' : 'Use dark'
           }
+          document
+            .querySelector('[data-theme-color]')
+            ?.setAttribute('content', theme === 'dark' ? '#07120b' : '#f8faf7')
           toggleButton.setAttribute(
             'aria-label',
             theme === 'dark' ? 'Use light mode' : 'Use dark mode',

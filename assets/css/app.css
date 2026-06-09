@@ -542,8 +542,7 @@
   .capability-section,
   .offers-section,
   .process-section,
-  .writing-section,
-  .closing-panel {
+  .writing-section {
     border-top: 1px solid var(--lvtd-border);
     padding-block: clamp(3.5rem, 7vw, 6.25rem);
   }
@@ -585,11 +584,17 @@
     gap: 0.75rem;
   }
 
+  .project-card-slot {
+    display: grid;
+    grid-column: span 2;
+    min-width: 0;
+  }
+
   .project-card {
     position: relative;
     display: grid;
-    grid-column: span 2;
     min-height: 18rem;
+    height: 100%;
     align-content: space-between;
     gap: 1.25rem;
     border: 1px solid var(--lvtd-border);
@@ -767,7 +772,6 @@
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 0.75rem;
-    counter-reset: process;
   }
 
   .process-list li {
@@ -954,7 +958,7 @@
   }
 
   @media (max-width: 1180px) {
-    .project-card,
+    .project-card-slot,
     .project-card-featured,
     .project-card-wide {
       grid-column: span 3;
@@ -1021,10 +1025,13 @@
       grid-template-columns: 1fr;
     }
 
-    .project-card,
+    .project-card-slot,
     .project-card-featured,
     .project-card-wide {
       grid-column: 1;
+    }
+
+    .project-card {
       min-height: 16rem;
     }
 
