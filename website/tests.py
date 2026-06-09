@@ -20,14 +20,19 @@ class HomePageTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "LVTD, LLC")
-        self.assertContains(response, "MVP done-for-you")
+        self.assertContains(
+            response, "Tools, sites, apps, and MVPs that feel finished."
+        )
+        self.assertContains(response, "MVP done for you")
         self.assertContains(response, "Pay a $100 deposit")
         self.assertContains(response, "$5,000")
+        self.assertContains(response, "Reserve MVP")
         self.assertContains(response, "Pay $100 deposit")
-        self.assertContains(response, "Product engineering for founders")
-        self.assertContains(response, "Shipped work")
-        self.assertContains(response, "Real products, not portfolio theater.")
-        self.assertContains(response, "Need a builder who can ship?")
+        self.assertContains(response, "Selected work")
+        self.assertContains(response, "Proof that ships.")
+        self.assertContains(
+            response, "Send the version you can explain in five minutes."
+        )
 
         for project_name in (
             "Talent Leads",
