@@ -9,6 +9,7 @@
       name="description"
       content="{% block description %}LVTD helps founders and teams design, build, and ship practical software products, automations, and growth tooling.{% endblock %}"
     />
+    <meta name="theme-color" content="#f8faf7" />
     <link rel="canonical" href="{{ canonical_url }}" />
     <meta property="og:site_name" content="LVTD" />
     <meta property="og:type" content="{% block og_type %}website{% endblock %}" />
@@ -64,6 +65,7 @@
     </script>
   </head>
   <body class="antialiased">
+    <a class="skip-link" href="#main-content">Skip to content</a>
     <div class="site-ambient" aria-hidden="true"></div>
     <div class="site-frame" aria-hidden="true">
       <div class="site-frame-inner"></div>
@@ -73,13 +75,18 @@
       <header class="site-container">
         <nav class="top-nav" aria-label="Primary navigation">
           <a class="brand-link" href="{% url 'home' %}">
-            <span class="brand-mark" aria-hidden="true">LV</span>
-            <span>LVTD</span>
+            <span class="brand-mark" aria-hidden="true">L</span>
+            <span class="brand-word">
+              <strong>LVTD</strong>
+              <span>builds software</span>
+            </span>
           </a>
           <div class="nav-links">
+            <a class="nav-link" href="{% url 'home' %}#work">Work</a>
+            <a class="nav-link" href="{% url 'home' %}#services">Services</a>
             <a class="nav-link" href="{% url 'blog-list' %}">Writing</a>
             <a class="nav-link" href="{% url 'hosted-openclaw-learn-more' %}">OpenClaw</a>
-            <a class="nav-link" href="mailto:rasul@lvtd.dev?subject=Project%20inquiry">Contact</a>
+            <a class="nav-link nav-link-strong" href="mailto:rasul@lvtd.dev?subject=Project%20inquiry">Start a build</a>
             <button
               id="theme-toggle"
               class="theme-toggle"
@@ -93,14 +100,18 @@
         </nav>
       </header>
 
-      <main class="site-container pb-20 sm:pb-24">
+      <main id="main-content" class="site-container site-main">
         {% block content %}{% endblock %}
       </main>
 
       <footer class="site-container pb-10">
-        <div class="flex flex-col gap-3 border-t pt-6 text-sm sm:flex-row sm:items-center sm:justify-between" style="border-color: var(--lvtd-border); color: var(--lvtd-soft);">
-          <p>&copy; 2026 LVTD, LLC. Product engineering for founders and teams.</p>
-          <a class="font-semibold transition hover:opacity-75" href="mailto:rasul@lvtd.dev?subject=Project%20inquiry">rasul@lvtd.dev</a>
+        <div class="footer-inner">
+          <p>&copy; 2026 LVTD, LLC. Tools, sites, apps, and MVPs.</p>
+          <div class="footer-links">
+            <a href="{% url 'blog-list' %}">Writing</a>
+            <a href="https://github.com/rasulkireev">GitHub</a>
+            <a href="mailto:rasul@lvtd.dev?subject=Project%20inquiry">rasul@lvtd.dev</a>
+          </div>
         </div>
       </footer>
     </div>
