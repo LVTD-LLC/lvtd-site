@@ -13,6 +13,7 @@ class HomePageTests(TestCase):
         MVP_DEPOSIT_CHECKOUT_URL="https://example.com/pay",
         MVP_DEPOSIT_AMOUNT="$100",
         MVP_FINAL_PRICE="$5,000",
+        HOSTED_OPENCLAW_DEPOSIT_AMOUNT="$125",
     )
     def test_homepage_loads(self) -> None:
         client = Client()
@@ -27,7 +28,7 @@ class HomePageTests(TestCase):
         self.assertContains(response, "Pay a $100 deposit")
         self.assertContains(response, "$5,000")
         self.assertContains(response, "Reserve MVP")
-        self.assertContains(response, "Pay $100 deposit")
+        self.assertContains(response, "Pay $125 deposit")
         self.assertContains(response, "Selected work")
         self.assertContains(response, "Proof that ships.")
         self.assertContains(
@@ -174,6 +175,7 @@ class BlogPagesTests(TestCase):
 
 
 class HostedOpenClawPagesTests(TestCase):
+    @override_settings(HOSTED_OPENCLAW_DEPOSIT_AMOUNT="$150")
     def test_learn_more_page_loads(self) -> None:
         client = Client()
         response = client.get(reverse("hosted-openclaw-learn-more"))
@@ -182,6 +184,7 @@ class HostedOpenClawPagesTests(TestCase):
         self.assertContains(response, "Hosted OpenClaw Service")
         self.assertContains(response, "Best fit")
         self.assertContains(response, "Frequently asked questions")
+        self.assertContains(response, "Pay $150 deposit")
         self.assertContains(response, '"@type": "Service"')
         self.assertContains(response, '"@type": "FAQPage"')
 

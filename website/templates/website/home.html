@@ -316,7 +316,7 @@
       <div class="offer-actions">
         <form method="post" action="{% url 'hosted-openclaw-checkout' %}">
           {% csrf_token %}
-          <button class="btn btn-primary" type="submit">Pay $100 deposit</button>
+          <button class="btn btn-primary" type="submit">Pay {{ hosted_openclaw_deposit_amount }} deposit</button>
         </form>
         <a class="btn btn-secondary" href="{% url 'hosted-openclaw-learn-more' %}">View details</a>
       </div>
