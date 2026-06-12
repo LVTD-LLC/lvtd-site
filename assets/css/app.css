@@ -27,47 +27,47 @@
 @layer base {
   :root {
     color-scheme: light;
-    --lvtd-bg: oklch(0.982 0.006 145);
+    --lvtd-bg: oklch(0.984 0.003 250);
     --lvtd-panel: oklch(1 0 0);
-    --lvtd-panel-muted: oklch(0.955 0.01 145);
-    --lvtd-panel-raised: oklch(0.992 0.003 145);
-    --lvtd-ink: oklch(0.16 0.018 150);
-    --lvtd-muted: oklch(0.38 0.026 150);
-    --lvtd-soft: oklch(0.54 0.024 150);
-    --lvtd-border: oklch(0.86 0.018 145);
-    --lvtd-border-strong: oklch(0.73 0.035 145);
-    --lvtd-accent: oklch(0.62 0.15 148);
-    --lvtd-accent-strong: oklch(0.36 0.13 148);
-    --lvtd-accent-soft: oklch(0.92 0.06 148);
-    --lvtd-focus: oklch(0.56 0.17 148);
+    --lvtd-panel-muted: oklch(0.956 0.006 250);
+    --lvtd-panel-raised: oklch(0.992 0.002 250);
+    --lvtd-ink: oklch(0.16 0.014 250);
+    --lvtd-muted: oklch(0.38 0.02 250);
+    --lvtd-soft: oklch(0.54 0.018 250);
+    --lvtd-border: oklch(0.86 0.012 250);
+    --lvtd-border-strong: oklch(0.73 0.02 250);
+    --lvtd-accent: oklch(0.68 0.19 18);
+    --lvtd-accent-strong: oklch(0.45 0.17 18);
+    --lvtd-accent-soft: oklch(0.95 0.056 76);
+    --lvtd-focus: oklch(0.72 0.17 42);
     --lvtd-action: var(--lvtd-ink);
     --lvtd-action-text: var(--lvtd-panel);
-    --lvtd-console: oklch(0.16 0.018 150);
-    --lvtd-console-ink: oklch(0.92 0.015 150);
-    --lvtd-console-muted: oklch(0.72 0.03 150);
+    --lvtd-console: oklch(0.16 0.014 250);
+    --lvtd-console-ink: oklch(0.92 0.012 250);
+    --lvtd-console-muted: oklch(0.72 0.02 250);
     --lvtd-grid: color-mix(in oklab, var(--lvtd-border) 58%, transparent);
   }
 
   html.dark {
     color-scheme: dark;
-    --lvtd-bg: oklch(0.13 0.014 150);
-    --lvtd-panel: oklch(0.17 0.016 150);
-    --lvtd-panel-muted: oklch(0.21 0.018 150);
-    --lvtd-panel-raised: oklch(0.185 0.016 150);
-    --lvtd-ink: oklch(0.94 0.012 150);
-    --lvtd-muted: oklch(0.76 0.018 150);
-    --lvtd-soft: oklch(0.64 0.02 150);
-    --lvtd-border: oklch(0.33 0.022 150);
-    --lvtd-border-strong: oklch(0.45 0.035 150);
-    --lvtd-accent: oklch(0.72 0.15 148);
-    --lvtd-accent-strong: oklch(0.8 0.14 148);
-    --lvtd-accent-soft: oklch(0.26 0.06 148);
-    --lvtd-focus: oklch(0.78 0.14 148);
+    --lvtd-bg: oklch(0.13 0.012 250);
+    --lvtd-panel: oklch(0.17 0.014 250);
+    --lvtd-panel-muted: oklch(0.21 0.016 250);
+    --lvtd-panel-raised: oklch(0.185 0.014 250);
+    --lvtd-ink: oklch(0.94 0.01 250);
+    --lvtd-muted: oklch(0.76 0.016 250);
+    --lvtd-soft: oklch(0.64 0.018 250);
+    --lvtd-border: oklch(0.33 0.02 250);
+    --lvtd-border-strong: oklch(0.45 0.028 250);
+    --lvtd-accent: oklch(0.72 0.16 18);
+    --lvtd-accent-strong: oklch(0.84 0.13 20);
+    --lvtd-accent-soft: oklch(0.26 0.055 18);
+    --lvtd-focus: oklch(0.82 0.15 55);
     --lvtd-action: var(--lvtd-accent);
-    --lvtd-action-text: oklch(0.12 0.014 150);
-    --lvtd-console: oklch(0.1 0.012 150);
-    --lvtd-console-ink: oklch(0.94 0.012 150);
-    --lvtd-console-muted: oklch(0.7 0.018 150);
+    --lvtd-action-text: oklch(0.12 0.012 250);
+    --lvtd-console: oklch(0.1 0.012 250);
+    --lvtd-console-ink: oklch(0.94 0.01 250);
+    --lvtd-console-muted: oklch(0.7 0.016 250);
     --lvtd-grid: color-mix(in oklab, var(--lvtd-border) 52%, transparent);
   }
 
@@ -212,18 +212,25 @@
 
   .brand-mark {
     display: inline-flex;
-    width: 2.25rem;
-    height: 2.25rem;
+    width: 2.5rem;
+    height: 2.5rem;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--lvtd-border-strong);
+    border: 1px solid color-mix(in oklab, var(--lvtd-accent) 28%, var(--lvtd-border));
     border-radius: 0.5rem;
-    background: var(--lvtd-action);
-    color: var(--lvtd-action-text);
-    font-family: var(--font-mono);
-    font-size: 0.8125rem;
-    font-weight: 760;
-    letter-spacing: 0;
+    background:
+      radial-gradient(
+        circle at 50% 54%,
+        color-mix(in oklab, var(--lvtd-accent-soft) 76%, var(--lvtd-panel)),
+        var(--lvtd-panel) 74%
+      );
+  }
+
+  .brand-mark-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0.28rem 0.5rem rgb(97 32 43 / 0.14));
   }
 
   .brand-word {
@@ -281,7 +288,12 @@
     width: 0.5rem;
     height: 0.5rem;
     border-radius: 999px;
-    background: var(--lvtd-accent);
+    background:
+      linear-gradient(
+        135deg,
+        var(--lvtd-accent),
+        color-mix(in oklab, var(--lvtd-focus) 82%, var(--lvtd-accent))
+      );
   }
 
   .btn {

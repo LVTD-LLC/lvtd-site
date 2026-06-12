@@ -9,16 +9,21 @@
       name="description"
       content="{% block description %}LVTD helps founders and teams design, build, and ship practical software products, automations, and growth tooling.{% endblock %}"
     />
-    <meta name="theme-color" content="#f8faf7" data-theme-color />
+    <meta name="theme-color" content="#fff0c7" data-theme-color />
     <link rel="canonical" href="{{ canonical_url }}" />
     <meta property="og:site_name" content="LVTD" />
     <meta property="og:type" content="{% block og_type %}website{% endblock %}" />
     <meta property="og:title" content="{% block og_title %}LVTD - Product engineering for founders and teams{% endblock %}" />
     <meta property="og:description" content="{% block og_description %}LVTD helps founders and teams design, build, and ship practical software products, automations, and growth tooling.{% endblock %}" />
     <meta property="og:url" content="{{ canonical_url }}" />
+    <meta property="og:image" content="{{ site_url }}{% static 'images/brand/lvtd-fire-heart.png' %}" />
+    <meta property="og:image:alt" content="LVTD fire heart logo" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="{% block twitter_title %}LVTD - Product engineering for founders and teams{% endblock %}" />
     <meta name="twitter:description" content="{% block twitter_description %}LVTD helps founders and teams design, build, and ship practical software products, automations, and growth tooling.{% endblock %}" />
+    <meta name="twitter:image" content="{{ site_url }}{% static 'images/brand/lvtd-fire-heart.png' %}" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/brand/favicon-32.png' %}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/brand/apple-touch-icon.png' %}" />
     <script>
       ;(() => {
         try {
@@ -34,7 +39,7 @@
           document.documentElement.style.colorScheme = theme
           document
             .querySelector('[data-theme-color]')
-            ?.setAttribute('content', theme === 'dark' ? '#07120b' : '#f8faf7')
+            ?.setAttribute('content', theme === 'dark' ? '#1b0f14' : '#fff0c7')
         } catch (error) {
           document.documentElement.classList.remove('dark')
           document.documentElement.style.colorScheme = 'light'
@@ -48,6 +53,7 @@
           "@type": "Organization",
           "name": "LVTD",
           "url": "{{ site_url }}/",
+          "logo": "{{ site_url }}{% static 'images/brand/lvtd-fire-heart.png' %}",
           "email": "rasul@lvtd.dev",
           "founder": {
             "@type": "Person",
@@ -78,7 +84,15 @@
       <header class="site-container">
         <nav class="top-nav" aria-label="Primary navigation">
           <a class="brand-link" href="{% url 'home' %}">
-            <span class="brand-mark" aria-hidden="true">L</span>
+            <span class="brand-mark" aria-hidden="true">
+              <img
+                class="brand-mark-image"
+                src="{% static 'images/brand/lvtd-fire-heart.png' %}"
+                width="40"
+                height="40"
+                alt=""
+              />
+            </span>
             <span class="brand-word">
               <strong>LVTD</strong>
               <span>builds software</span>
@@ -138,7 +152,7 @@
           }
           document
             .querySelector('[data-theme-color]')
-            ?.setAttribute('content', theme === 'dark' ? '#07120b' : '#f8faf7')
+            ?.setAttribute('content', theme === 'dark' ? '#1b0f14' : '#fff0c7')
           toggleButton.setAttribute(
             'aria-label',
             theme === 'dark' ? 'Use light mode' : 'Use dark mode',
