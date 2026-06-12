@@ -133,6 +133,48 @@ class CanonicalRedirectTests(TestCase):
         self.assertEqual(response.status_code, 308)
         self.assertEqual(response["Location"], "https://lvtd.test/")
 
+    @override_settings(
+        SITE_URL="https://lvtd.test",
+        CANONICAL_HOST_REDIRECT_ENABLED=True,
+        ALLOWED_HOSTS=["lvtd.test", "testserver"],
+    )
+    def test_allows_canonical_host_with_default_port(self) -> None:
+        client = Client()
+        response = client.get("/", HTTP_HOST="lvtd.test:443", secure=True)
+
+        self.assertEqual(response.status_code, 200)
+
+    @override_settings(
+        SITE_URL="https://lvtd.test",
+        CANONICAL_HOST_REDIRECT_ENABLED=True,
+        ALLOWED_HOSTS=["lvtd.test", "testserver"],
+    )
+    def test_allows_wsgi_fallback_with_default_port(self) -> None:
+        client = Client()
+        response = client.get(
+            "/",
+            secure=True,
+            SERVER_NAME="lvtd.test",
+            SERVER_PORT="443",
+        )
+
+        self.assertEqual(response.status_code, 200)
+
+    @override_settings(
+        SITE_URL="https://lvtd.test",
+        CANONICAL_HOST_REDIRECT_ENABLED=True,
+    )
+    def test_redirects_malformed_host_port_to_canonical_url(self) -> None:
+        client = Client()
+        response = client.get(
+            "/?utm_source=test",
+            HTTP_HOST="lvtd.test:notaport",
+            secure=True,
+        )
+
+        self.assertEqual(response.status_code, 308)
+        self.assertEqual(response["Location"], "https://lvtd.test/?utm_source=test")
+
 
 class CrawlEndpointTests(TestCase):
     @override_settings(SITE_URL="https://lvtd.test")
@@ -149,7 +191,7 @@ class CrawlEndpointTests(TestCase):
         self.assertIn("Disallow: /api/", content)
         self.assertIn("Sitemap: https://lvtd.test/sitemap.xml", content)
 
-    @override_settings(SITE_URL="https://lvtd.test")
+    @override_settings(SITE_URL="https://lvtd.test", SITE_LASTMOD="2026-06-12")
     def test_sitemap_includes_public_indexable_urls_only(self) -> None:
         published_post = BlogPost.objects.create(
             title="Shipping with confidence",

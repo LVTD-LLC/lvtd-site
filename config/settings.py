@@ -109,7 +109,11 @@ SECURE_SSL_REDIRECT = (
     and not DEBUG
     and not TESTING
 )
-SECURE_HSTS_SECONDS = 31536000 if not DEBUG and not TESTING else 0
+SECURE_HSTS_SECONDS = (
+    int(os.getenv("DJANGO_SECURE_HSTS_SECONDS", "31536000"))
+    if not DEBUG and not TESTING
+    else 0
+)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = (
     os.getenv("DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS", "false").lower()
     in {"1", "true", "yes"}
