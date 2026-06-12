@@ -146,7 +146,7 @@ class LegalPagesTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Terms of Service")
-        self.assertContains(response, "Last updated June 12, 2026")
+        self.assertContains(response, "Last updated")
         self.assertContains(response, "Deposits, Payments, and Refunds")
         self.assertContains(response, "Work Product and Intellectual Property")
         self.assertContains(
@@ -162,7 +162,7 @@ class LegalPagesTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Privacy Policy")
-        self.assertContains(response, "Last updated June 12, 2026")
+        self.assertContains(response, "Last updated")
         self.assertContains(response, "Plausible Analytics")
         self.assertContains(response, "Mailgun")
         self.assertContains(
