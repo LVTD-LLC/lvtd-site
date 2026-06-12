@@ -62,6 +62,15 @@ class HomePageTests(TestCase):
         self.assertContains(response, reverse("blog-list"))
         self.assertContains(response, "Read notes")
 
+    def test_homepage_has_legal_links(self) -> None:
+        client = Client()
+        response = client.get(reverse("home"))
+
+        self.assertContains(response, reverse("terms-of-service"))
+        self.assertContains(response, reverse("privacy-policy"))
+        self.assertContains(response, "Terms")
+        self.assertContains(response, "Privacy")
+
     @override_settings(SITE_URL="https://lvtd.test")
     def test_homepage_has_shared_seo_metadata(self) -> None:
         client = Client()
@@ -118,6 +127,8 @@ class CrawlEndpointTests(TestCase):
         self.assertIn("<loc>https://lvtd.test/</loc>", content)
         self.assertIn("<loc>https://lvtd.test/blog/</loc>", content)
         self.assertIn("<loc>https://lvtd.test/services/hosted-openclaw/</loc>", content)
+        self.assertIn("<loc>https://lvtd.test/tos/</loc>", content)
+        self.assertIn("<loc>https://lvtd.test/privacy/</loc>", content)
         self.assertIn(
             f"<loc>https://lvtd.test/blog/{published_post.slug}/</loc>", content
         )
@@ -125,6 +136,40 @@ class CrawlEndpointTests(TestCase):
         self.assertNotIn("draft-post", content)
         self.assertNotIn("checkout", content)
         self.assertNotIn("api/stripe", content)
+
+
+class LegalPagesTests(TestCase):
+    @override_settings(SITE_URL="https://lvtd.test")
+    def test_terms_of_service_page_loads(self) -> None:
+        client = Client()
+        response = client.get(reverse("terms-of-service"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Terms of Service")
+        self.assertContains(response, "Last updated June 12, 2026")
+        self.assertContains(response, "Deposits, Payments, and Refunds")
+        self.assertContains(response, "Work Product and Intellectual Property")
+        self.assertContains(
+            response,
+            '<link rel="canonical" href="https://lvtd.test/tos/" />',
+            html=True,
+        )
+
+    @override_settings(SITE_URL="https://lvtd.test")
+    def test_privacy_policy_page_loads(self) -> None:
+        client = Client()
+        response = client.get(reverse("privacy-policy"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Privacy Policy")
+        self.assertContains(response, "Last updated June 12, 2026")
+        self.assertContains(response, "Plausible Analytics")
+        self.assertContains(response, "Mailgun")
+        self.assertContains(
+            response,
+            '<link rel="canonical" href="https://lvtd.test/privacy/" />',
+            html=True,
+        )
 
 
 class BlogPagesTests(TestCase):

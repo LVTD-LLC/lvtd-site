@@ -42,6 +42,8 @@ def sitemap_xml(request: HttpRequest) -> HttpResponse:
         (reverse("home"), "weekly", "1.0"),
         (reverse("blog-list"), "weekly", "0.7"),
         (reverse("hosted-openclaw-learn-more"), "monthly", "0.8"),
+        (reverse("terms-of-service"), "yearly", "0.3"),
+        (reverse("privacy-policy"), "yearly", "0.3"),
     ]
     for path, changefreq, priority in static_urls:
         url = ElementTree.SubElement(urlset, "url")
@@ -102,6 +104,14 @@ class HostedOpenClawLearnMoreView(TemplateView):
             settings.HOSTED_OPENCLAW_DEPOSIT_AMOUNT
         )
         return context
+
+
+class TermsOfServiceView(TemplateView):
+    template_name = "website/terms.html"
+
+
+class PrivacyPolicyView(TemplateView):
+    template_name = "website/privacy.html"
 
 
 @require_POST

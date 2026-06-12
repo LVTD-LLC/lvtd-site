@@ -1,0 +1,139 @@
+{% extends "website/base.html" %}
+
+{% block title %}Terms of Service | LVTD{% endblock %}
+{% block description %}Terms for using the LVTD website, requesting services, purchasing deposits, and working with LVTD, LLC.{% endblock %}
+{% block og_title %}Terms of Service | LVTD{% endblock %}
+{% block og_description %}Terms for using the LVTD website, requesting services, purchasing deposits, and working with LVTD, LLC.{% endblock %}
+{% block twitter_title %}Terms of Service | LVTD{% endblock %}
+{% block twitter_description %}Terms for using the LVTD website, requesting services, purchasing deposits, and working with LVTD, LLC.{% endblock %}
+{% block structured_data %}
+  {{ block.super }}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Terms of Service",
+      "url": "{{ canonical_url }}",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LVTD",
+        "url": "{{ site_url }}/"
+      }
+    }
+  </script>
+{% endblock %}
+
+{% block content %}
+  <article class="mx-auto max-w-4xl py-12 sm:py-16">
+    <header>
+      <p class="section-kicker">LVTD, LLC</p>
+      <h1 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl" style="color: var(--lvtd-ink);">
+        Terms of Service
+      </h1>
+      <p class="mt-5 max-w-3xl text-base leading-8 muted">
+        Last updated June 12, 2026. These terms apply to your use of lvtd.dev and
+        to services purchased from or arranged with LVTD, LLC.
+      </p>
+    </header>
+
+    <section class="surface-card article-body mt-10 p-6 text-base leading-8 sm:p-8" style="color: var(--lvtd-muted);">
+      <h2 class="text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">Agreement</h2>
+      <p class="mt-3">
+        By using this website, contacting LVTD, or purchasing a service deposit,
+        you agree to these terms. If you are acting for a company or organization,
+        you confirm that you have authority to bind that organization.
+      </p>
+
+      <h2 class="mt-8 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">Services</h2>
+      <p class="mt-3">
+        LVTD provides product engineering, software development, automation,
+        technical debugging, hosted OpenClaw support, and related consulting
+        services. The specific scope, timeline, deliverables, pricing, and support
+        expectations for a project are set in the written proposal, email thread,
+        checkout flow, or statement of work accepted by both sides.
+      </p>
+      <p>
+        Unless agreed in writing, estimates are good-faith planning estimates, not
+        guaranteed delivery dates. You are responsible for timely access to systems,
+        credentials, technical context, feedback, and approvals needed to perform
+        the work.
+      </p>
+
+      <h2 class="mt-8 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">Deposits, Payments, and Refunds</h2>
+      <p class="mt-3">
+        Deposits reserve time and begin project intake. Payment processing is
+        handled by third-party providers such as Stripe, and their terms may also
+        apply. Unless a written agreement says otherwise, deposits are credited
+        toward the related service and are non-refundable after intake, planning,
+        setup, or implementation work has started.
+      </p>
+      <p>
+        Additional work outside the agreed scope may require a separate quote,
+        invoice, or written approval. Late or failed payments may pause work,
+        delivery, access, or support until the account is current.
+      </p>
+
+      <h2 class="mt-8 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">Client Materials and Access</h2>
+      <p class="mt-3">
+        You retain ownership of materials, data, systems, credentials, and content
+        you provide to LVTD. You grant LVTD the limited permission needed to use
+        those materials to provide the requested services. You are responsible for
+        confirming that you have the rights and permissions needed to share them.
+      </p>
+
+      <h2 class="mt-8 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">Work Product and Intellectual Property</h2>
+      <p class="mt-3">
+        Unless otherwise agreed in writing, project-specific deliverables created
+        for you are assigned to you after full payment. LVTD retains ownership of
+        pre-existing tools, templates, libraries, know-how, reusable techniques,
+        and general skills used to perform the work. Open-source components remain
+        subject to their applicable licenses.
+      </p>
+
+      <h2 class="mt-8 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">Acceptable Use</h2>
+      <p class="mt-3">
+        You may not use this website or LVTD services to violate law, infringe
+        rights, compromise systems, distribute malware, send abusive or unlawful
+        communications, or interfere with the operation of LVTD or third-party
+        services.
+      </p>
+
+      <h2 class="mt-8 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">No Professional Advice</h2>
+      <p class="mt-3">
+        Information on this website is for general business and technical purposes.
+        It is not legal, financial, tax, security, or compliance advice. You are
+        responsible for getting professional advice for your own situation.
+      </p>
+
+      <h2 class="mt-8 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">Third-Party Services</h2>
+      <p class="mt-3">
+        Projects may use third-party tools, APIs, hosting providers, analytics,
+        payment processors, email providers, or open-source software. LVTD is not
+        responsible for third-party outages, policy changes, security incidents,
+        pricing changes, or service limitations.
+      </p>
+
+      <h2 class="mt-8 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">Disclaimers and Limitation of Liability</h2>
+      <p class="mt-3">
+        The website is provided as available. Services are performed with reasonable
+        care, but LVTD does not promise that any website, product, integration, or
+        automation will be uninterrupted, error-free, or suitable for every future
+        use case. To the maximum extent allowed by law, LVTD will not be liable for
+        indirect, incidental, special, consequential, exemplary, or punitive damages.
+      </p>
+
+      <h2 class="mt-8 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">Changes</h2>
+      <p class="mt-3">
+        LVTD may update these terms from time to time. The updated version will be
+        posted on this page with a new last-updated date. Continued use of the site
+        or services after an update means you accept the updated terms.
+      </p>
+
+      <h2 class="mt-8 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">Contact</h2>
+      <p class="mt-3">
+        Questions about these terms can be sent to
+        <a class="font-bold transition hover:opacity-75" style="color: var(--lvtd-accent-strong);" href="mailto:rasul@lvtd.dev?subject=Terms%20of%20Service">rasul@lvtd.dev</a>.
+      </p>
+    </section>
+  </article>
+{% endblock %}

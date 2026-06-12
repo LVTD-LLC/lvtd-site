@@ -8,6 +8,8 @@ urlpatterns = [
     path("", views.HomePageView.as_view(), name="home"),
     path("blog/", views.BlogListView.as_view(), name="blog-list"),
     path("blog/<slug:slug>/", views.BlogDetailView.as_view(), name="blog-detail"),
+    path("tos/", views.TermsOfServiceView.as_view(), name="terms-of-service"),
+    path("privacy/", views.PrivacyPolicyView.as_view(), name="privacy-policy"),
     path(
         "services/hosted-openclaw/",
         views.HostedOpenClawLearnMoreView.as_view(),
