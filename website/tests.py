@@ -138,6 +138,17 @@ class CanonicalRedirectTests(TestCase):
         CANONICAL_HOST_REDIRECT_ENABLED=True,
         ALLOWED_HOSTS=["lvtd.test", "testserver"],
     )
+    def test_allows_canonical_host_and_scheme(self) -> None:
+        client = Client()
+        response = client.get("/", HTTP_HOST="lvtd.test", secure=True)
+
+        self.assertEqual(response.status_code, 200)
+
+    @override_settings(
+        SITE_URL="https://lvtd.test",
+        CANONICAL_HOST_REDIRECT_ENABLED=True,
+        ALLOWED_HOSTS=["lvtd.test", "testserver"],
+    )
     def test_allows_canonical_host_with_default_port(self) -> None:
         client = Client()
         response = client.get("/", HTTP_HOST="lvtd.test:443", secure=True)
