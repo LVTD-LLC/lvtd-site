@@ -1,0 +1,142 @@
+{% extends "website/base.html" %}
+
+{% block title %}Privacy Policy | LVTD{% endblock %}
+{% block description %}Privacy policy for LVTD, including website analytics, service inquiries, payments, email, and project data handling.{% endblock %}
+{% block og_title %}Privacy Policy | LVTD{% endblock %}
+{% block og_description %}Privacy policy for LVTD, including website analytics, service inquiries, payments, email, and project data handling.{% endblock %}
+{% block twitter_title %}Privacy Policy | LVTD{% endblock %}
+{% block twitter_description %}Privacy policy for LVTD, including website analytics, service inquiries, payments, email, and project data handling.{% endblock %}
+{% block structured_data %}
+  {{ block.super }}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Privacy Policy",
+      "url": "{{ canonical_url }}",
+      "publisher": {
+        "@type": "Organization",
+        "name": "LVTD",
+        "url": "{{ site_url }}/"
+      }
+    }
+  </script>
+{% endblock %}
+
+{% block content %}
+  <article class="mx-auto max-w-4xl py-12 sm:py-16">
+    <header>
+      <p class="section-kicker">LVTD, LLC</p>
+      <h1 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl" style="color: var(--lvtd-ink);">
+        Privacy Policy
+      </h1>
+      <p class="mt-5 max-w-3xl text-base leading-8 muted">
+        Last updated June 12, 2026. This policy explains how LVTD, LLC handles
+        information collected through lvtd.dev, service inquiries, payments, and
+        client work.
+      </p>
+    </header>
+
+    <section class="surface-card article-body mt-10 p-6 text-base leading-8 sm:p-8" style="color: var(--lvtd-muted);">
+      <h2 class="text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">Information Collected</h2>
+      <p class="mt-3">
+        LVTD collects information you choose to provide, such as your name, email
+        address, company, project details, technical context, files, credentials,
+        and messages sent by email or other agreed channels.
+      </p>
+      <p>
+        The website may also collect basic technical information such as IP address,
+        browser type, device information, referring pages, pages visited, timestamps,
+        and server log data. The site stores your theme preference in local storage
+        so the light or dark mode setting works across visits.
+      </p>
+
+      <h2 class="mt-8 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">How Information Is Used</h2>
+      <p class="mt-3">
+        LVTD uses information to respond to inquiries, scope projects, provide
+        services, process payments, operate hosted services, send project follow-up,
+        maintain security, debug technical issues, improve the website, and comply
+        with legal or tax obligations.
+      </p>
+
+      <h2 class="mt-8 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">Payments</h2>
+      <p class="mt-3">
+        Payment details are handled by third-party payment processors such as
+        Stripe. LVTD may receive payment status, customer contact details, invoice
+        metadata, and transaction identifiers, but does not intentionally collect or
+        store full payment card numbers on this website.
+      </p>
+
+      <h2 class="mt-8 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">Analytics and Cookies</h2>
+      <p class="mt-3">
+        LVTD uses Plausible Analytics to understand website usage, file downloads,
+        and outbound link activity. Plausible is designed to provide aggregate site
+        metrics without building advertising profiles. The site may also use
+        cookies or local storage where needed for security, payments, preferences,
+        or third-party services.
+      </p>
+
+      <h2 class="mt-8 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">Service Providers</h2>
+      <p class="mt-3">
+        LVTD may share information with service providers that help run the
+        business, including hosting providers, email providers such as Mailgun,
+        payment processors such as Stripe, analytics providers, code hosting tools,
+        support tools, and infrastructure vendors. These providers may process
+        information only as needed to provide their services to LVTD.
+      </p>
+
+      <h2 class="mt-8 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">Client Data</h2>
+      <p class="mt-3">
+        For project work, LVTD may access systems, databases, files, logs, source
+        code, and business data that you provide or authorize. LVTD uses that data
+        to perform the requested work and does not sell client data. You should not
+        provide sensitive personal data, regulated health data, payment card data,
+        or other highly sensitive information unless it is necessary and expressly
+        agreed in writing.
+      </p>
+
+      <h2 class="mt-8 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">Retention</h2>
+      <p class="mt-3">
+        LVTD keeps information for as long as needed to provide services, maintain
+        business records, resolve disputes, meet legal obligations, and preserve
+        useful project context. Information may be deleted or anonymized when it is
+        no longer needed.
+      </p>
+
+      <h2 class="mt-8 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">Security</h2>
+      <p class="mt-3">
+        LVTD uses reasonable administrative and technical safeguards to protect
+        information. No website, email system, hosting provider, or internet
+        transmission is completely secure, so LVTD cannot guarantee absolute
+        security.
+      </p>
+
+      <h2 class="mt-8 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">Your Choices</h2>
+      <p class="mt-3">
+        You may request access, correction, deletion, or a copy of personal
+        information associated with you, subject to identity verification and legal
+        retention requirements. You can also ask LVTD to stop using your information
+        for non-essential communications.
+      </p>
+
+      <h2 class="mt-8 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">International Processing</h2>
+      <p class="mt-3">
+        LVTD is based in the United States and may use service providers in the
+        United States or other countries. By using the site or services, you
+        understand that information may be processed in those locations.
+      </p>
+
+      <h2 class="mt-8 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">Changes</h2>
+      <p class="mt-3">
+        LVTD may update this policy from time to time. The updated version will be
+        posted on this page with a new last-updated date.
+      </p>
+
+      <h2 class="mt-8 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">Contact</h2>
+      <p class="mt-3">
+        Privacy requests or questions can be sent to
+        <a class="font-bold transition hover:opacity-75" style="color: var(--lvtd-accent-strong);" href="mailto:rasul@lvtd.dev?subject=Privacy%20Policy">rasul@lvtd.dev</a>.
+      </p>
+    </section>
+  </article>
+{% endblock %}
