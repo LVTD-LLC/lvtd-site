@@ -39,15 +39,21 @@ def sitemap_xml(request: HttpRequest) -> HttpResponse:
     )
 
     static_urls = [
-        (reverse("home"), "weekly", "1.0"),
-        (reverse("blog-list"), "weekly", "0.7"),
-        (reverse("hosted-openclaw-learn-more"), "monthly", "0.8"),
-        (reverse("terms-of-service"), "yearly", "0.3"),
-        (reverse("privacy-policy"), "yearly", "0.3"),
+        (reverse("home"), settings.SITE_LASTMOD, "weekly", "1.0"),
+        (reverse("blog-list"), settings.SITE_LASTMOD, "weekly", "0.7"),
+        (
+            reverse("hosted-openclaw-learn-more"),
+            settings.SITE_LASTMOD,
+            "monthly",
+            "0.8",
+        ),
+        (reverse("terms-of-service"), settings.SITE_LASTMOD, "yearly", "0.3"),
+        (reverse("privacy-policy"), settings.SITE_LASTMOD, "yearly", "0.3"),
     ]
-    for path, changefreq, priority in static_urls:
+    for path, lastmod, changefreq, priority in static_urls:
         url = ElementTree.SubElement(urlset, "url")
         ElementTree.SubElement(url, "loc").text = _absolute_url(path)
+        ElementTree.SubElement(url, "lastmod").text = lastmod
         ElementTree.SubElement(url, "changefreq").text = changefreq
         ElementTree.SubElement(url, "priority").text = priority
 
