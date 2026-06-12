@@ -17,6 +17,9 @@
       "url": "{{ site_url }}/",
       "description": "Tools, sites, apps, MVPs, automations, and hosted infrastructure for founders and small teams.",
       "email": "rasul@lvtd.dev",
+      "sameAs": [
+        "https://github.com/LVTD-LLC"
+      ],
       "founder": {
         "@type": "Person",
         "name": "Rasul Kireev"
@@ -72,8 +75,8 @@
         </div>
         <div class="console-cell">
           <span>apps</span>
-          <strong>Cleanapp</strong>
-          <em>store ops</em>
+          <strong>PageFresh</strong>
+          <em>site reviews</em>
         </div>
         <div class="console-cell">
           <span>infra</span>
@@ -100,160 +103,278 @@
       </p>
     </div>
 
-    <ul class="project-grid">
-      <li class="project-card-slot project-card-featured">
-      <a class="project-card" href="https://gettalentleads.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-        <span class="project-media">
-          <img src="{% static 'images/logos/rocket_take_off.png' %}" alt="Talent Leads logo" class="project-logo" />
-        </span>
-        <span class="project-copy">
-          <span class="project-meta">Lead generation / hiring</span>
-          <strong>Talent Leads</strong>
-          <span>Lead generation for startup hiring teams that need targeted outreach inputs.</span>
-        </span>
-        <span class="project-tags" aria-label="Talent Leads categories">
-          <span>growth tool</span>
-          <span>automation</span>
-        </span>
-      </a>
-      </li>
+    <div class="project-group" aria-labelledby="active-projects-heading">
+      <div class="project-group-head">
+        <h3 id="active-projects-heading">Active projects</h3>
+        <p>Products, utilities, and experiments that are still in motion.</p>
+      </div>
 
-      <li class="project-card-slot">
-      <a class="project-card" href="https://builtwithdjango.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-        <span class="project-media">
-          <img src="{% static 'images/logos/builtwithdjango.png' %}" alt="Built with Django logo" class="project-logo" />
-        </span>
-        <span class="project-copy">
-          <span class="project-meta">Developer site</span>
-          <strong>Built with Django</strong>
-          <span>Developer education, product discovery, and useful examples for Django builders.</span>
-        </span>
-        <span class="project-tags" aria-label="Built with Django categories">
-          <span>content</span>
-          <span>community</span>
-        </span>
-      </a>
-      </li>
+      <ul class="project-grid">
+        <li class="project-card-slot project-card-featured">
+        <a class="project-card" href="https://filebridge.lvtd.dev/?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+          <span class="project-media">
+            <img src="{% static 'images/logos/filebridge.png' %}" alt="FileBridge logo" class="project-logo" />
+          </span>
+          <span class="project-copy">
+            <span class="project-meta">Data API product</span>
+            <strong>FileBridge</strong>
+            <span>Upload a CSV, inspect it, choose an index, and get clean API endpoints and exports.</span>
+          </span>
+          <span class="project-tags" aria-label="FileBridge categories">
+            <span>files</span>
+            <span>API</span>
+          </span>
+        </a>
+        </li>
 
-      <li class="project-card-slot">
-      <a class="project-card" href="https://levreview.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-        <span class="project-media">
-          <img src="{% static 'images/logos/levreview.jpg' %}" alt="LevReview logo" class="project-logo" />
-        </span>
-        <span class="project-copy">
-          <span class="project-meta">Local business SaaS</span>
-          <strong>LevReview</strong>
-          <span>Review collection workflows for operators who need better customer proof.</span>
-        </span>
-        <span class="project-tags" aria-label="LevReview categories">
-          <span>SaaS</span>
-          <span>reviews</span>
-        </span>
-      </a>
-      </li>
+        <li class="project-card-slot project-card-featured">
+        <a class="project-card" href="https://pgsandbox-mcp.lvtd.dev/?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+          <span class="project-media">
+            <img src="{% static 'images/logos/pgsandbox-mcp.svg' %}" alt="PGSandbox MCP logo" class="project-logo" />
+          </span>
+          <span class="project-copy">
+            <span class="project-meta">Alpha / developer infrastructure</span>
+            <strong>PGSandbox MCP</strong>
+            <span>Agent-facing MCP server for disposable Postgres sandboxes with TTLs and cleanup built in.</span>
+          </span>
+          <span class="project-tags" aria-label="PGSandbox MCP categories">
+            <span>MCP</span>
+            <span>Postgres</span>
+          </span>
+        </a>
+        </li>
 
-      <li class="project-card-slot">
-      <a class="project-card" href="https://gettjalerts.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-        <span class="project-media">
-          <img src="{% static 'images/logos/techjobalerts.png' %}" alt="Tech Job Alerts logo" class="project-logo" />
-        </span>
-        <span class="project-copy">
-          <span class="project-meta">Automation product</span>
-          <strong>Tech Job Alerts</strong>
-          <span>Automated matching and alerts for people tracking technical roles.</span>
-        </span>
-        <span class="project-tags" aria-label="Tech Job Alerts categories">
-          <span>alerts</span>
-          <span>jobs</span>
-        </span>
-      </a>
-      </li>
+        <li class="project-card-slot">
+        <a class="project-card" href="https://skills.lvtd.dev/?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+          <span class="project-media">
+            <span class="project-mark" aria-hidden="true">SK</span>
+          </span>
+          <span class="project-copy">
+            <span class="project-meta">Agent workflow library</span>
+            <strong>Skills</strong>
+            <span>Reusable agent skills for LVTD projects, Django SaaS workflows, and repeatable engineering tasks.</span>
+          </span>
+          <span class="project-tags" aria-label="Skills categories">
+            <span>agents</span>
+            <span>workflows</span>
+          </span>
+        </a>
+        </li>
 
-      <li class="project-card-slot project-card-wide">
-      <a class="project-card" href="https://osig.app?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-        <span class="project-media">
-          <img src="{% static 'images/logos/osig.png' %}" alt="OSIG logo" class="project-logo" />
-        </span>
-        <span class="project-copy">
-          <span class="project-meta">Open-source utility</span>
-          <strong>OSIG</strong>
-          <span>Open-source social image generation for shipping shareable pages and previews.</span>
-        </span>
-        <span class="project-tags" aria-label="OSIG categories">
-          <span>open source</span>
-          <span>images</span>
-        </span>
-      </a>
-      </li>
+        <li class="project-card-slot">
+        <a class="project-card" href="https://djass.dev/?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+          <span class="project-media">
+            <img src="{% static 'images/logos/djass.svg' %}" alt="Djass logo" class="project-logo" />
+          </span>
+          <span class="project-copy">
+            <span class="project-meta">Django SaaS generator</span>
+            <strong>Djass</strong>
+            <span>Generate production-ready Django SaaS codebases with deployment paths and agent instructions.</span>
+          </span>
+          <span class="project-tags" aria-label="Djass categories">
+            <span>Django</span>
+            <span>SaaS</span>
+          </span>
+        </a>
+        </li>
 
-      <li class="project-card-slot">
-      <a class="project-card" href="https://statushen.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-        <span class="project-media">
-          <img src="{% static 'images/logos/statushen.png' %}" alt="StatusHen logo" class="project-logo" />
-        </span>
-        <span class="project-copy">
-          <span class="project-meta">Infrastructure product</span>
-          <strong>StatusHen</strong>
-          <span>Uptime monitoring and status pages for teams that need clear incident surfaces.</span>
-        </span>
-        <span class="project-tags" aria-label="StatusHen categories">
-          <span>monitoring</span>
-          <span>status</span>
-        </span>
-      </a>
-      </li>
+        <li class="project-card-slot">
+        <a class="project-card" href="https://awesome.lvtd.dev/?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+          <span class="project-media">
+            <img src="{% static 'images/logos/awesome.svg' %}" alt="Awesome logo" class="project-logo" />
+          </span>
+          <span class="project-copy">
+            <span class="project-meta">Repository discovery</span>
+            <strong>Awesome</strong>
+            <span>Search and monitor repositories discovered across curated awesome lists.</span>
+          </span>
+          <span class="project-tags" aria-label="Awesome categories">
+            <span>GitHub</span>
+            <span>search</span>
+          </span>
+        </a>
+        </li>
 
-      <li class="project-card-slot">
-      <a class="project-card" href="https://tuxseo.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-        <span class="project-media">
-          <img src="{% static 'images/logos/tuxseo.png' %}" alt="TuxSEO logo" class="project-logo" />
-        </span>
-        <span class="project-copy">
-          <span class="project-meta">Growth system</span>
-          <strong>TuxSEO</strong>
-          <span>Programmatic SEO tooling for creating and maintaining search surfaces.</span>
-        </span>
-        <span class="project-tags" aria-label="TuxSEO categories">
-          <span>SEO</span>
-          <span>programmatic</span>
-        </span>
-      </a>
-      </li>
+        <li class="project-card-slot">
+        <a class="project-card" href="https://askhndigests.com/?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+          <span class="project-media">
+            <img src="{% static 'images/logos/ask-hn-digest.svg' %}" alt="Ask HN Digest logo" class="project-logo" />
+          </span>
+          <span class="project-copy">
+            <span class="project-meta">Newsletter product</span>
+            <strong>Ask HN Digest</strong>
+            <span>Summaries of the most engaging Ask HN discussions for readers who want the signal.</span>
+          </span>
+          <span class="project-tags" aria-label="Ask HN Digest categories">
+            <span>newsletter</span>
+            <span>HN</span>
+          </span>
+        </a>
+        </li>
 
-      <li class="project-card-slot">
-      <a class="project-card" href="https://cleanapp.dev?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-        <span class="project-media">
-          <img src="{% static 'images/logos/cleanapp.png' %}" alt="Cleanapp logo" class="project-logo" />
-        </span>
-        <span class="project-copy">
-          <span class="project-meta">App operations</span>
-          <strong>Cleanapp</strong>
-          <span>App Store maintenance workflows for keeping releases and metadata in order.</span>
-        </span>
-        <span class="project-tags" aria-label="Cleanapp categories">
-          <span>ops</span>
-          <span>apps</span>
-        </span>
-      </a>
-      </li>
+        <li class="project-card-slot project-card-wide">
+        <a class="project-card" href="https://pagefresh.lvtd.dev/?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+          <span class="project-media">
+            <img src="{% static 'images/logos/pagefresh.svg' %}" alt="PageFresh logo" class="project-logo" />
+          </span>
+          <span class="project-copy">
+            <span class="project-meta">Website maintenance</span>
+            <strong>PageFresh</strong>
+            <span>Scheduled page review reminders for every sitemap, sent as practical email digests.</span>
+          </span>
+          <span class="project-tags" aria-label="PageFresh categories">
+            <span>maintenance</span>
+            <span>email</span>
+          </span>
+        </a>
+        </li>
 
-      <li class="project-card-slot">
-      <a class="project-card" href="https://isitketo.org?ref=lvtd.dev&amp;utm_source=lvtd.dev">
-        <span class="project-media">
-          <img src="{% static 'images/logos/isitketo.png' %}" alt="Is it Keto logo" class="project-logo" />
-        </span>
-        <span class="project-copy">
-          <span class="project-meta">Consumer search</span>
-          <strong>Is it Keto</strong>
-          <span>Search product for fast food decisions and structured nutrition lookup.</span>
-        </span>
-        <span class="project-tags" aria-label="Is it Keto categories">
-          <span>search</span>
-          <span>consumer</span>
-        </span>
-      </a>
-      </li>
-    </ul>
+        <li class="project-card-slot">
+        <a class="project-card" href="https://gettalentleads.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+          <span class="project-media">
+            <img src="{% static 'images/logos/rocket_take_off.png' %}" alt="Talent Leads logo" class="project-logo" />
+          </span>
+          <span class="project-copy">
+            <span class="project-meta">Lead generation / hiring</span>
+            <strong>Talent Leads</strong>
+            <span>Lead generation for startup hiring teams that need targeted outreach inputs.</span>
+          </span>
+          <span class="project-tags" aria-label="Talent Leads categories">
+            <span>growth tool</span>
+            <span>automation</span>
+          </span>
+        </a>
+        </li>
+
+        <li class="project-card-slot">
+        <a class="project-card" href="https://builtwithdjango.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+          <span class="project-media">
+            <img src="{% static 'images/logos/builtwithdjango.png' %}" alt="Built with Django logo" class="project-logo" />
+          </span>
+          <span class="project-copy">
+            <span class="project-meta">Developer site</span>
+            <strong>Built with Django</strong>
+            <span>Developer education, product discovery, and useful examples for Django builders.</span>
+          </span>
+          <span class="project-tags" aria-label="Built with Django categories">
+            <span>content</span>
+            <span>community</span>
+          </span>
+        </a>
+        </li>
+
+        <li class="project-card-slot">
+        <a class="project-card" href="https://levreview.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+          <span class="project-media">
+            <img src="{% static 'images/logos/levreview.jpg' %}" alt="LevReview logo" class="project-logo" />
+          </span>
+          <span class="project-copy">
+            <span class="project-meta">Local business SaaS</span>
+            <strong>LevReview</strong>
+            <span>Review collection workflows for operators who need better customer proof.</span>
+          </span>
+          <span class="project-tags" aria-label="LevReview categories">
+            <span>SaaS</span>
+            <span>reviews</span>
+          </span>
+        </a>
+        </li>
+
+        <li class="project-card-slot">
+        <a class="project-card" href="https://gettjalerts.com?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+          <span class="project-media">
+            <img src="{% static 'images/logos/techjobalerts.png' %}" alt="Tech Job Alerts logo" class="project-logo" />
+          </span>
+          <span class="project-copy">
+            <span class="project-meta">Automation product</span>
+            <strong>Tech Job Alerts</strong>
+            <span>Automated matching and alerts for people tracking technical roles.</span>
+          </span>
+          <span class="project-tags" aria-label="Tech Job Alerts categories">
+            <span>alerts</span>
+            <span>jobs</span>
+          </span>
+        </a>
+        </li>
+
+        <li class="project-card-slot">
+        <a class="project-card" href="https://osig.app?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+          <span class="project-media">
+            <img src="{% static 'images/logos/osig.png' %}" alt="OSIG logo" class="project-logo" />
+          </span>
+          <span class="project-copy">
+            <span class="project-meta">Open-source utility</span>
+            <strong>OSIG</strong>
+            <span>Open-source social image generation for shipping shareable pages and previews.</span>
+          </span>
+          <span class="project-tags" aria-label="OSIG categories">
+            <span>open source</span>
+            <span>images</span>
+          </span>
+        </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="project-group" aria-labelledby="archived-projects-heading">
+      <div class="project-group-head">
+        <h3 id="archived-projects-heading">Archived projects</h3>
+        <p>Read-only or retired work. Cards link to source only when the repository is public.</p>
+      </div>
+
+      <ul class="project-grid project-grid-archive">
+        <li class="project-card-slot">
+        <a class="project-card project-card-archived" href="https://github.com/LVTD-LLC/tuxseo">
+          <span class="project-media">
+            <img src="{% static 'images/logos/tuxseo.png' %}" alt="TuxSEO logo" class="project-logo" />
+          </span>
+          <span class="project-copy">
+            <span class="project-meta">Archived / public repo</span>
+            <strong>TuxSEO</strong>
+            <span>Programmatic SEO tooling, now archived and available as a public read-only repository.</span>
+          </span>
+          <span class="project-tags" aria-label="TuxSEO categories">
+            <span>repo</span>
+            <span>archived</span>
+          </span>
+        </a>
+        </li>
+
+        <li class="project-card-slot">
+        <article class="project-card project-card-archived project-card-static">
+          <span class="project-media">
+            <img src="{% static 'images/logos/statushen.png' %}" alt="StatusHen logo" class="project-logo" />
+          </span>
+          <span class="project-copy">
+            <span class="project-meta">Archived / private repo</span>
+            <strong>StatusHen</strong>
+            <span>Uptime monitoring and status page product. No public repository link is available.</span>
+          </span>
+          <span class="project-tags" aria-label="StatusHen categories">
+            <span>status</span>
+            <span>archived</span>
+          </span>
+        </article>
+        </li>
+
+        <li class="project-card-slot">
+        <article class="project-card project-card-archived project-card-static">
+          <span class="project-media">
+            <img src="{% static 'images/logos/isitketo.png' %}" alt="Is it Keto logo" class="project-logo" />
+          </span>
+          <span class="project-copy">
+            <span class="project-meta">Archived / private repo</span>
+            <strong>Is it Keto</strong>
+            <span>Consumer search product for fast food decisions and structured nutrition lookup.</span>
+          </span>
+          <span class="project-tags" aria-label="Is it Keto categories">
+            <span>search</span>
+            <span>archived</span>
+          </span>
+        </article>
+        </li>
+      </ul>
+    </div>
   </section>
 
   <section id="services" class="capability-section">
@@ -381,7 +502,7 @@
       </div>
     {% else %}
       <div class="article-empty">
-        <p>Posts are coming soon. The project archive above is the best place to start today.</p>
+        <p>Posts are coming soon. The active and archived work above is the best place to start today.</p>
       </div>
     {% endif %}
   </section>
@@ -396,7 +517,7 @@
     </div>
     <div class="closing-actions">
       <a class="btn btn-primary" href="mailto:rasul@lvtd.dev?subject=Project%20inquiry">Start a build</a>
-      <a class="btn btn-secondary" href="https://github.com/rasulkireev">Follow work</a>
+      <a class="btn btn-secondary" href="https://github.com/LVTD-LLC">Follow work</a>
     </div>
   </section>
 {% endblock %}
