@@ -31,11 +31,20 @@ class HomePageTests(TestCase):
         self.assertContains(response, "Pay $125 deposit")
         self.assertContains(response, "Selected work")
         self.assertContains(response, "Proof that ships.")
+        self.assertContains(response, "Active projects")
+        self.assertContains(response, "Archived projects")
         self.assertContains(
             response, "Send the version you can explain in five minutes."
         )
 
         for project_name in (
+            "FileBridge",
+            "PGSandbox MCP",
+            "Skills",
+            "Djass",
+            "Awesome",
+            "Ask HN Digest",
+            "PageFresh",
             "Talent Leads",
             "Built with Django",
             "LevReview",
@@ -44,9 +53,14 @@ class HomePageTests(TestCase):
             "OSIG",
             "StatusHen",
             "TuxSEO",
-            "Cleanapp",
         ):
             self.assertContains(response, project_name)
+
+        self.assertNotContains(response, "Cleanapp")
+        self.assertContains(response, "https://github.com/LVTD-LLC")
+        self.assertContains(response, "https://github.com/LVTD-LLC/tuxseo")
+        self.assertNotContains(response, "https://statushen.com")
+        self.assertNotContains(response, "https://isitketo.org")
 
     def test_homepage_has_hosted_openclaw_actions(self) -> None:
         client = Client()

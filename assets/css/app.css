@@ -590,6 +590,39 @@
     font-size: clamp(2rem, 4vw, 3.8rem);
   }
 
+  .project-group {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .project-group + .project-group {
+    margin-top: clamp(2rem, 5vw, 3.5rem);
+    border-top: 1px solid var(--lvtd-border);
+    padding-top: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .project-group-head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1.25rem;
+  }
+
+  .project-group-head h3 {
+    color: var(--lvtd-ink);
+    font-size: clamp(1.35rem, 2vw, 1.9rem);
+    font-weight: 780;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+
+  .project-group-head p {
+    max-width: 34rem;
+    color: var(--lvtd-muted);
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
   .project-grid {
     display: grid;
     grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -646,6 +679,22 @@
     padding: 0.35rem;
   }
 
+  .project-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border: 1px solid var(--lvtd-border);
+    border-radius: 0.5rem;
+    background: var(--lvtd-action);
+    color: var(--lvtd-action-text);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    font-weight: 780;
+    letter-spacing: 0;
+  }
+
   .project-copy {
     display: grid;
     gap: 0.6rem;
@@ -686,6 +735,38 @@
     font-family: var(--font-mono);
     font-size: 0.72rem;
     padding: 0.3rem 0.45rem;
+  }
+
+  .project-grid-archive {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .project-grid-archive .project-card-slot {
+    grid-column: span 1;
+  }
+
+  .project-grid-archive .project-card {
+    min-height: 14.5rem;
+  }
+
+  .project-card-archived {
+    background: color-mix(in oklab, var(--lvtd-panel-muted) 66%, var(--lvtd-panel));
+  }
+
+  .project-card-archived .project-logo,
+  .project-card-archived .project-mark {
+    opacity: 0.84;
+    filter: saturate(0.72);
+  }
+
+  .project-card-static {
+    cursor: default;
+  }
+
+  .project-card-static:hover {
+    border-color: var(--lvtd-border);
+    background: color-mix(in oklab, var(--lvtd-panel-muted) 66%, var(--lvtd-panel));
+    transform: none;
   }
 
   .capability-section {
@@ -1032,6 +1113,7 @@
     }
 
     .project-grid,
+    .project-grid-archive,
     .process-list,
     .article-grid {
       grid-template-columns: 1fr;
@@ -1045,6 +1127,15 @@
 
     .project-card {
       min-height: 16rem;
+    }
+
+    .project-grid-archive .project-card-slot {
+      grid-column: 1;
+    }
+
+    .project-group-head {
+      align-items: start;
+      flex-direction: column;
     }
 
     .offer-card,
