@@ -50,6 +50,10 @@ uv run python manage.py qcluster
 - `DJANGO_ALLOWED_HOSTS`: comma-separated hostnames.
 - `DJANGO_CSRF_TRUSTED_ORIGINS`: comma-separated origins.
 - `SITE_URL`: canonical public origin used for canonical tags and sitemap URLs (default `https://lvtd.dev`).
+- `SITE_LASTMOD`: ISO date used as the static page `lastmod` value in `sitemap.xml`.
+- `CANONICAL_HOST_REDIRECT_ENABLED`: redirects non-canonical host/scheme requests to `SITE_URL` in production.
+- `DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS`: set to `true` only when all subdomains support HTTPS.
+- `DJANGO_SECURE_HSTS_PRELOAD`: set to `true` only when the domain is ready for HSTS preload requirements.
 - `DATABASE_URL`: PostgreSQL connection string (defaults to local SQLite when unset).
 - `MVP_DEPOSIT_CHECKOUT_URL`: Stripe checkout/payment link for the MVP deposit CTA.
 - `MVP_DEPOSIT_AMOUNT`: display text for the deposit amount (default `$100`).

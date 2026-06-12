@@ -10,6 +10,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-insecure-change-me")
 DEBUG = os.getenv("DJANGO_DEBUG", "").lower() in {"1", "true", "yes"}
+TESTING = (
+    "PYTEST_CURRENT_TEST" in os.environ
+    or "pytest" in " ".join(sys.argv)
+    or any(arg == "test" for arg in sys.argv)
+)
 
 ALLOWED_HOSTS = [
     host.strip()
@@ -37,6 +42,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "website.middleware.CanonicalHostMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -86,7 +92,6 @@ STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
-TESTING = "PYTEST_CURRENT_TEST" in os.environ or "pytest" in " ".join(sys.argv)
 STATICFILES_BACKEND = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 if DEBUG or TESTING:
     STATICFILES_BACKEND = "django.contrib.staticfiles.storage.StaticFilesStorage"
@@ -99,8 +104,33 @@ STORAGES = {
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SECURE_SSL_REDIRECT = (
+    os.getenv("DJANGO_SECURE_SSL_REDIRECT", "false").lower() in {"1", "true", "yes"}
+    and not DEBUG
+    and not TESTING
+)
+SECURE_HSTS_SECONDS = 31536000 if not DEBUG and not TESTING else 0
+SECURE_HSTS_INCLUDE_SUBDOMAINS = (
+    os.getenv("DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS", "false").lower()
+    in {"1", "true", "yes"}
+    and not DEBUG
+    and not TESTING
+)
+SECURE_HSTS_PRELOAD = (
+    os.getenv("DJANGO_SECURE_HSTS_PRELOAD", "false").lower() in {"1", "true", "yes"}
+    and not DEBUG
+    and not TESTING
+)
+SESSION_COOKIE_SECURE = not DEBUG and not TESTING
+CSRF_COOKIE_SECURE = not DEBUG and not TESTING
 
 SITE_URL = os.getenv("SITE_URL", "https://lvtd.dev").rstrip("/")
+CANONICAL_HOST_REDIRECT_ENABLED = (
+    os.getenv("CANONICAL_HOST_REDIRECT_ENABLED", "true").lower() in {"1", "true", "yes"}
+    and not DEBUG
+    and not TESTING
+)
+SITE_LASTMOD = os.getenv("SITE_LASTMOD", "2026-06-12")
 
 Q_CLUSTER = {
     "name": "lvtd",

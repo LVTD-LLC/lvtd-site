@@ -96,8 +96,42 @@ class HomePageTests(TestCase):
             html=True,
         )
         self.assertContains(response, 'property="og:title"')
+        self.assertContains(response, 'property="og:image"')
+        self.assertContains(response, 'name="twitter:image"')
+        self.assertContains(response, 'rel="icon"')
         self.assertContains(response, 'name="twitter:card"')
         self.assertContains(response, 'type="application/ld+json"')
+        self.assertContains(response, '"logo": "https://lvtd.test/static/')
+
+
+class CanonicalRedirectTests(TestCase):
+    @override_settings(
+        SITE_URL="https://lvtd.test",
+        CANONICAL_HOST_REDIRECT_ENABLED=True,
+    )
+    def test_redirects_www_to_canonical_host(self) -> None:
+        client = Client()
+        response = client.get(
+            "/blog/?utm_source=test",
+            HTTP_HOST="www.lvtd.test",
+            secure=True,
+        )
+
+        self.assertEqual(response.status_code, 308)
+        self.assertEqual(
+            response["Location"], "https://lvtd.test/blog/?utm_source=test"
+        )
+
+    @override_settings(
+        SITE_URL="https://lvtd.test",
+        CANONICAL_HOST_REDIRECT_ENABLED=True,
+    )
+    def test_redirects_http_to_canonical_scheme(self) -> None:
+        client = Client()
+        response = client.get("/", HTTP_HOST="lvtd.test")
+
+        self.assertEqual(response.status_code, 308)
+        self.assertEqual(response["Location"], "https://lvtd.test/")
 
 
 class CrawlEndpointTests(TestCase):
@@ -139,6 +173,7 @@ class CrawlEndpointTests(TestCase):
         content = response.content.decode()
         self.assertTrue(content.startswith("<?xml version='1.0' encoding='utf-8'?>"))
         self.assertIn("<loc>https://lvtd.test/</loc>", content)
+        self.assertIn("<lastmod>2026-06-12</lastmod>", content)
         self.assertIn("<loc>https://lvtd.test/blog/</loc>", content)
         self.assertIn("<loc>https://lvtd.test/services/hosted-openclaw/</loc>", content)
         self.assertIn("<loc>https://lvtd.test/tos/</loc>", content)
@@ -163,6 +198,7 @@ class LegalPagesTests(TestCase):
         self.assertContains(response, "Last updated")
         self.assertContains(response, "Deposits, Payments, and Refunds")
         self.assertContains(response, "Work Product and Intellectual Property")
+        self.assertContains(response, '"@type": "WebPage"')
         self.assertContains(
             response,
             '<link rel="canonical" href="https://lvtd.test/tos/" />',
@@ -179,6 +215,7 @@ class LegalPagesTests(TestCase):
         self.assertContains(response, "Last updated")
         self.assertContains(response, "Plausible Analytics")
         self.assertContains(response, "Mailgun")
+        self.assertContains(response, '"@type": "WebPage"')
         self.assertContains(
             response,
             '<link rel="canonical" href="https://lvtd.test/privacy/" />',
