@@ -67,7 +67,9 @@ This file explains where things belong in `lvtd-site`.
 - Brand images belong under `static/images/brand/`.
 - Project logos belong under `static/images/logos/`.
 - CI and deploy workflow files belong under `.github/workflows/`.
-- Repo steering files belong at the root so multiple agents can find them.
+- Repo steering files belong at the root so multiple agents can find them, except
+  `.github/copilot-instructions.md`, which GitHub Copilot requires under
+  `.github/`.
 
 ## Template Organization
 

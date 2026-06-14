@@ -41,40 +41,22 @@ from the service business.
 
 ## Commands
 
-Install dependencies:
+`TECH.md` is the canonical source for install, run, CSS, and validation
+commands. Use this quick path for normal local validation:
 
 ```bash
 uv sync --extra dev
 npm install --include=dev
-```
-
-Run the app locally:
-
-```bash
 uv run python manage.py migrate
-uv run python manage.py runserver
-```
-
-Run optional background workers:
-
-```bash
-uv run python manage.py qcluster
-```
-
-Build CSS after template class or stylesheet changes:
-
-```bash
 npm run build:css
-```
-
-Validate before handing off meaningful changes:
-
-```bash
 uv run ruff format --check
 uv run ruff check
 uv run python manage.py check
 uv run pytest
 ```
+
+For server, worker, watch-mode CSS, and environment setup commands, read
+`TECH.md`.
 
 Use `uv run ruff format` only when formatting Python files. For frontend changes,
 also verify the relevant page in a browser when feasible.
