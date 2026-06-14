@@ -9,6 +9,8 @@ This file explains where things belong in `lvtd-site`.
 ```text
 .
 |-- AGENTS.md
+|-- CLAUDE.md
+|-- GEMINI.md
 |-- PRODUCT.md
 |-- VISION.md
 |-- TECH.md
@@ -44,6 +46,7 @@ This file explains where things belong in `lvtd-site`.
 |   `-- templates/
 |       `-- website/
 |-- .github/
+|   |-- copilot-instructions.md
 |   `-- workflows/
 `-- uv.lock
 ```
