@@ -22,19 +22,21 @@ class HomePageTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "LVTD, LLC")
         self.assertContains(
-            response, "Tools, sites, apps, and MVPs that feel finished."
+            response, "Working software for founders with no team to spare."
         )
+        self.assertContains(response, "Agency as a service")
+        self.assertContains(response, "Hire the same system that ships the projects.")
         self.assertContains(response, "MVP done for you")
         self.assertContains(response, "Pay a $100 deposit")
         self.assertContains(response, "$5,000")
-        self.assertContains(response, "Reserve MVP")
-        self.assertContains(response, "Pay $125 deposit")
+        self.assertContains(response, "Reserve MVP build")
+        self.assertContains(response, "Reserve OpenClaw setup")
         self.assertContains(response, "Selected work")
         self.assertContains(response, "Proof that ships.")
         self.assertContains(response, "Active projects")
         self.assertContains(response, "Archived projects")
         self.assertContains(
-            response, "Send the version you can explain in five minutes."
+            response, "Send the problem you want off your plate."
         )
 
         for project_name in (
@@ -331,9 +333,13 @@ class HostedOpenClawPagesTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Hosted OpenClaw Service")
+        self.assertContains(
+            response, "Private OpenClaw, deployed and operated for your workflows."
+        )
         self.assertContains(response, "Best fit")
         self.assertContains(response, "Frequently asked questions")
-        self.assertContains(response, "Pay $150 deposit")
+        self.assertContains(response, "$150 deposit")
+        self.assertContains(response, "Reserve OpenClaw setup")
         self.assertContains(response, '"@type": "Service"')
         self.assertContains(response, '"@type": "FAQPage"')
 

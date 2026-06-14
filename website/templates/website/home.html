@@ -1,12 +1,12 @@
 {% extends "website/base.html" %}
 {% load static %}
 
-{% block title %}LVTD - Tools, sites, apps, and MVPs{% endblock %}
-{% block description %}LVTD builds practical tools, sites, apps, MVPs, automations, and hosted infrastructure for founders and small teams.{% endblock %}
-{% block og_title %}LVTD - Tools, sites, apps, and MVPs{% endblock %}
-{% block og_description %}LVTD builds practical tools, sites, apps, MVPs, automations, and hosted infrastructure for founders and small teams.{% endblock %}
-{% block twitter_title %}LVTD - Tools, sites, apps, and MVPs{% endblock %}
-{% block twitter_description %}LVTD builds practical tools, sites, apps, MVPs, automations, and hosted infrastructure for founders and small teams.{% endblock %}
+{% block title %}LVTD - AI product engineering for founders{% endblock %}
+{% block description %}LVTD turns rough product ideas, manual workflows, and AI workflow ideas into shipped apps, automations, and managed infrastructure.{% endblock %}
+{% block og_title %}LVTD - AI product engineering for founders{% endblock %}
+{% block og_description %}LVTD turns rough product ideas, manual workflows, and AI workflow ideas into shipped apps, automations, and managed infrastructure.{% endblock %}
+{% block twitter_title %}LVTD - AI product engineering for founders{% endblock %}
+{% block twitter_description %}LVTD turns rough product ideas, manual workflows, and AI workflow ideas into shipped apps, automations, and managed infrastructure.{% endblock %}
 {% block structured_data %}
   {{ block.super }}
   <script type="application/ld+json">
@@ -15,7 +15,7 @@
       "@type": "ProfessionalService",
       "name": "LVTD",
       "url": "{{ site_url }}/",
-      "description": "Tools, sites, apps, MVPs, automations, and hosted infrastructure for founders and small teams.",
+      "description": "AI product engineering, MVP builds, automations, and hosted infrastructure for founders and small teams.",
       "email": "rasul@lvtd.dev",
       "sameAs": [
         "https://github.com/LVTD-LLC"
@@ -39,16 +39,16 @@
 {% block content %}
   <section class="home-hero">
     <div class="hero-copy">
-      <p class="hero-label">LVTD / product engineering</p>
+      <p class="hero-label">LVTD / AI product engineering</p>
       <h1 class="hero-title">
-        Tools, sites, apps, and MVPs that feel finished.
+        Working software for founders with no team to spare.
       </h1>
       <p class="hero-text">
-        LVTD builds practical software for founders who need careful execution and visible shipping momentum.
+        I turn rough product ideas, manual workflows, and AI workflow ideas into shipped apps, automations, and managed infrastructure.
       </p>
       <div class="hero-actions" aria-label="Primary actions">
-        <a class="btn btn-primary" href="mailto:rasul@lvtd.dev?subject=Project%20inquiry">Start a build</a>
-        <a class="btn btn-secondary" href="#work">View work</a>
+        <a class="btn btn-primary" href="mailto:rasul@lvtd.dev?subject=Project%20brief">Send a project brief</a>
+        <a class="btn btn-secondary" href="#work">See shipped work</a>
       </div>
     </div>
 
@@ -59,37 +59,65 @@
       </div>
       <div class="console-command">
         <span aria-hidden="true">$</span>
-        <span>ship scope:mvp finish:the-edges</span>
+        <span>ship offer:ai-service proof:projects</span>
         <span class="console-cursor" aria-hidden="true"></span>
       </div>
       <div class="console-matrix" aria-label="Software LVTD builds">
         <div class="console-cell">
-          <span>tools</span>
-          <strong>Talent Leads</strong>
-          <em>lead engine</em>
+          <span>MVPs</span>
+          <strong>Build the first release</strong>
+          <em>scope to deploy</em>
         </div>
         <div class="console-cell">
-          <span>sites</span>
-          <strong>Built with Django</strong>
-          <em>developer discovery</em>
+          <span>agents</span>
+          <strong>Wire AI into work</strong>
+          <em>tools and data</em>
         </div>
         <div class="console-cell">
-          <span>apps</span>
-          <strong>PageFresh</strong>
-          <em>site reviews</em>
+          <span>ops</span>
+          <strong>Replace the manual loop</strong>
+          <em>alerts and reports</em>
         </div>
         <div class="console-cell">
           <span>infra</span>
-          <strong>OpenClaw</strong>
-          <em>managed hosting</em>
+          <strong>Run the service</strong>
+          <em>hosting and care</em>
         </div>
       </div>
       <div class="console-log" aria-label="LVTD build qualities">
-        <p><span>01</span> real architecture, not a throwaway demo</p>
-        <p><span>02</span> tidy interfaces and fewer launch surprises</p>
-        <p><span>03</span> shipping notes, source links, and next steps</p>
+        <p><span>01</span> scope the smallest release worth using</p>
+        <p><span>02</span> ship with deployment and operating notes</p>
+        <p><span>03</span> keep the projects visible as proof</p>
       </div>
     </aside>
+  </section>
+
+  <section class="service-rail" aria-label="How LVTD works with clients">
+    <div class="service-rail-copy">
+      <p class="section-label">Agency as a service</p>
+      <h2>Hire the same system that ships the projects.</h2>
+      <p>
+        LVTD packages reusable Django patterns, agent workflows, and deployment playbooks into focused builds with one accountable engineer.
+      </p>
+    </div>
+    <ul class="service-rail-list">
+      <li>
+        <strong>MVP build</strong>
+        <span>Product spine, data model, UI, deployment, analytics, and launch notes.</span>
+      </li>
+      <li>
+        <strong>AI workflow</strong>
+        <span>Agents, data sources, prompts, tools, eval paths, and human review loops.</span>
+      </li>
+      <li>
+        <strong>Internal tool</strong>
+        <span>Dashboards, scrapers, enrichment jobs, alerts, and reporting flows.</span>
+      </li>
+      <li>
+        <strong>Managed service</strong>
+        <span>Hosted OpenClaw, updates, monitoring, integrations, and operating checks.</span>
+      </li>
+    </ul>
   </section>
 
   <section id="work" class="work-section">
@@ -99,7 +127,7 @@
         <h2>Proof that ships.</h2>
       </div>
       <p>
-        A mix of SaaS tools, discovery sites, automation systems, open-source utilities, and operational products built end to end.
+        Active projects show the range behind the service: SaaS tools, discovery sites, automations, open-source utilities, and managed infrastructure.
       </p>
     </div>
 
@@ -380,9 +408,9 @@
   <section id="services" class="capability-section">
     <div class="capability-intro">
       <p class="section-label">What LVTD builds</p>
-      <h2>Bring the messy version. Leave with working software.</h2>
+      <h2>Bring the messy version. Leave with a system people can use.</h2>
       <p>
-        The work can start as a market test, a broken workflow, an internal spreadsheet, a stalled app, or a product idea that needs a real first version.
+        The work can start as a market test, a broken workflow, an internal spreadsheet, a stalled app, or an AI workflow that needs a real owner.
       </p>
     </div>
 
@@ -413,33 +441,33 @@
   <section class="offers-section" aria-label="Ways to start">
     <div class="offer-card offer-card-primary">
       <p class="section-label">MVP done for you</p>
-      <h2>Reserve a focused full-service build.</h2>
+      <h2>Hire LVTD for a focused first release.</h2>
       <p>
-        Pay a {{ mvp_deposit_amount }} deposit to show serious intent. I follow up for project context, goals, and timeline. Final service price:
+        Pay a {{ mvp_deposit_amount }} deposit to reserve implementation time. I follow up for scope, timeline, and the first decisions that need to be made. Final service price:
         <strong>{{ mvp_final_price }}</strong>.
       </p>
       <div class="offer-actions">
         {% if mvp_deposit_checkout_url %}
-          <a class="btn btn-primary" href="{{ mvp_deposit_checkout_url }}">Reserve MVP</a>
+          <a class="btn btn-primary" href="{{ mvp_deposit_checkout_url }}">Reserve MVP build</a>
         {% else %}
-          <a class="btn btn-primary" href="mailto:rasul@lvtd.dev?subject=MVP%20build%20inquiry">Reserve MVP</a>
+          <a class="btn btn-primary" href="mailto:rasul@lvtd.dev?subject=MVP%20build%20inquiry">Reserve MVP build</a>
         {% endif %}
-        <a class="btn btn-secondary" href="#process">See process</a>
+        <a class="btn btn-secondary" href="#process">Review build process</a>
       </div>
     </div>
 
     <div class="offer-card">
       <p class="section-label">Managed OpenClaw</p>
-      <h2>Run OpenClaw without owning the infrastructure work.</h2>
+      <h2>Run OpenClaw inside real team workflows.</h2>
       <p>
-        LVTD handles setup, access, monitoring, updates, and custom integrations so your team can use OpenClaw inside real workflows.
+        Get a private OpenClaw deployment with hosting, access, monitoring, updates, and integrations handled by LVTD.
       </p>
       <div class="offer-actions">
         <form method="post" action="{% url 'hosted-openclaw-checkout' %}">
           {% csrf_token %}
-          <button class="btn btn-primary" type="submit">Pay {{ hosted_openclaw_deposit_amount }} deposit</button>
+          <button class="btn btn-primary" type="submit">Reserve OpenClaw setup</button>
         </form>
-        <a class="btn btn-secondary" href="{% url 'hosted-openclaw-learn-more' %}">View details</a>
+        <a class="btn btn-secondary" href="{% url 'hosted-openclaw-learn-more' %}">See OpenClaw scope</a>
       </div>
     </div>
   </section>
@@ -448,10 +476,10 @@
     <div class="section-head section-head-compact">
       <div>
         <p class="section-label">How a build moves</p>
-        <h2>Small loop, visible progress.</h2>
+        <h2>A small delivery loop with visible decisions.</h2>
       </div>
       <p>
-        The process is intentionally direct because early software changes shape once it touches users, data, and edge cases.
+        Early software changes once it meets users, data, and edge cases. The loop keeps scope tight while the product becomes real.
       </p>
     </div>
 
@@ -459,22 +487,22 @@
       <li>
         <span>01</span>
         <strong>Map the job</strong>
-        <p>Clarify the user, workflow, constraints, and first useful release.</p>
+        <p>Clarify the user, workflow, constraints, and the first release worth using.</p>
       </li>
       <li>
         <span>02</span>
         <strong>Build the spine</strong>
-        <p>Set architecture, data flow, deployment, and the core product path.</p>
+        <p>Set the model, data flow, deployment path, and core product route.</p>
       </li>
       <li>
         <span>03</span>
         <strong>Finish the edges</strong>
-        <p>Tighten UI states, copy, errors, logging, speed, and operating notes.</p>
+        <p>Tighten UI states, copy, errors, logs, speed, and operating notes.</p>
       </li>
       <li>
         <span>04</span>
         <strong>Ship and learn</strong>
-        <p>Launch, watch what happens, fix the sharp parts, and decide the next move.</p>
+        <p>Launch, watch real use, fix the sharp parts, and choose the next move.</p>
       </li>
     </ol>
   </section>
@@ -510,13 +538,13 @@
   <section class="closing-panel">
     <div>
       <p class="section-label">Start here</p>
-      <h2>Send the version you can explain in five minutes.</h2>
+      <h2>Send the problem you want off your plate.</h2>
       <p>
-        A short note with context, constraints, timeline, and what you want shipped is enough to begin.
+        A short note with the workflow, users, timeline, and current constraints is enough to begin.
       </p>
     </div>
     <div class="closing-actions">
-      <a class="btn btn-primary" href="mailto:rasul@lvtd.dev?subject=Project%20inquiry">Start a build</a>
+      <a class="btn btn-primary" href="mailto:rasul@lvtd.dev?subject=Project%20brief">Send project brief</a>
       <a class="btn btn-secondary" href="https://github.com/LVTD-LLC">Follow work</a>
     </div>
   </section>
