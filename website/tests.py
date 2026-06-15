@@ -35,9 +35,7 @@ class HomePageTests(TestCase):
         self.assertContains(response, "Proof that ships.")
         self.assertContains(response, "Active projects")
         self.assertContains(response, "Archived projects")
-        self.assertContains(
-            response, "Send the problem you want off your plate."
-        )
+        self.assertContains(response, "Send the problem you want off your plate.")
 
         for project_name in (
             "FileBridge",
