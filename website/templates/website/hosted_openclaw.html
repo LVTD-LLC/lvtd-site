@@ -1,11 +1,11 @@
 {% extends "website/base.html" %}
 
-{% block title %}Hosted OpenClaw Service - Managed OpenClaw by LVTD{% endblock %}
-{% block description %}Hosted OpenClaw setup, management, monitoring, security, and integrations for teams that want a dedicated OpenClaw instance without operating it themselves.{% endblock %}
-{% block og_title %}Hosted OpenClaw Service - Managed OpenClaw by LVTD{% endblock %}
-{% block og_description %}Hosted OpenClaw setup, management, monitoring, security, and integrations for teams that want a dedicated OpenClaw instance without operating it themselves.{% endblock %}
-{% block twitter_title %}Hosted OpenClaw Service - Managed OpenClaw by LVTD{% endblock %}
-{% block twitter_description %}Hosted OpenClaw setup, management, monitoring, security, and integrations for teams that want a dedicated OpenClaw instance without operating it themselves.{% endblock %}
+{% block title %}Hosted OpenClaw Service - Private OpenClaw by LVTD{% endblock %}
+{% block description %}LVTD deploys, monitors, maintains, and integrates private OpenClaw instances for teams that want useful AI workflows without the infrastructure burden.{% endblock %}
+{% block og_title %}Hosted OpenClaw Service - Private OpenClaw by LVTD{% endblock %}
+{% block og_description %}LVTD deploys, monitors, maintains, and integrates private OpenClaw instances for teams that want useful AI workflows without the infrastructure burden.{% endblock %}
+{% block twitter_title %}Hosted OpenClaw Service - Private OpenClaw by LVTD{% endblock %}
+{% block twitter_description %}LVTD deploys, monitors, maintains, and integrates private OpenClaw instances for teams that want useful AI workflows without the infrastructure burden.{% endblock %}
 {% block structured_data %}
   {{ block.super }}
   <script type="application/ld+json">
@@ -20,7 +20,7 @@
         "url": "{{ site_url }}/"
       },
       "serviceType": "Managed OpenClaw hosting and integration",
-      "description": "Hosted OpenClaw setup, management, monitoring, security, and integrations for teams that want a dedicated OpenClaw instance without operating it themselves.",
+      "description": "Private OpenClaw deployment, monitoring, maintenance, security, and integrations for teams that want useful AI workflows without the infrastructure burden.",
       "areaServed": "Worldwide"
     }
   </script>
@@ -34,7 +34,7 @@
           "name": "Who is the Hosted OpenClaw service for?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It is for teams that want a dedicated OpenClaw instance, custom integrations, and ongoing operational support without managing hosting, updates, backups, and monitoring themselves."
+            "text": "It is for teams that want a private OpenClaw instance, custom integrations, and ongoing operational support without managing hosting, updates, backups, and monitoring themselves."
           }
         },
         {
@@ -63,31 +63,30 @@
     <div class="max-w-4xl">
       <p class="section-kicker">Hosted OpenClaw Service</p>
       <h1 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl" style="color: var(--lvtd-ink);">
-        Managed OpenClaw infrastructure with hands-on engineering support.
+        Private OpenClaw, deployed and operated for your workflows.
       </h1>
       <p class="mt-6 max-w-3xl text-base leading-8 muted">
-        LVTD sets up, hosts, monitors, and maintains a dedicated OpenClaw instance
-        for teams that want useful AI workflows without taking on the operational
-        burden. You get a hardened deployment, practical integrations, and a
-        technical partner who can keep improving the system after the first launch.
+        LVTD handles hosting, access controls, monitoring, backups, updates, and
+        integrations for teams that want OpenClaw connected to real tools instead
+        of another platform to maintain.
       </p>
       <div class="mt-8 flex flex-wrap gap-3">
         <form method="post" action="{% url 'hosted-openclaw-checkout' %}">
           {% csrf_token %}
-          <button class="btn btn-primary" type="submit">Pay {{ hosted_openclaw_deposit_amount }} deposit</button>
+          <button class="btn btn-primary" type="submit">Reserve OpenClaw setup</button>
         </form>
-        <a class="btn btn-secondary" href="mailto:rasul@lvtd.dev?subject=Hosted%20OpenClaw%20inquiry">Ask a question</a>
+        <a class="btn btn-secondary" href="mailto:rasul@lvtd.dev?subject=Hosted%20OpenClaw%20inquiry">Discuss OpenClaw setup</a>
       </div>
     </div>
 
     <aside class="confidence-panel p-6">
       <p class="section-kicker">What you get</p>
       <h2 class="mt-4 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">
-        A working service, maintained by the person who sets it up.
+        Setup, integrations, and care from one accountable engineer.
       </h2>
       <p class="mt-4 text-sm leading-7 muted">
-        Deposit reserves implementation time. We align on goals, data sources, access,
-        and the workflows that matter before deployment starts.
+        The {{ hosted_openclaw_deposit_amount }} deposit reserves implementation time. We align on goals, data,
+        access, and the first workflows before deployment starts.
       </p>
     </aside>
   </section>
@@ -99,10 +98,10 @@
           What's included
         </h2>
         <ul class="mt-5 space-y-3 text-sm leading-7 muted">
-          <li>Dedicated OpenClaw deployment with isolated infrastructure.</li>
-          <li>Monitoring, backups, update handling, and operational checks.</li>
-          <li>Custom integrations with your data sources, CRMs, or internal tools.</li>
-          <li>Security review for access, tokens, secrets, and data handling.</li>
+          <li>Private OpenClaw deployment with isolated infrastructure.</li>
+          <li>Access controls, environment hardening, and secrets handling.</li>
+          <li>Monitoring, backup checks, update handling, and operational checks.</li>
+          <li>Workflow integrations with your data sources, CRMs, or internal tools.</li>
         </ul>
       </article>
       <article class="surface-card p-6 sm:p-8">
@@ -111,8 +110,8 @@
         </h2>
         <ul class="mt-5 space-y-3 text-sm leading-7 muted">
           <li>Teams that want OpenClaw running privately for internal workflows.</li>
-          <li>Founders who need working automation before hiring an internal platform team.</li>
-          <li>Operators who need AI workflows connected to real business systems.</li>
+          <li>Founders who need AI automation before hiring an internal platform team.</li>
+          <li>Operators who need AI workflows connected to existing business systems.</li>
           <li>Companies that want one accountable engineer for setup and iteration.</li>
         </ul>
       </article>
@@ -178,7 +177,7 @@
       <div class="mt-8 flex flex-wrap gap-3">
         <form method="post" action="{% url 'hosted-openclaw-checkout' %}">
           {% csrf_token %}
-          <button class="btn btn-primary" type="submit">Pay {{ hosted_openclaw_deposit_amount }} deposit</button>
+          <button class="btn btn-primary" type="submit">Reserve OpenClaw setup</button>
         </form>
         <a class="btn btn-secondary" href="{% url 'home' %}">Back to LVTD</a>
       </div>

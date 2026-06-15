@@ -551,6 +551,7 @@
   }
 
   .work-section,
+  .service-rail,
   .capability-section,
   .offers-section,
   .process-section,
@@ -588,6 +589,55 @@
 
   .section-head-compact h2 {
     font-size: clamp(2rem, 4vw, 3.8rem);
+  }
+
+  .service-rail {
+    display: grid;
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+    gap: clamp(1.5rem, 5vw, 4rem);
+    align-items: start;
+  }
+
+  .service-rail-copy h2 {
+    margin-top: 0.75rem;
+    max-width: 10ch;
+    font-size: clamp(2rem, 4.4vw, 4.2rem);
+    font-weight: 780;
+    line-height: 0.98;
+  }
+
+  .service-rail-text {
+    max-width: 37rem;
+    margin-top: 1.15rem;
+    color: var(--lvtd-muted);
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  .service-rail-list {
+    display: grid;
+    border-top: 1px solid var(--lvtd-border);
+  }
+
+  .service-rail-list li {
+    display: grid;
+    grid-template-columns: minmax(8rem, 0.36fr) minmax(0, 1fr);
+    gap: 1.25rem;
+    border-bottom: 1px solid var(--lvtd-border);
+    padding-block: 1.15rem;
+  }
+
+  .service-rail-list strong {
+    color: var(--lvtd-ink);
+    font-size: 1.02rem;
+    font-weight: 760;
+    letter-spacing: -0.02em;
+  }
+
+  .service-rail-list span {
+    color: var(--lvtd-muted);
+    font-size: 0.96rem;
+    line-height: 1.62;
   }
 
   .project-group {
@@ -1058,6 +1108,7 @@
     }
 
     .capability-section,
+    .service-rail-list li,
     .capability-item {
       grid-template-columns: 1fr;
     }
@@ -1069,6 +1120,7 @@
 
   @media (max-width: 900px) {
     .home-hero,
+    .service-rail,
     .section-head,
     .offers-section,
     .closing-panel {
