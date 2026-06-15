@@ -606,7 +606,7 @@
     line-height: 0.98;
   }
 
-  .service-rail-copy p:last-child {
+  .service-rail-text {
     max-width: 37rem;
     margin-top: 1.15rem;
     color: var(--lvtd-muted);

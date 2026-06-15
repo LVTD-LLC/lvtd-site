@@ -13,7 +13,6 @@ class HomePageTests(TestCase):
         MVP_DEPOSIT_CHECKOUT_URL="https://example.com/pay",
         MVP_DEPOSIT_AMOUNT="$100",
         MVP_FINAL_PRICE="$5,000",
-        HOSTED_OPENCLAW_DEPOSIT_AMOUNT="$125",
     )
     def test_homepage_loads(self) -> None:
         client = Client()
