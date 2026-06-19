@@ -9,7 +9,13 @@
       name="description"
       content="{% block description %}LVTD helps founders and teams design, build, and ship practical software products, automations, and growth tooling.{% endblock %}"
     />
-    <meta name="theme-color" content="#fff0c7" data-theme-color />
+    <meta
+      name="theme-color"
+      content="#f8ecef"
+      data-theme-color
+      data-light-color="#f8ecef"
+      data-dark-color="#1a1216"
+    />
     <link rel="canonical" href="{{ canonical_url }}" />
     <meta property="og:site_name" content="LVTD" />
     <meta property="og:type" content="{% block og_type %}website{% endblock %}" />
@@ -41,9 +47,12 @@
                 : 'light'
           document.documentElement.classList.toggle('dark', theme === 'dark')
           document.documentElement.style.colorScheme = theme
-          document
-            .querySelector('[data-theme-color]')
-            ?.setAttribute('content', theme === 'dark' ? '#1b0f14' : '#fff0c7')
+          const themeColor = document.querySelector('[data-theme-color]')
+          const chromeColor =
+            themeColor?.dataset[theme === 'dark' ? 'darkColor' : 'lightColor']
+          if (chromeColor) {
+            themeColor.setAttribute('content', chromeColor)
+          }
         } catch (error) {
           document.documentElement.classList.remove('dark')
           document.documentElement.style.colorScheme = 'light'
@@ -94,7 +103,7 @@
             <span class="brand-mark" aria-hidden="true">
               <img
                 class="brand-mark-image"
-                src="{% static 'images/brand/lvtd-fire-heart.png' %}"
+                src="{% static 'images/brand/lvtd-fire-heart-nav.png' %}"
                 width="40"
                 height="40"
                 alt=""
@@ -111,6 +120,16 @@
             <a class="nav-link" href="{% url 'blog-list' %}">Writing</a>
             <a class="nav-link" href="{% url 'hosted-openclaw-learn-more' %}">OpenClaw</a>
             <a class="nav-link nav-link-strong" href="mailto:rasul@lvtd.dev?subject=Project%20inquiry">Start a build</a>
+            <details class="mobile-menu">
+              <summary class="mobile-menu-summary">Menu</summary>
+              <div class="mobile-menu-panel">
+                <a class="mobile-menu-link" href="{% url 'home' %}#work">Work</a>
+                <a class="mobile-menu-link" href="{% url 'home' %}#services">Services</a>
+                <a class="mobile-menu-link" href="{% url 'blog-list' %}">Writing</a>
+                <a class="mobile-menu-link" href="{% url 'hosted-openclaw-learn-more' %}">OpenClaw</a>
+                <a class="mobile-menu-link mobile-menu-link-strong" href="mailto:rasul@lvtd.dev?subject=Project%20inquiry">Start a build</a>
+              </div>
+            </details>
             <button
               id="theme-toggle"
               class="theme-toggle"
@@ -159,9 +178,12 @@
           if (label) {
             label.textContent = theme === 'dark' ? 'Use light' : 'Use dark'
           }
-          document
-            .querySelector('[data-theme-color]')
-            ?.setAttribute('content', theme === 'dark' ? '#1b0f14' : '#fff0c7')
+          const themeColor = document.querySelector('[data-theme-color]')
+          const chromeColor =
+            themeColor?.dataset[theme === 'dark' ? 'darkColor' : 'lightColor']
+          if (chromeColor) {
+            themeColor.setAttribute('content', chromeColor)
+          }
           toggleButton.setAttribute(
             'aria-label',
             theme === 'dark' ? 'Use light mode' : 'Use dark mode',
