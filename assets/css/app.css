@@ -496,15 +496,10 @@
     border-color: var(--lvtd-border);
   }
 
-  .text-action-link,
-  .inline-touch-link {
+  .text-action-link {
     display: inline-flex;
     min-height: 2.75rem;
     align-items: center;
-  }
-
-  .inline-touch-link {
-    vertical-align: middle;
   }
 
   .blog-title-link {
