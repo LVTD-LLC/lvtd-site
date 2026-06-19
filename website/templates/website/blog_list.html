@@ -23,7 +23,7 @@
   <section class="py-12 sm:py-16">
     <div class="max-w-4xl">
       <p class="section-kicker">LVTD Blog</p>
-      <h1 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl" style="color: var(--lvtd-ink);">
+      <h1 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl ink">
         Practical notes on building and shipping software.
       </h1>
       <p class="mt-5 max-w-2xl text-base leading-8 muted">
@@ -32,19 +32,19 @@
     </div>
   </section>
 
-  <section class="border-t pb-16 pt-10" style="border-color: var(--lvtd-border);">
+  <section class="border-t pb-16 pt-10 border-muted">
     {% if posts %}
       <ul class="grid gap-4">
         {% for post in posts %}
           <li class="surface-card p-6 sm:p-8">
             <p class="section-kicker">{{ post.published_at|date:"M j, Y" }}</p>
-            <h2 class="mt-3 text-2xl font-bold tracking-tight" style="color: var(--lvtd-ink);">
-              <a class="transition hover:opacity-75" href="{% url 'blog-detail' slug=post.slug %}">
+            <h2 class="mt-3 text-2xl font-bold tracking-tight ink">
+              <a class="blog-title-link transition hover:opacity-75" href="{% url 'blog-detail' slug=post.slug %}">
                 {{ post.title }}
               </a>
             </h2>
             <p class="mt-3 max-w-3xl text-sm leading-7 muted">{{ post.summary }}</p>
-            <a class="mt-5 inline-flex text-sm font-bold transition hover:opacity-75" style="color: var(--lvtd-accent-strong);" href="{% url 'blog-detail' slug=post.slug %}">
+            <a class="mt-5 text-action-link text-sm font-bold transition hover:opacity-75 accent-strong" href="{% url 'blog-detail' slug=post.slug %}">
               Read article
             </a>
           </li>
