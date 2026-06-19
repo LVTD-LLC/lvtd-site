@@ -347,6 +347,10 @@
     font-size: 0.95rem;
     font-weight: 680;
     padding: 0.75rem 0.8rem;
+    transition:
+      background-color 180ms ease,
+      color 180ms ease,
+      opacity 180ms ease;
   }
 
   .mobile-menu-link:hover {
