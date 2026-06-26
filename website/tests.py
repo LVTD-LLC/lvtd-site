@@ -37,7 +37,7 @@ class HomePageTests(TestCase):
         self.assertContains(response, "Send the problem you want off your plate.")
 
         for project_name in (
-            "FileBridge",
+            "Rowset",
             "PGSandbox MCP",
             "Skills",
             "Djass",
@@ -55,6 +55,8 @@ class HomePageTests(TestCase):
         ):
             self.assertContains(response, project_name)
 
+        self.assertNotContains(response, "FileBridge")
+        self.assertNotContains(response, "https://filebridge.lvtd.dev")
         self.assertNotContains(response, "Cleanapp")
         self.assertContains(response, "https://github.com/LVTD-LLC")
         self.assertContains(response, "https://github.com/LVTD-LLC/tuxseo")
