@@ -32,6 +32,15 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Verify OpenRouter key
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          if [ -z "$OPENROUTER_API_KEY" ]; then
+            echo "::error title=Missing OPENROUTER_API_KEY::Configure this repository secret to enable ReviewGate."
+            exit 1
+          fi
+
       - name: Review PR
         uses: LVTD-LLC/reviewgate@40d73b79d1d620412ab5825eef51746e9fd506e0
         with:
