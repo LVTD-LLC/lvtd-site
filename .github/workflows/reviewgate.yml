@@ -8,11 +8,10 @@ on:
 permissions:
   contents: read
   pull-requests: write
-  issues: write
   checks: write
 
 concurrency:
-  group: reviewgate-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  group: reviewgate-${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
   cancel-in-progress: true
 
 jobs:
@@ -26,6 +25,7 @@ jobs:
         )
       }}
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
@@ -33,6 +33,6 @@ jobs:
           fetch-depth: 0
 
       - name: Review PR
-        uses: LVTD-LLC/reviewgate@v0
+        uses: LVTD-LLC/reviewgate@40d73b79d1d620412ab5825eef51746e9fd506e0
         with:
           openrouter_api_key: ${{ secrets.OPENROUTER_API_KEY }}
