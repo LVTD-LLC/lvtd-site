@@ -80,8 +80,10 @@ Create a webhook endpoint in Stripe that points to `/api/stripe/webhook` and lis
 ## CI + deploy secrets
 
 CI runs lint, tests, and Tailwind build.
-`.github/workflows/reviewgate.yml` runs ReviewGate AI PR review on
-in-repository pull requests and expects:
+`.github/workflows/reviewgate.yml` runs ReviewGate AI PR review for
+in-repository pull requests when a PR comment contains `@reviewgate review`.
+It intentionally uses `LVTD-LLC/reviewgate@v0` so this experimental install
+tracks the latest v0 action behavior. The workflow expects:
 
 - `OPENROUTER_API_KEY`
 
