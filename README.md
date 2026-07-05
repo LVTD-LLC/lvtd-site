@@ -80,6 +80,9 @@ Create a webhook endpoint in Stripe that points to `/api/stripe/webhook` and lis
 ## CI + deploy secrets
 
 CI runs lint, tests, and Tailwind build.
+ReviewGate runs AI PR review on in-repository pull requests and expects:
+
+- `OPENROUTER_API_KEY`
 
 CapRover deploy workflow expects:
 
