@@ -1,6 +1,8 @@
 name: ReviewGate
 
 on:
+  pull_request:
+    types: [opened, ready_for_review]
   issue_comment:
     types: [created]
 
@@ -9,16 +11,24 @@ permissions:
   pull-requests: write
 
 concurrency:
-  group: reviewgate-${{ github.workflow }}-${{ github.event.issue.number || github.run_id }}
+  group: reviewgate-${{ github.workflow }}-${{ github.event.pull_request.number || github.event.issue.number || github.run_id }}
   cancel-in-progress: true
 
 jobs:
   review:
     if: >-
       ${{
-        github.event.issue.pull_request &&
-        contains(github.event.comment.body, '@reviewgate review') &&
-        github.actor != 'dependabot[bot]'
+        (
+          github.event_name == 'pull_request' &&
+          github.event.pull_request.head.repo.full_name == github.repository &&
+          github.actor != 'dependabot[bot]'
+        ) ||
+        (
+          github.event_name == 'issue_comment' &&
+          github.event.issue.pull_request &&
+          contains(github.event.comment.body, '@reviewgate review') &&
+          github.actor != 'dependabot[bot]'
+        )
       }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -27,14 +37,14 @@ jobs:
         id: pr
         env:
           GH_TOKEN: ${{ github.token }}
-          PR_NUMBER: ${{ github.event.issue.number }}
+          PR_NUMBER: ${{ github.event.pull_request.number || github.event.issue.number }}
         run: |
           set -euo pipefail
           pr_json="$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}")"
           head_repo="$(jq -r '.head.repo.full_name' <<< "$pr_json")"
 
           if [ "$head_repo" != "$GITHUB_REPOSITORY" ]; then
-            echo "ReviewGate skipped: comment-triggered reviews only run for in-repository PRs."
+            echo "ReviewGate skipped: reviews only run for in-repository PRs."
             echo "should_run=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
