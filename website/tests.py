@@ -47,6 +47,7 @@ class HomePageTests(TestCase):
             "Talent Leads",
             "Built with Django",
             "LevReview",
+            "ReviewGate",
             "Tech Job Alerts",
             "Is it Keto",
             "OSIG",
@@ -58,6 +59,9 @@ class HomePageTests(TestCase):
         self.assertNotContains(response, "Cleanapp")
         self.assertContains(response, "https://github.com/LVTD-LLC")
         self.assertContains(response, "https://github.com/LVTD-LLC/tuxseo")
+        self.assertContains(response, "https://github.com/LVTD-LLC/osig")
+        self.assertContains(response, "https://reviewgate.lvtd.dev/")
+        self.assertNotContains(response, "https://osig.app?ref=lvtd.dev")
         self.assertNotContains(response, "https://statushen.com")
         self.assertNotContains(response, "https://isitketo.org")
 
