@@ -8,9 +8,10 @@ on:
 permissions:
   contents: read
   pull-requests: write
-  checks: write
 
 concurrency:
+  # This workflow only runs on pull_request and workflow_dispatch; manual runs use
+  # run_id so they do not cancel other manual ReviewGate runs on the same branch.
   group: reviewgate-${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
   cancel-in-progress: true
 
