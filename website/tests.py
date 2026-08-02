@@ -2,6 +2,7 @@ import json
 from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
+import stripe
 from django.test import Client, TestCase, override_settings
 from django.urls import reverse
 
@@ -369,6 +370,7 @@ class HostedOpenClawCheckoutTests(TestCase):
         kwargs = mock_create.call_args.kwargs
         self.assertEqual(kwargs["line_items"][0]["price"], "price_test_123")
         self.assertEqual(kwargs["metadata"]["flow"], "hosted_openclaw_deposit")
+        self.assertEqual(kwargs["metadata"]["price_id"], "price_test_123")
 
 
 class StripeWebhookTests(TestCase):
@@ -400,9 +402,13 @@ class StripeWebhookTests(TestCase):
             "payment_link": "plink_123",
             "customer_details": {"email": "buyer@example.com"},
         }
-        mock_retrieve.return_value = SimpleNamespace(
-            type="checkout.session.completed",
-            data={"object": session},
+        mock_retrieve.return_value = stripe.Event.construct_from(
+            {
+                "id": "evt_1",
+                "type": "checkout.session.completed",
+                "data": {"object": session},
+            },
+            "sk_test",
         )
         mock_post.return_value = SimpleNamespace(status_code=200)
 
@@ -416,6 +422,7 @@ class StripeWebhookTests(TestCase):
 
     @override_settings(
         STRIPE_API_KEY="sk_test",
+        HOSTED_OPENCLAW_DEPOSIT_PRICE_ID="price_hosted_openclaw",
         MAILGUN_API_KEY="mg_key",
         MAILGUN_DOMAIN="mg.example.com",
         MAILGUN_FROM_EMAIL="hello@example.com",
@@ -427,7 +434,10 @@ class StripeWebhookTests(TestCase):
         self, mock_retrieve: Mock, mock_post: Mock
     ) -> None:
         session = {
-            "metadata": {"flow": "hosted_openclaw_deposit"},
+            "metadata": {
+                "flow": "hosted_openclaw_deposit",
+                "price_id": "price_hosted_openclaw",
+            },
             "customer_details": {"email": "payer@example.com"},
         }
         mock_retrieve.return_value = SimpleNamespace(
@@ -481,14 +491,13 @@ class StripeWebhookTests(TestCase):
     @override_settings(
         STRIPE_API_KEY="sk_test",
         STRIPE_MVP_DEPOSIT_PAYMENT_LINK_ID="",
-        STRIPE_MVP_DEPOSIT_FALLBACK_AMOUNT=10000,
         MAILGUN_API_KEY="mg_key",
         MAILGUN_DOMAIN="mg.example.com",
         MAILGUN_FROM_EMAIL="hello@example.com",
     )
     @patch("website.views.requests.post")
     @patch("website.views.stripe.Event.retrieve")
-    def test_webhook_fallback_amount_matches(
+    def test_webhook_does_not_fallback_to_matching_amount(
         self, mock_retrieve: Mock, mock_post: Mock
     ) -> None:
         session = {
@@ -504,4 +513,34 @@ class StripeWebhookTests(TestCase):
 
         status_code = self._post_webhook({"id": "evt_3"})
         self.assertEqual(status_code, 200)
-        self.assertEqual(mock_post.call_count, 1)
+        self.assertEqual(mock_post.call_count, 0)
+
+    @override_settings(
+        STRIPE_API_KEY="sk_test",
+        HOSTED_OPENCLAW_DEPOSIT_PRICE_ID="price_hosted_openclaw",
+        MAILGUN_API_KEY="mg_key",
+        MAILGUN_DOMAIN="mg.example.com",
+        MAILGUN_FROM_EMAIL="hello@example.com",
+    )
+    @patch("website.views.requests.post")
+    @patch("website.views.stripe.Event.retrieve")
+    def test_webhook_ignores_hosted_flow_with_wrong_price(
+        self, mock_retrieve: Mock, mock_post: Mock
+    ) -> None:
+        mock_retrieve.return_value = SimpleNamespace(
+            type="checkout.session.completed",
+            data={
+                "object": {
+                    "metadata": {
+                        "flow": "hosted_openclaw_deposit",
+                        "price_id": "price_another_product",
+                    },
+                    "customer_details": {"email": "buyer@example.com"},
+                }
+            },
+        )
+
+        status_code = self._post_webhook({"id": "evt_wrong_hosted_price"})
+
+        self.assertEqual(status_code, 200)
+        self.assertEqual(mock_post.call_count, 0)

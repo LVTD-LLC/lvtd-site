@@ -63,7 +63,6 @@ uv run python manage.py qcluster
 - `STRIPE_API_KEY`: Stripe secret API key used to retrieve events by id.
 - `STRIPE_CONTEXT_ACCOUNT`: optional Stripe connected account id for event retrieval.
 - `STRIPE_MVP_DEPOSIT_PAYMENT_LINK_ID`: payment link id to match for the MVP deposit.
-- `STRIPE_MVP_DEPOSIT_FALLBACK_AMOUNT`: amount in cents to match when no payment link id is set.
 - `MAILGUN_API_KEY`: Mailgun API key for outbound email.
 - `MAILGUN_DOMAIN`: Mailgun sending domain (e.g. `mg.example.com`).
 - `MAILGUN_FROM_EMAIL`: From address used in outbound emails.
@@ -76,6 +75,10 @@ Create a webhook endpoint in Stripe that points to `/api/stripe/webhook` and lis
 
 - sends the MVP follow-up email for matching MVP deposit sessions, or
 - sends the Hosted OpenClaw follow-up email for hosted deposit sessions created by this app.
+
+Both flows require an exact product identifier: the configured Payment Link for MVP
+deposits or the configured Price ID in Hosted OpenClaw checkout metadata. Amount-only
+matching is intentionally not accepted because this Stripe account hosts several products.
 
 ## CI + deploy secrets
 
