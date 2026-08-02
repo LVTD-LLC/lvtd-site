@@ -148,7 +148,10 @@ def hosted_openclaw_checkout(request: HttpRequest) -> HttpResponse:
             success_url=success_url,
             cancel_url=cancel_url,
             customer_creation="always",
-            metadata={"flow": "hosted_openclaw_deposit"},
+            metadata={
+                "flow": "hosted_openclaw_deposit",
+                "price_id": settings.HOSTED_OPENCLAW_DEPOSIT_PRICE_ID,
+            },
             **stripe_kwargs,
         )
     except Exception:
@@ -185,11 +188,16 @@ class StripeWebhookView(View):
         except Exception:
             return JsonResponse({"error": "stripe_event_fetch_failed"}, status=400)
 
-        if event.type != "checkout.session.completed":
+        event_payload = self._stripe_mapping(event)
+        event_type = event_payload.get("type") or getattr(event, "type", None)
+        if event_type != "checkout.session.completed":
             StripeWebhookEvent.objects.create(event_id=event_id)
             return JsonResponse({"status": "ignored"})
 
-        session = event.data.get("object", {})
+        event_data = self._stripe_mapping(
+            event_payload.get("data") or getattr(event, "data", {})
+        )
+        session = self._stripe_mapping(event_data.get("object"))
 
         if self._is_hosted_openclaw_deposit_session(session):
             customer_email = self._extract_customer_email(session)
@@ -223,22 +231,31 @@ class StripeWebhookView(View):
         )
 
     @staticmethod
+    def _stripe_mapping(value) -> dict:
+        if isinstance(value, dict):
+            return value
+        to_dict_recursive = getattr(value, "to_dict_recursive", None)
+        if callable(to_dict_recursive):
+            return to_dict_recursive()
+        to_dict = getattr(value, "to_dict", None)
+        if callable(to_dict):
+            return to_dict()
+        return {}
+
+    @staticmethod
     def _is_hosted_openclaw_deposit_session(session: dict) -> bool:
         metadata = session.get("metadata") or {}
-        return metadata.get("flow") == "hosted_openclaw_deposit"
+        expected_price_id = settings.HOSTED_OPENCLAW_DEPOSIT_PRICE_ID
+        return (
+            bool(expected_price_id)
+            and metadata.get("flow") == "hosted_openclaw_deposit"
+            and metadata.get("price_id") == expected_price_id
+        )
 
     @staticmethod
     def _is_mvp_deposit_session(session: dict) -> bool:
         payment_link_id = settings.STRIPE_MVP_DEPOSIT_PAYMENT_LINK_ID
-        if payment_link_id:
-            return session.get("payment_link") == payment_link_id
-
-        amount_total = session.get("amount_total")
-        currency = (session.get("currency") or "").lower()
-        return (
-            amount_total == settings.STRIPE_MVP_DEPOSIT_FALLBACK_AMOUNT
-            and currency == "usd"
-        )
+        return bool(payment_link_id) and session.get("payment_link") == payment_link_id
 
     @classmethod
     def _send_mvp_followup(cls, customer_email: str) -> bool:
