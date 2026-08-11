@@ -1,12 +1,12 @@
 {% extends "website/base.html" %}
 {% load static %}
 
-{% block title %}LVTD - AI product engineering for founders{% endblock %}
-{% block description %}LVTD turns rough product ideas, manual workflows, and AI workflow ideas into shipped apps, automations, and managed infrastructure.{% endblock %}
-{% block og_title %}LVTD - AI product engineering for founders{% endblock %}
-{% block og_description %}LVTD turns rough product ideas, manual workflows, and AI workflow ideas into shipped apps, automations, and managed infrastructure.{% endblock %}
-{% block twitter_title %}LVTD - AI product engineering for founders{% endblock %}
-{% block twitter_description %}LVTD turns rough product ideas, manual workflows, and AI workflow ideas into shipped apps, automations, and managed infrastructure.{% endblock %}
+{% block title %}LVTD - High-quality MVP development for founders{% endblock %}
+{% block description %}LVTD scopes, builds, and launches focused MVPs for founders and small teams.{% endblock %}
+{% block og_title %}LVTD - High-quality MVP development for founders{% endblock %}
+{% block og_description %}LVTD scopes, builds, and launches focused MVPs for founders and small teams.{% endblock %}
+{% block twitter_title %}LVTD - High-quality MVP development for founders{% endblock %}
+{% block twitter_description %}LVTD scopes, builds, and launches focused MVPs for founders and small teams.{% endblock %}
 {% block structured_data %}
   {{ block.super }}
   <script type="application/ld+json">
@@ -37,107 +37,66 @@
 {% endblock %}
 
 {% block content %}
-  <section class="home-hero">
+  <section class="home-hero hero-proof hero-wide">
     <div class="hero-copy">
-      <p class="hero-label">LVTD / AI product engineering</p>
-      <h1 class="hero-title">
-        Working software for founders with no team to spare.
-      </h1>
+      <h1 class="hero-title">From idea to credible software.</h1>
       <p class="hero-text">
-        I turn rough product ideas, manual workflows, and AI workflow ideas into shipped apps, automations, and managed infrastructure.
+        LVTD scopes, builds, and launches focused MVPs. Fast, finished, and ready for users.
       </p>
       <div class="hero-actions" aria-label="Primary actions">
-        <a class="btn btn-primary" href="mailto:rasul@lvtd.dev?subject=Project%20brief">Send a project brief</a>
-        <a class="btn btn-secondary" href="#work">See shipped work</a>
+        <a class="btn btn-primary" href="mailto:rasul@lvtd.dev?subject=MVP%20project%20brief">Start your MVP</a>
+        <a class="btn btn-secondary" href="#work">See the proof</a>
       </div>
     </div>
-
-    <aside class="lab-console" aria-label="LVTD shipped work snapshot">
-      <div class="console-top">
-        <span class="console-title">lvtd.ship</span>
-        <span class="console-state">active</span>
-      </div>
-      <div class="console-command">
-        <span aria-hidden="true">$</span>
-        <span>ship offer:ai-service proof:projects</span>
-        <span class="console-cursor" aria-hidden="true"></span>
-      </div>
-      <div class="console-matrix" aria-label="Software LVTD builds">
-        <div class="console-cell">
-          <span>MVPs</span>
-          <strong>Build the first release</strong>
-          <em>scope to deploy</em>
-        </div>
-        <div class="console-cell">
-          <span>agents</span>
-          <strong>Wire AI into work</strong>
-          <em>tools and data</em>
-        </div>
-        <div class="console-cell">
-          <span>ops</span>
-          <strong>Replace the manual loop</strong>
-          <em>alerts and reports</em>
-        </div>
-        <div class="console-cell">
-          <span>infra</span>
-          <strong>Run the service</strong>
-          <em>hosting and care</em>
-        </div>
-      </div>
-      <div class="console-log" aria-label="LVTD build qualities">
-        <p><span>01</span> scope the smallest release worth using</p>
-        <p><span>02</span> ship with deployment and operating notes</p>
-        <p><span>03</span> keep the projects visible as proof</p>
-      </div>
-    </aside>
+    <div class="hero-proof-note">
+      <strong>The studio behind Rowset, ReviewGate, CiteGuild, Djass, and PGSandbox.</strong>
+      <a href="#work">View active work <span aria-hidden="true">&darr;</span></a>
+    </div>
   </section>
 
   <section class="service-rail" aria-label="How LVTD works with clients">
     <div class="service-rail-copy">
-      <p class="section-label">Agency as a service</p>
-      <h2>Hire the same system that ships the projects.</h2>
+      <h2>One builder. One complete first release.</h2>
       <p class="service-rail-text">
-        LVTD packages reusable Django patterns, agent workflows, and deployment playbooks into focused builds with one accountable engineer.
+        Scope, product, code, deployment, and launch - handled.
       </p>
     </div>
-    <ul class="service-rail-list">
-      <li>
-        <strong>MVP build</strong>
-        <span>Product spine, data model, UI, deployment, analytics, and launch notes.</span>
-      </li>
-      <li>
-        <strong>AI workflow</strong>
-        <span>Agents, data sources, prompts, tools, eval paths, and human review loops.</span>
-      </li>
-      <li>
-        <strong>Internal tool</strong>
-        <span>Dashboards, scrapers, enrichment jobs, alerts, and reporting flows.</span>
-      </li>
-      <li>
-        <strong>Managed service</strong>
-        <span>Hosted OpenClaw, updates, monitoring, integrations, and operating checks.</span>
-      </li>
-    </ul>
+    <dl class="service-rail-list">
+      <div>
+        <dt>MVP build</dt>
+        <dd>A focused product ready for users.</dd>
+      </div>
+      <div>
+        <dt>AI workflow</dt>
+        <dd>Agents connected to real tools and data.</dd>
+      </div>
+      <div>
+        <dt>Internal tool</dt>
+        <dd>Manual work replaced with software.</dd>
+      </div>
+      <div>
+        <dt>Managed service</dt>
+        <dd>Hosting, monitoring, and updates handled.</dd>
+      </div>
+    </dl>
   </section>
 
   <section id="work" class="work-section">
     <div class="section-head">
       <div>
-        <p class="section-label">Selected work</p>
-        <h2>Proof that ships.</h2>
+        <h2>Products we have shipped.</h2>
       </div>
       <p>
-        Active projects show the range behind the service: SaaS tools, discovery sites, automations, open-source utilities, and managed infrastructure.
+        SaaS, agents, automation, and infrastructure - built and operated by LVTD.
       </p>
     </div>
 
     <div class="project-group" aria-labelledby="active-projects-heading">
       <div class="project-group-head">
         <h3 id="active-projects-heading">Active projects</h3>
-        <p>Products, utilities, and experiments that are still in motion.</p>
       </div>
 
-      <ul class="project-grid">
+      <ul class="project-grid" role="list">
         <li class="project-card-slot project-card-featured">
         <a class="project-card" href="https://rowset.lvtd.dev/?ref=lvtd.dev&amp;utm_source=lvtd.dev">
           <span class="project-media">
@@ -158,16 +117,50 @@
         <li class="project-card-slot project-card-featured">
         <a class="project-card" href="https://pgsandbox-mcp.lvtd.dev/?ref=lvtd.dev&amp;utm_source=lvtd.dev">
           <span class="project-media">
-            <img src="{% static 'images/logos/pgsandbox-mcp.svg' %}" width="64" height="64" loading="lazy" decoding="async" fetchpriority="low" alt="PGSandbox MCP logo" class="project-logo" />
+            <img src="{% static 'images/logos/pgsandbox-mcp.svg' %}" width="64" height="64" loading="lazy" decoding="async" fetchpriority="low" alt="PGSandbox logo" class="project-logo" />
           </span>
           <span class="project-copy">
             <span class="project-meta">Alpha / developer infrastructure</span>
-            <strong>PGSandbox MCP</strong>
+            <strong>PGSandbox</strong>
             <span>Agent-facing MCP server for disposable Postgres sandboxes with TTLs and cleanup built in.</span>
           </span>
-          <span class="project-tags" aria-label="PGSandbox MCP categories">
+          <span class="project-tags" aria-label="PGSandbox categories">
             <span>MCP</span>
             <span>Postgres</span>
+          </span>
+        </a>
+        </li>
+
+        <li class="project-card-slot project-card-featured">
+        <a class="project-card" href="https://reviewgate.lvtd.dev/?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+          <span class="project-media">
+            <img src="{% static 'images/logos/reviewgate.svg' %}" width="64" height="64" loading="lazy" decoding="async" fetchpriority="low" alt="ReviewGate logo" class="project-logo" />
+          </span>
+          <span class="project-copy">
+            <span class="project-meta">Open-source code review</span>
+            <strong>ReviewGate</strong>
+            <span>AI pre-merge checks for agent-written pull requests, with actionable findings and a quality gate.</span>
+          </span>
+          <span class="project-tags" aria-label="ReviewGate categories">
+            <span>AI review</span>
+            <span>open source</span>
+          </span>
+        </a>
+        </li>
+
+        <li class="project-card-slot project-card-featured">
+        <a class="project-card" href="https://citeguild.app/?ref=lvtd.dev&amp;utm_source=lvtd.dev">
+          <span class="project-media">
+            <img src="{% static 'images/logos/citeguild.svg' %}" width="48" height="48" loading="lazy" decoding="async" fetchpriority="low" alt="CiteGuild logo" class="project-logo" />
+          </span>
+          <span class="project-copy">
+            <span class="project-meta">Editorial source network</span>
+            <strong>CiteGuild</strong>
+            <span>A searchable network of member articles that helps AI content agents discover relevant sources to cite.</span>
+          </span>
+          <span class="project-tags" aria-label="CiteGuild categories">
+            <span>agents</span>
+            <span>content</span>
           </span>
         </a>
         </li>
@@ -347,10 +340,10 @@
     <div class="project-group" aria-labelledby="archived-projects-heading">
       <div class="project-group-head">
         <h3 id="archived-projects-heading">Archived projects</h3>
-        <p>Read-only or retired work. Cards link to source only when the repository is public.</p>
+        <p>Earlier products, kept honest.</p>
       </div>
 
-      <ul class="project-grid project-grid-archive">
+      <ul class="project-grid project-grid-archive" role="list">
         <li class="project-card-slot">
         <a class="project-card project-card-archived" href="https://github.com/LVTD-LLC/tuxseo">
           <span class="project-media">
@@ -424,67 +417,55 @@
 
   <section id="services" class="capability-section">
     <div class="capability-intro">
-      <p class="section-label">What LVTD builds</p>
-      <h2>Bring the messy version. Leave with a system people can use.</h2>
-      <p>
-        The work can start as a market test, a broken workflow, an internal spreadsheet, a stalled app, or an AI workflow that needs a real owner.
-      </p>
+      <h2>Bring the messy idea. Leave with working software.</h2>
+      <p>We turn uncertain scope into a focused release.</p>
     </div>
 
-    <div class="capability-list">
-      <article class="capability-item">
-        <span>MVPs</span>
-        <h3>First versions with the hard parts included.</h3>
-        <p>Product scope, data model, backend, UI, deployment, analytics, and the plain decisions needed to launch.</p>
-      </article>
-      <article class="capability-item">
-        <span>Tools</span>
-        <h3>Internal systems that replace manual work.</h3>
-        <p>Dashboards, scrapers, reporting flows, enrichment jobs, alerts, admin tools, and integrations that fit your operators.</p>
-      </article>
-      <article class="capability-item">
-        <span>Sites</span>
-        <h3>Marketing and content systems with real mechanics.</h3>
-        <p>Fast sites, programmatic pages, CMS-backed publishing, SEO surfaces, lead capture, and conversion paths.</p>
-      </article>
-      <article class="capability-item">
-        <span>Rescue</span>
-        <h3>Debugging when the product is already in motion.</h3>
-        <p>Slow pages, broken jobs, unreliable APIs, fragile deployments, confusing UI, and systems nobody wants to touch.</p>
-      </article>
-    </div>
+    <dl class="capability-list">
+      <div class="capability-item">
+        <dt><span>MVPs</span><strong>Ship the first useful version.</strong></dt>
+        <dd>Product, backend, UI, deployment, and analytics.</dd>
+      </div>
+      <div class="capability-item">
+        <dt><span>Tools</span><strong>Replace the manual loop.</strong></dt>
+        <dd>Dashboards, jobs, alerts, and integrations.</dd>
+      </div>
+      <div class="capability-item">
+        <dt><span>Sites</span><strong>Turn attention into action.</strong></dt>
+        <dd>Fast pages, publishing, SEO, and lead capture.</dd>
+      </div>
+      <div class="capability-item">
+        <dt><span>Rescue</span><strong>Fix what is slowing you down.</strong></dt>
+        <dd>Broken jobs, unreliable APIs, fragile deploys, and rough UI.</dd>
+      </div>
+    </dl>
   </section>
 
   <section class="offers-section" aria-label="Ways to start">
     <div class="offer-card offer-card-primary">
-      <p class="section-label">MVP done for you</p>
-      <h2>Hire LVTD for a focused first release.</h2>
+      <h2>A focused MVP, done for you.</h2>
       <p>
-        Pay a {{ mvp_deposit_amount }} deposit to reserve implementation time. I follow up for scope, timeline, and the first decisions that need to be made. Final service price:
-        <strong>{{ mvp_final_price }}</strong>.
+        Reserve implementation with a {{ mvp_deposit_amount }} deposit. Final price: <strong>{{ mvp_final_price }}</strong>.
       </p>
       <div class="offer-actions">
         {% if mvp_deposit_checkout_url %}
-          <a class="btn btn-primary" href="{{ mvp_deposit_checkout_url }}">Reserve MVP build</a>
+          <a class="btn btn-secondary" href="{{ mvp_deposit_checkout_url }}">Reserve your MVP</a>
         {% else %}
-          <a class="btn btn-primary" href="mailto:rasul@lvtd.dev?subject=MVP%20build%20inquiry">Reserve MVP build</a>
+          <a class="btn btn-secondary" href="mailto:rasul@lvtd.dev?subject=MVP%20build%20inquiry">Reserve your MVP</a>
         {% endif %}
-        <a class="btn btn-secondary" href="#process">Review build process</a>
+        <a class="btn btn-secondary" href="#process">See the process</a>
       </div>
     </div>
 
     <div class="offer-card">
-      <p class="section-label">Managed OpenClaw</p>
-      <h2>Run OpenClaw inside real team workflows.</h2>
-      <p>
-        Get a private OpenClaw deployment with hosting, access, monitoring, updates, and integrations handled by LVTD.
-      </p>
+      <h2>Hosted OpenClaw, fully managed.</h2>
+      <p>Private deployment, access, monitoring, updates, and integrations.</p>
       <div class="offer-actions">
         <form method="post" action="{% url 'hosted-openclaw-checkout' %}">
           {% csrf_token %}
-          <button class="btn btn-primary" type="submit">Reserve OpenClaw setup</button>
+          <button class="btn btn-secondary" type="submit">Reserve OpenClaw setup</button>
         </form>
-        <a class="btn btn-secondary" href="{% url 'hosted-openclaw-learn-more' %}">See OpenClaw scope</a>
+        <a class="btn btn-secondary" href="{% url 'hosted-openclaw-learn-more' %}">See the scope</a>
       </div>
     </div>
   </section>
@@ -492,34 +473,31 @@
   <section id="process" class="process-section">
     <div class="section-head section-head-compact">
       <div>
-        <p class="section-label">How a build moves</p>
-        <h2>A small delivery loop with visible decisions.</h2>
+        <h2>Four steps. No theater.</h2>
       </div>
-      <p>
-        Early software changes once it meets users, data, and edge cases. The loop keeps scope tight while the product becomes real.
-      </p>
+      <p>Scope tightly. Ship visibly. Improve from real use.</p>
     </div>
 
-    <ol class="process-list">
+    <ol class="process-list" role="list">
       <li>
         <span>01</span>
         <strong>Map the job</strong>
-        <p>Clarify the user, workflow, constraints, and the first release worth using.</p>
+        <p>Choose the user, problem, and first useful release.</p>
       </li>
       <li>
         <span>02</span>
-        <strong>Build the spine</strong>
-        <p>Set the model, data flow, deployment path, and core product route.</p>
+        <strong>Build the core</strong>
+        <p>Create the product, data, and deployment path.</p>
       </li>
       <li>
         <span>03</span>
         <strong>Finish the edges</strong>
-        <p>Tighten UI states, copy, errors, logs, speed, and operating notes.</p>
+        <p>Test states, errors, speed, and handoff.</p>
       </li>
       <li>
         <span>04</span>
-        <strong>Ship and learn</strong>
-        <p>Launch, watch real use, fix the sharp parts, and choose the next move.</p>
+        <strong>Ship</strong>
+        <p>Launch, learn, and choose the next move.</p>
       </li>
     </ol>
   </section>
@@ -527,8 +505,7 @@
   <section class="writing-section">
     <div class="section-head section-head-compact">
       <div>
-        <p class="section-label">Writing</p>
-        <h2>Notes from the workbench.</h2>
+        <h2>Notes from shipping.</h2>
       </div>
       <a class="btn btn-secondary" href="{% url 'blog-list' %}">Read notes</a>
     </div>
@@ -554,15 +531,12 @@
 
   <section class="closing-panel">
     <div>
-      <p class="section-label">Start here</p>
-      <h2>Send the problem you want off your plate.</h2>
-      <p>
-        A short note with the workflow, users, timeline, and current constraints is enough to begin.
-      </p>
+      <h2>Have an MVP in mind?</h2>
+      <p>Send the idea. A short brief is enough.</p>
     </div>
     <div class="closing-actions">
-      <a class="btn btn-primary" href="mailto:rasul@lvtd.dev?subject=Project%20brief">Send project brief</a>
-      <a class="btn btn-secondary" href="https://github.com/LVTD-LLC">Follow work</a>
+      <a class="btn btn-secondary" href="mailto:rasul@lvtd.dev?subject=Project%20brief">Send your brief</a>
+      <a class="btn btn-secondary" href="https://github.com/LVTD-LLC">See GitHub</a>
     </div>
   </section>
 {% endblock %}

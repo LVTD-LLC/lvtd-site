@@ -21,25 +21,26 @@ class HomePageTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "LVTD, LLC")
-        self.assertContains(
-            response, "Working software for founders with no team to spare."
-        )
-        self.assertContains(response, "Agency as a service")
-        self.assertContains(response, "Hire the same system that ships the projects.")
-        self.assertContains(response, "MVP done for you")
-        self.assertContains(response, "Pay a $100 deposit")
+        self.assertContains(response, "From idea to credible software.")
+        self.assertContains(response, "One builder. One complete first release.")
+        self.assertContains(response, "A focused MVP, done for you.")
+        self.assertContains(response, "Reserve implementation with a $100 deposit.")
         self.assertContains(response, "$5,000")
-        self.assertContains(response, "Reserve MVP build")
+        self.assertContains(response, "Reserve your MVP")
         self.assertContains(response, "Reserve OpenClaw setup")
-        self.assertContains(response, "Selected work")
-        self.assertContains(response, "Proof that ships.")
+        self.assertContains(response, "Products we have shipped.")
         self.assertContains(response, "Active projects")
         self.assertContains(response, "Archived projects")
-        self.assertContains(response, "Send the problem you want off your plate.")
+        self.assertContains(response, "Have an MVP in mind?")
+        self.assertNotContains(response, "data-uidotsh-pick")
+        self.assertNotContains(response, "data-uidotsh-option")
+        self.assertNotContains(response, "https://ui.sh/ui-picker.js")
 
         for project_name in (
             "Rowset",
-            "PGSandbox MCP",
+            "PGSandbox",
+            "ReviewGate",
+            "CiteGuild",
             "Skills",
             "Djass",
             "Awesome",
@@ -90,6 +91,19 @@ class HomePageTests(TestCase):
         self.assertContains(response, reverse("privacy-policy"))
         self.assertContains(response, "Terms")
         self.assertContains(response, "Privacy")
+
+    def test_shared_shell_has_no_header_and_uses_system_theme(self) -> None:
+        client = Client()
+        response = client.get(reverse("home"))
+
+        self.assertContains(response, "prefers-color-scheme: dark")
+        self.assertNotContains(response, "<header")
+        self.assertNotContains(response, 'aria-label="Homepage"')
+        self.assertNotContains(response, 'aria-label="Primary navigation"')
+        self.assertNotContains(response, 'id="theme-toggle"')
+        self.assertNotContains(response, "localStorage")
+        self.assertNotContains(response, 'class="mobile-menu"')
+        self.assertNotContains(response, "Start a build")
 
     @override_settings(SITE_URL="https://lvtd.test")
     def test_homepage_has_shared_seo_metadata(self) -> None:

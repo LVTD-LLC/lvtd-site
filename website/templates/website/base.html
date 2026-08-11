@@ -36,15 +36,10 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/brand/apple-touch-icon.png' %}" />
     <script>
       ;(() => {
-        try {
-          const storedTheme = localStorage.getItem('theme')
-          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-          const theme =
-            storedTheme === 'light' || storedTheme === 'dark'
-              ? storedTheme
-              : prefersDark
-                ? 'dark'
-                : 'light'
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
+
+        const applySystemTheme = () => {
+          const theme = systemTheme.matches ? 'dark' : 'light'
           document.documentElement.classList.toggle('dark', theme === 'dark')
           document.documentElement.style.colorScheme = theme
           const themeColor = document.querySelector('[data-theme-color]')
@@ -53,10 +48,10 @@
           if (chromeColor) {
             themeColor.setAttribute('content', chromeColor)
           }
-        } catch (error) {
-          document.documentElement.classList.remove('dark')
-          document.documentElement.style.colorScheme = 'light'
         }
+
+        applySystemTheme()
+        systemTheme.addEventListener?.('change', applySystemTheme)
       })()
     </script>
     {% block structured_data %}
@@ -96,53 +91,7 @@
       <div class="site-frame-inner"></div>
     </div>
 
-    <div class="site-content">
-      <header class="site-container">
-        <nav class="top-nav" aria-label="Primary navigation">
-          <a class="brand-link" href="{% url 'home' %}">
-            <span class="brand-mark" aria-hidden="true">
-              <img
-                class="brand-mark-image"
-                src="{% static 'images/brand/lvtd-fire-heart-nav.png' %}"
-                width="40"
-                height="40"
-                alt=""
-              />
-            </span>
-            <span class="brand-word">
-              <strong>LVTD</strong>
-              <span>builds software</span>
-            </span>
-          </a>
-          <div class="nav-links">
-            <a class="nav-link" href="{% url 'home' %}#work">Work</a>
-            <a class="nav-link" href="{% url 'home' %}#services">Services</a>
-            <a class="nav-link" href="{% url 'blog-list' %}">Writing</a>
-            <a class="nav-link" href="{% url 'hosted-openclaw-learn-more' %}">OpenClaw</a>
-            <a class="nav-link nav-link-strong" href="mailto:rasul@lvtd.dev?subject=Project%20inquiry">Start a build</a>
-            <details class="mobile-menu">
-              <summary class="mobile-menu-summary">Menu</summary>
-              <div class="mobile-menu-panel">
-                <a class="mobile-menu-link" href="{% url 'home' %}#work">Work</a>
-                <a class="mobile-menu-link" href="{% url 'home' %}#services">Services</a>
-                <a class="mobile-menu-link" href="{% url 'blog-list' %}">Writing</a>
-                <a class="mobile-menu-link" href="{% url 'hosted-openclaw-learn-more' %}">OpenClaw</a>
-                <a class="mobile-menu-link mobile-menu-link-strong" href="mailto:rasul@lvtd.dev?subject=Project%20inquiry">Start a build</a>
-              </div>
-            </details>
-            <button
-              id="theme-toggle"
-              class="theme-toggle"
-              type="button"
-              aria-label="Toggle theme"
-            >
-              <span class="theme-dot" aria-hidden="true"></span>
-              <span data-theme-label>Theme</span>
-            </button>
-          </div>
-        </nav>
-      </header>
-
+    <div class="site-content isolate">
       <main id="main-content" class="site-container site-main">
         {% block content %}{% endblock %}
       </main>
@@ -161,70 +110,5 @@
       </footer>
     </div>
 
-    <script>
-      ;(() => {
-        const toggleButton = document.getElementById('theme-toggle')
-        if (!toggleButton) return
-        const label = toggleButton.querySelector('[data-theme-label]')
-
-        const setTheme = (theme) => {
-          document.documentElement.classList.toggle('dark', theme === 'dark')
-          document.documentElement.style.colorScheme = theme
-          try {
-            localStorage.setItem('theme', theme)
-          } catch (error) {
-            // Private browsing can block storage writes.
-          }
-          if (label) {
-            label.textContent = theme === 'dark' ? 'Use light' : 'Use dark'
-          }
-          const themeColor = document.querySelector('[data-theme-color]')
-          const chromeColor =
-            themeColor?.dataset[theme === 'dark' ? 'darkColor' : 'lightColor']
-          if (chromeColor) {
-            themeColor.setAttribute('content', chromeColor)
-          }
-          toggleButton.setAttribute(
-            'aria-label',
-            theme === 'dark' ? 'Use light mode' : 'Use dark mode',
-          )
-        }
-
-        const getTheme = () =>
-          document.documentElement.classList.contains('dark') ? 'dark' : 'light'
-
-        setTheme(getTheme())
-        toggleButton.addEventListener('click', () => {
-          setTheme(getTheme() === 'dark' ? 'light' : 'dark')
-        })
-      })()
-    </script>
-    <script>
-      ;(() => {
-        const menu = document.querySelector('.mobile-menu')
-        if (!menu) return
-        const closeMenu = () => {
-          menu.open = false
-        }
-
-        document.addEventListener('click', (event) => {
-          if (!menu.open || menu.contains(event.target)) return
-          closeMenu()
-        })
-
-        document.addEventListener('keydown', (event) => {
-          if (event.key !== 'Escape' || !menu.open) return
-          closeMenu()
-        })
-
-        menu.addEventListener('click', (event) => {
-          if (!(event.target instanceof Element)) return
-          if (!event.target.closest('a')) return
-          closeMenu()
-        })
-
-        window.addEventListener('hashchange', closeMenu)
-      })()
-    </script>
   </body>
 </html>
