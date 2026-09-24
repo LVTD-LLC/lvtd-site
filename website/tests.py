@@ -558,3 +558,38 @@ class StripeWebhookTests(TestCase):
 
         self.assertEqual(status_code, 200)
         self.assertEqual(mock_post.call_count, 0)
+
+
+class AISteeringTests(TestCase):
+    @override_settings(SITE_URL="https://lvtd.test")
+    def test_catalog_preserves_guides_links_and_installation(self):
+        response = self.client.get(reverse("ai-steering"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'href="https://lvtd.test/ai-steering"')
+        self.assertContains(response, '"@type":"CollectionPage"')
+        sections = response.context["catalog"]["sections"]
+        self.assertEqual(sum(len(s["resources"]) for s in sections), 11)
+        for section in sections:
+            for resource in section["resources"]:
+                self.assertContains(response, f'id="{resource["slug"]}"')
+                self.assertContains(response, resource["name"])
+                for link in resource["usefulResources"] + resource["greatExamples"]:
+                    self.assertContains(response, link["href"])
+        self.assertContains(response, "npx skills add LVTD-LLC/ai-steering")
+        self.assertContains(response, "gh skill install LVTD-LLC/ai-steering")
+        self.assertNotContains(response, "https://ai-steering.lvtd.dev")
+
+    def test_slash_variant_redirects_to_canonical_path(self):
+        self.assertRedirects(
+            self.client.get("/ai-steering/?ref=old"),
+            "/ai-steering?ref=old",
+            status_code=301,
+        )
+
+    @override_settings(SITE_URL="https://lvtd.test")
+    def test_catalog_is_discoverable(self):
+        self.assertContains(self.client.get(reverse("home")), 'href="/ai-steering"')
+        self.assertContains(
+            self.client.get(reverse("sitemap")),
+            "<loc>https://lvtd.test/ai-steering</loc>",
+        )

@@ -117,3 +117,11 @@ For a new public service or product page:
 7. Add a sitemap entry if the page should be indexed.
 8. Update navigation only if the page is a primary surface.
 9. Run the relevant Django and CSS checks.
+
+## AI Steering Catalog
+
+`website/data/ai_steering.json` is the checked-in catalog snapshot used by
+`ai_steering.html`. The source remains `LVTD-LLC/ai-steering` at
+`src/data/steering-data.js`; its `npm run export:catalog` command emits this JSON.
+After catalog edits, export a fresh snapshot here and run the page tests.
+The LVTD page has no runtime dependency on GitHub or the old standalone site.
