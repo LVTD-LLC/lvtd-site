@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from pathlib import Path
 from xml.etree import ElementTree
 
 import requests
@@ -41,6 +42,7 @@ def sitemap_xml(request: HttpRequest) -> HttpResponse:
     static_urls = [
         (reverse("home"), settings.SITE_LASTMOD, "weekly", "1.0"),
         (reverse("blog-list"), settings.SITE_LASTMOD, "weekly", "0.7"),
+        (reverse("ai-steering"), settings.SITE_LASTMOD, "monthly", "0.7"),
         (
             reverse("hosted-openclaw-learn-more"),
             settings.SITE_LASTMOD,
@@ -82,6 +84,16 @@ class HomePageView(TemplateView):
             settings.HOSTED_OPENCLAW_DEPOSIT_AMOUNT
         )
         context["latest_blog_posts"] = BlogPost.objects.filter(is_published=True)[:3]
+        return context
+
+
+class AISteeringView(TemplateView):
+    template_name = "website/ai_steering.html"
+
+    def get_context_data(self, **kwargs: object) -> dict[str, object]:
+        context = super().get_context_data(**kwargs)
+        catalog_path = Path(__file__).parent / "data" / "ai_steering.json"
+        context["catalog"] = json.loads(catalog_path.read_text())
         return context
 
 
