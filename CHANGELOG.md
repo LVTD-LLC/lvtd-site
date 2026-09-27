@@ -10,6 +10,7 @@
   pin Jev 1.13.0 and keep all API calls behind an explicit management command.
 - Add regression coverage for incremental runs, failures, ranking calculations,
   provider validation, HTML escaping, and admin permissions.
+- Allow ReviewGate to publish its check result and rerun on updated PR commits.
 
 
 ## Unreleased

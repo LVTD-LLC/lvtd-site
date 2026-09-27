@@ -2,11 +2,12 @@ name: ReviewGate
 
 on:
   pull_request:
-    types: [opened, ready_for_review]
+    types: [opened, synchronize, ready_for_review]
   issue_comment:
     types: [created]
 
 permissions:
+  checks: write
   contents: read
   pull-requests: write
 
