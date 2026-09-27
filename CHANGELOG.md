@@ -1,5 +1,7 @@
 # Changelog
 
+- Increase bounded ReviewGate review timeouts after repeated provider timeouts; review requirements and on-demand triggers are unchanged.
+
 ## 2026-09-27 - Explicit truncated-answer retries
 
 - Add an opt-in bounded retry budget for answers truncated by reasoning/output

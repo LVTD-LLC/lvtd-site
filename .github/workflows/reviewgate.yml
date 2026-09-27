@@ -97,3 +97,5 @@ jobs:
           GITHUB_EVENT_PATH: ${{ github.workspace }}/.reviewgate/pull_request_event.json
         with:
           openrouter_api_key: ${{ secrets.OPENROUTER_API_KEY }}
+          angle_timeout_seconds: 360
+          total_timeout_seconds: 900
