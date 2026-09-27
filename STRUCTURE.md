@@ -125,3 +125,10 @@ For a new public service or product page:
 `src/data/steering-data.js`; its `npm run export:catalog` command emits this JSON.
 After catalog edits, export a fresh snapshot here and run the page tests.
 The LVTD page has no runtime dependency on GitHub or the old standalone site.
+
+## Jev Benchmark experiment
+
+`jev_benchmark/` owns benchmark models, admin, provider clients, resumable
+management commands, ranking calculations, and public templates. It is a separate
+app because its persistent experiment lifecycle is independent of marketing and
+payment flows. See README for operations and methodology.

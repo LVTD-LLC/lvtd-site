@@ -43,6 +43,7 @@ def sitemap_xml(request: HttpRequest) -> HttpResponse:
         (reverse("home"), settings.SITE_LASTMOD, "weekly", "1.0"),
         (reverse("blog-list"), settings.SITE_LASTMOD, "weekly", "0.7"),
         (reverse("ai-steering"), settings.SITE_LASTMOD, "monthly", "0.7"),
+        (reverse("jev-benchmark"), settings.SITE_LASTMOD, "weekly", "0.7"),
         (
             reverse("hosted-openclaw-learn-more"),
             settings.SITE_LASTMOD,
