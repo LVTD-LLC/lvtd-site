@@ -503,3 +503,17 @@ def test_missing_request_budget_is_labelled_not_recorded(cohort, client):
     page = client.get("/jev-benchmark/question-0")
     assert page.status_code == 200
     assert b"Output budget: not recorded" in page.content
+
+
+def test_null_request_template_lookup_is_safe(cohort):
+    # SQL NULL is forbidden by Answer.request, but verify the reviewer's
+    # hypothetical in-memory None case against the actual Django template.
+    from django.template.loader import render_to_string
+
+    models, questions = cohort
+    answer = Answer(model=models[0], question=questions[0], text="Response", request=None)
+    html = render_to_string(
+        "jev_benchmark/detail.html",
+        {"question": questions[0], "rows": [{"model": models[0], "answer": answer}]},
+    )
+    assert "Output budget: not recorded" in html
