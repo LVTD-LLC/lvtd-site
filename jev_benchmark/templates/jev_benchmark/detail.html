@@ -1,0 +1,23 @@
+{% extends 'website/base.html' %}
+{% block title %}{{ question.title }} - Jev Benchmark | LVTD{% endblock %}
+{% block description %}Compare model answers to {{ question.title }}. See the prompt, scoring rubric, Elo ranking, and Jev's head-to-head decisions.{% endblock %}
+{% block og_title %}{{ question.title }} - Jev Benchmark{% endblock %}
+{% block twitter_title %}{{ question.title }} - Jev Benchmark{% endblock %}
+{% block content %}
+<div class="benchmark">
+  <nav class="bench-nav" aria-label="Breadcrumb"><a href="{% url 'home' %}">LVTD</a><span aria-hidden="true">/</span><a href="{% url 'jev-benchmark' %}">Jev Benchmark</a></nav>
+  <header class="bench-header"><p class="bench-eyebrow">{{ question.get_category_display }} &middot; Weight {{ question.weight }}</p><h1>{{ question.title }}</h1><p class="bench-muted">{{ answers_count }} / {{ model_count }} answers &middot; {{ matches_count }} / {{ expected_matches }} pairs &middot; Judge: {{ question.judge_model }}</p></header>
+  <section class="bench-section"><h2>The prompt</h2><div class="bench-prose">{{ question.prompt|linebreaksbr }}</div><details class="bench-disclosure"><summary>Judging rubric</summary><p>{{ question.rubric }}</p></details></section>
+  <section class="bench-section"><h2>Question ranking</h2>{% include 'jev_benchmark/ranking_table.html' %}<p class="bench-footnote">Elo starts at 1,500, K = 32. Scores are provisional while pairs remain. <a href="{% url 'jev-benchmark' %}#methodology">Full methodology</a>.</p></section>
+  <section class="bench-section"><h2>The answers</h2><p class="bench-muted">Original model output, displayed as escaped plain text. No generated code or HTML is executed.</p>
+    {% for row in rows %}<details class="bench-disclosure" id="answer-{{ row.model.pk }}"><summary>{{ row.model.name }} {% if not row.answer %}<span class="bench-pending">&middot; Awaiting answer</span>{% endif %}</summary>
+      {% if row.answer %}<p class="bench-footnote">Requested model: {{ row.model.openrouter_id }} &middot; Output budget: {{ row.model.max_tokens }} tokens &middot; {{ row.answer.completed_at|date:"M j, Y, H:i" }} UTC</p><pre class="bench-answer">{{ row.answer.text }}</pre>{% else %}<p>No completed answer yet.</p>{% endif %}
+    </details>{% endfor %}
+  </section>
+  <section class="bench-section"><h2>Head-to-head decisions</h2><p class="bench-muted">A and B are presentation positions, not model labels shown to Jev. Confidence is a 0&ndash;1 decision signal, not a correctness guarantee. Jev provides a choice and probabilities, not a written explanation.</p>
+    {% for match in matches %}<details class="bench-disclosure"><summary>{{ match.left.model.name }} vs {{ match.right.model.name }} <span class="bench-pending">&middot; {% if match.winner_id == match.left.model_id %}{{ match.left.model.name }}{% else %}{{ match.right.model.name }}{% endif %} wins</span></summary>
+      <dl class="bench-match"><dt>Answer A</dt><dd>{% if match.a_is_left %}{{ match.left.model.name }}{% else %}{{ match.right.model.name }}{% endif %}</dd><dt>Answer B</dt><dd>{% if match.a_is_left %}{{ match.right.model.name }}{% else %}{{ match.left.model.name }}{% endif %}</dd><dt>Probabilities</dt><dd>A: {{ match.probabilities.A|floatformat:3 }} &middot; B: {{ match.probabilities.B|floatformat:3 }}</dd><dt>Confidence</dt><dd>{{ match.confidence|floatformat:3 }}</dd><dt>Judge version</dt><dd>{{ match.response.model }}</dd><dt>Judged at</dt><dd>{{ match.completed_at|date:"M j, Y, H:i" }} UTC</dd></dl>
+    </details>{% empty %}<p class="bench-empty">No judgments yet. Comparisons will appear after answers are collected.</p>{% endfor %}
+  </section>
+</div>
+{% endblock %}

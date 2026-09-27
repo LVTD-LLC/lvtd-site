@@ -106,3 +106,81 @@ uv run ruff check
 uv run python manage.py check
 uv run pytest
 ```
+
+## Jev Benchmark
+
+The `jev_benchmark` Django app serves `/jev-benchmark` (the original
+`/jev-benchamrk` spelling redirects). It stores one OpenRouter answer per active
+model/question and one Jev decision per unordered answer pair. Admin supports
+models, questions, positive question weights, and read-only answer/judgment audit
+records. The question pages expose the exact prompts, answers, and probabilities.
+
+### First run / adding entries
+
+```bash
+uv run python manage.py migrate
+uv run python manage.py seed_jev_benchmark
+uv run python manage.py run_jev_benchmark --dry-run
+uv run python manage.py run_jev_benchmark --max-requests 165
+```
+
+The initial seed contains ten models from ten creators and three questions
+(writing, programming, mathematics), selected against OpenRouter's catalogue on
+2026-09-27. It does not overwrite admin changes. The initial run needs 30 answer
+requests and 135 judgments. Add models or questions in admin, then rerun the
+command: completed work is never intentionally regenerated. An eleventh model
+adds three answers and thirty comparisons. Deactivating an entry removes it from
+current rankings but retains its results. New answers and judgments immediately
+appear on the public pages; do not enter confidential prompts.
+
+Server-side environment:
+
+- `OPENROUTER_JEVBENCHMARK_AI_API_KEY`: Infisical `Openclaw / prod /
+  /projects/lvtd`, key of the same name.
+- `TYPESAFE_API_KEY`: Infisical `Openclaw / prod / /services/typesafeai`.
+
+Resolve/inject credentials through the deployment environment, never the admin or
+browser. The runner requires both keys. No paid requests occur on page views,
+admin saves, deploys, seeding, or dry runs. Running the management command is the
+explicit spending action. It can be invoked manually in the deployed container
+or by a separately configured scheduler; no schedule is installed automatically.
+The existing django-q worker's 60-second timeout is too short for this full run,
+so do not enqueue the entire command as a default worker job.
+
+### Reproducibility and operations
+
+- Questions pin Jev to `jev-1.13.0`, not the moving `jev-latest` alias. Requests,
+  responses (including usage/provider metadata), latency, attempts, and completion
+  times are persisted. A/B presentation is hash-assigned; model labels are omitted.
+- Used prompt/rubric/judge and model ID/output budget cannot be edited through
+  model saves/admin. Create a new question version for new semantics. Weight,
+  display name, category, and activation edits do not cause inference.
+- Elo starts at 1500, K=32, and replays each stored win/loss once in a stable hashed
+  model-ID order. It is reproducible for the same data, not order-independent.
+  Confidence does not change match weight. Overall ratings are weighted arithmetic
+  means and require all active-question matchups to be complete for that model.
+- One cross-process database lease protects paid work. It renews before each
+  request and expires after 20 minutes if a process crashes. Do not manually clear
+  it while a runner may still be active. Individual HTTP read timeout is 240s;
+  retries for 429/503/529 are bounded to three attempts with capped backoff.
+- `--max-requests` bounds logical jobs, not rate-limit retries or dollars. Provider
+  pricing and reasoning defaults vary. Incomplete answers and malformed decisions
+  are excluded, not counted as losses. Failed jobs are retried on the next run;
+  nonzero command exit means inspect admin errors before retrying.
+- Database uniqueness and the lease prevent normal duplicate runs, but an upstream
+  response followed by a crash before the database save can still be billed twice
+  on retry. No provider-side exactly-once guarantee is claimed. Network timeouts
+  are not automatically retried.
+- Back up the database before rollout, apply the additive `jev_benchmark` migration
+  before serving the new routes, seed once, then run the benchmark. Rollback uses
+  the previous application image; keep these additive tables and stored results.
+  Never reverse/drop the migration to roll back application code.
+
+This is an exploratory judge-preference benchmark, not a correctness certification.
+Generated code is never executed and answer text is HTML-escaped. The methodology
+page explicitly covers sample size, presentation bias, provider defaults, and
+confidence interpretation.
+
+API references: [TypeSafe HTTP API](https://docs.typesafe.ai/api),
+[TypeSafe models](https://docs.typesafe.ai/models),
+[OpenRouter model catalogue](https://openrouter.ai/api/v1/models).

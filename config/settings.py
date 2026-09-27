@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_q",
     "website",
+    "jev_benchmark",
 ]
 
 MIDDLEWARE = [
@@ -162,3 +163,7 @@ MAILGUN_API_KEY = os.getenv("MAILGUN_API_KEY", "")
 MAILGUN_DOMAIN = os.getenv("MAILGUN_DOMAIN", "")
 MAILGUN_FROM_EMAIL = os.getenv("MAILGUN_FROM_EMAIL", "")
 MAILGUN_REPLY_TO_EMAIL = os.getenv("MAILGUN_REPLY_TO_EMAIL", "")
+
+# Jev Benchmark: server-side credentials only. No paid work on page/admin requests.
+OPENROUTER_JEVBENCHMARK_AI_API_KEY = os.getenv("OPENROUTER_JEVBENCHMARK_AI_API_KEY", "")
+TYPESAFE_API_KEY = os.getenv("TYPESAFE_API_KEY", "")

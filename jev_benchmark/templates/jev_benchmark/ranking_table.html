@@ -1,0 +1,12 @@
+<div class="bench-table-scroll" tabindex="0" role="region" aria-label="Per-question rankings">
+  <table class="bench-table"><caption class="sr-only">Per-question Elo, wins, losses, and average judge confidence</caption>
+    <thead><tr><th scope="col">Model</th><th scope="col">Elo</th><th scope="col">W / L</th><th scope="col">Avg. confidence</th><th scope="col">Status</th></tr></thead>
+    <tbody>{% for row in rows %}<tr>
+      <th scope="row">{{ row.model.name }}</th>
+      <td class="bench-score">{% if row.rating != None %}{{ row.rating|floatformat:1 }}{% else %}&mdash;{% endif %}</td>
+      <td class="bench-number">{{ row.wins }} / {{ row.losses }}</td>
+      <td class="bench-number">{% if row.confidence != None %}{{ row.confidence|floatformat:2 }}{% else %}&mdash;{% endif %}</td>
+      <td><span class="bench-pending">{% if row.complete %}Complete{% elif row.games %}Provisional{% else %}Pending{% endif %}</span></td>
+    </tr>{% endfor %}</tbody>
+  </table>
+</div>
