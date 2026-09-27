@@ -511,7 +511,9 @@ def test_null_request_template_lookup_is_safe(cohort):
     from django.template.loader import render_to_string
 
     models, questions = cohort
-    answer = Answer(model=models[0], question=questions[0], text="Response", request=None)
+    answer = Answer(
+        model=models[0], question=questions[0], text="Response", request=None
+    )
     html = render_to_string(
         "jev_benchmark/detail.html",
         {"question": questions[0], "rows": [{"model": models[0], "answer": answer}]},
