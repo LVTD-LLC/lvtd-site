@@ -37,18 +37,35 @@ jobs:
           docker build --tag "$IMAGE_NAME:$GITHUB_SHA" .
           docker push "$IMAGE_NAME:$GITHUB_SHA"
 
-      - name: Deploy web app
-        uses: caprover/deploy-from-github@main
-        with:
-          server: ${{ secrets.CAPROVER_SERVER }}
-          app: lvtd-site
-          token: ${{ secrets.CAPROVER_TOKEN_LVTD_SITE }}
-          image: ${{ env.IMAGE_NAME }}:${{ github.sha }}
+      - name: Deploy web and workers and wait for CapRover
+        env:
+          CAPROVER_SERVER: ${{ secrets.CAPROVER_SERVER }}
+          WEB_TOKEN: ${{ secrets.CAPROVER_TOKEN_LVTD_SITE }}
+          WORKER_TOKEN: ${{ secrets.CAPROVER_TOKEN_LVTD_SITE_WORKERS }}
+        run: |
+          python3 - <<'PYTHON'
+          import json
+          import os
+          import urllib.request
 
-      - name: Deploy workers
-        uses: caprover/deploy-from-github@main
-        with:
-          server: ${{ secrets.CAPROVER_SERVER }}
-          app: lvtd-site-workers
-          token: ${{ secrets.CAPROVER_TOKEN_LVTD_SITE_WORKERS }}
-          image: ${{ env.IMAGE_NAME }}:${{ github.sha }}
+          image = f"{os.environ['IMAGE_NAME']}:{os.environ['GITHUB_SHA']}"
+          body = json.dumps({
+              "captainDefinitionContent": json.dumps({"schemaVersion": 2, "imageName": image}),
+              "gitHash": os.environ["GITHUB_SHA"],
+          }).encode()
+          for app, token_key in [("lvtd-site", "WEB_TOKEN"), ("lvtd-site-workers", "WORKER_TOKEN")]:
+              request = urllib.request.Request(
+                  f"{os.environ['CAPROVER_SERVER'].rstrip('/')}/api/v2/user/apps/appData/{app}",
+                  data=body,
+                  headers={
+                      "Content-Type": "application/json",
+                      "x-captain-app-token": os.environ[token_key],
+                      "x-namespace": "captain",
+                  },
+              )
+              with urllib.request.urlopen(request, timeout=600) as response:
+                  result = json.load(response)
+              if result.get("status") != 100:
+                  raise SystemExit(f"Deployment failed for {app}: {result.get('description')}")
+              print(f"CapRover deployed {app}: {image}", flush=True)
+          PYTHON
