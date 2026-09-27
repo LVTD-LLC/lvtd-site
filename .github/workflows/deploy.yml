@@ -6,42 +6,49 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
 env:
-  WEB_APP_NAME: lvtd-site
-  WORKER_APP_NAME: lvtd-site-workers
+  IMAGE_NAME: ghcr.io/lvtd-llc/lvtd-site
 
 jobs:
-  deploy-web:
-    name: Deploy web app
+  deploy:
+    name: Build and deploy web and workers
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Create CapRover deploy tarball
-        run: tar --exclude=deploy.tar -cf deploy.tar .
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: CapRover Deploy (web)
+      - name: Build and push image
+        run: |
+          docker build --tag "$IMAGE_NAME:$GITHUB_SHA" .
+          docker push "$IMAGE_NAME:$GITHUB_SHA"
+
+      - name: Deploy web app
         uses: caprover/deploy-from-github@main
         with:
           server: ${{ secrets.CAPROVER_SERVER }}
-          app: ${{ env.WEB_APP_NAME }}
+          app: lvtd-site
           token: ${{ secrets.CAPROVER_TOKEN_LVTD_SITE }}
+          image: ${{ env.IMAGE_NAME }}:${{ github.sha }}
 
-  deploy-workers:
-    name: Deploy workers app
-    runs-on: ubuntu-latest
-    needs: deploy-web
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Create CapRover deploy tarball
-        run: tar --exclude=deploy.tar -cf deploy.tar .
-
-      - name: CapRover Deploy (workers)
+      - name: Deploy workers
         uses: caprover/deploy-from-github@main
         with:
           server: ${{ secrets.CAPROVER_SERVER }}
-          app: ${{ env.WORKER_APP_NAME }}
+          app: lvtd-site-workers
           token: ${{ secrets.CAPROVER_TOKEN_LVTD_SITE_WORKERS }}
+          image: ${{ env.IMAGE_NAME }}:${{ github.sha }}
