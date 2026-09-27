@@ -489,3 +489,17 @@ def test_question_shows_actual_retry_budget(cohort, client):
     )
     page = client.get("/jev-benchmark/question-0")
     assert b"Output budget: 16384 tokens" in page.content
+
+
+def test_missing_request_budget_is_labelled_not_recorded(cohort, client):
+    models, questions = cohort
+    Answer.objects.create(
+        model=models[0],
+        question=questions[0],
+        status="complete",
+        text="Older response",
+        request={},
+    )
+    page = client.get("/jev-benchmark/question-0")
+    assert page.status_code == 200
+    assert b"Output budget: not recorded" in page.content
