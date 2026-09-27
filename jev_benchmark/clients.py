@@ -58,11 +58,11 @@ def post_json(url, key, payload):
     raise ProviderError("Provider unavailable")
 
 
-def generate(model, question):
+def generate(model, question, *, max_tokens=None):
     payload = {
         "model": model.openrouter_id,
         "messages": [{"role": "user", "content": question.prompt}],
-        "max_tokens": model.max_tokens,
+        "max_tokens": model.max_tokens if max_tokens is None else max_tokens,
         "stream": False,
     }
     start = time.monotonic()

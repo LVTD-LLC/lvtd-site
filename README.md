@@ -184,3 +184,19 @@ confidence interpretation.
 API references: [TypeSafe HTTP API](https://docs.typesafe.ai/api),
 [TypeSafe models](https://docs.typesafe.ai/models),
 [OpenRouter model catalogue](https://openrouter.ai/api/v1/models).
+
+### Retrying reasoning-token exhaustion
+
+If an answer fails with OpenRouter `finish_reason=length` (including empty final
+content when reasoning consumed the whole allowance), an operator can explicitly
+raise the retry budget without editing frozen model inputs:
+
+```bash
+uv run python manage.py run_jev_benchmark --retry-max-tokens 16384
+```
+
+This applies only to failed, truncated answers. New answers and other failure
+types retain the model's configured budget; completed answers and judgments are
+never repeated. The override is bounded to 16,384 tokens and may increase API
+cost. Each saved request records the actual budget, shown on its question page.
+It does not automatically escalate budgets or promise a successful completion.
