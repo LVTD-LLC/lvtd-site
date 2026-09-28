@@ -16,17 +16,11 @@ class Command(BaseCommand):
         parser.add_argument("--poll-seconds", type=int, default=30)
 
     def handle(self, *args, **options):
-        if (
-            options["watch"]
-            and threading.current_thread() is not threading.main_thread()
-        ):
-            raise CommandError(
-                "Watch mode must run in the main thread for signal handling."
-            )
+        if threading.current_thread() is not threading.main_thread():
+            raise CommandError("Worker command must run in the main thread.")
         stop = threading.Event()
-        if threading.current_thread() is threading.main_thread():
-            for sig in (signal.SIGTERM, signal.SIGINT):
-                signal.signal(sig, lambda *_: stop.set())
+        for sig in (signal.SIGTERM, signal.SIGINT):
+            signal.signal(sig, lambda *_: stop.set())
         while not stop.is_set():
             try:
                 stats = run_queue(

@@ -284,3 +284,16 @@ def test_historical_snapshot_recovers_actual_retry_cost_without_changing_result(
     assert WorkAttempt.objects.count() == 2
     assert WorkAttempt.objects.get(number=1).cost_usd == Decimal("0.01")
     assert Answer.objects.values().get(pk=row.pk) == before
+
+
+@pytest.mark.parametrize("watch", [False, True])
+def test_worker_rejects_non_main_thread(watch):
+    from concurrent.futures import ThreadPoolExecutor
+
+    from django.core.management import call_command
+    from django.core.management.base import CommandError
+
+    with ThreadPoolExecutor(max_workers=1) as pool:
+        future = pool.submit(call_command, "work_jev_benchmark", watch=watch)
+        with pytest.raises(CommandError, match="main thread"):
+            future.result()
