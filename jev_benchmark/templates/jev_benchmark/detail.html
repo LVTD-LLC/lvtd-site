@@ -1,4 +1,5 @@
 {% extends 'website/base.html' %}
+{% load static %}
 {% block title %}{{ question.title }} - Jev Benchmark | LVTD{% endblock %}
 {% block description %}Compare model answers to {{ question.title }}. See the prompt, scoring rubric, Elo ranking, and Jev's head-to-head decisions.{% endblock %}
 {% block og_title %}{{ question.title }} - Jev Benchmark{% endblock %}
@@ -6,7 +7,7 @@
 {% block content %}
 <div class="benchmark">
   <nav class="bench-nav" aria-label="Breadcrumb"><a href="{% url 'home' %}">LVTD</a><span aria-hidden="true">/</span><a href="{% url 'jev-benchmark' %}">Jev Benchmark</a></nav>
-  <header class="bench-header"><p class="bench-eyebrow">{{ question.get_category_display }} &middot; Weight {{ question.weight }}</p><h1>{{ question.title }}</h1><p class="bench-muted">{{ answers_count }} / {{ model_count }} answers &middot; {{ matches_count }} / {{ expected_matches }} pairs &middot; Judge: {{ question.judge_model }}</p></header>
+  <header class="bench-header"><h1>{{ question.title }}</h1><p class="bench-muted">{{ answers_count }} / {{ model_count }} answers &middot; {{ matches_count }} / {{ expected_matches }} pairs &middot; Judge: {{ question.judge_model }}</p></header>
   <section class="bench-section"><h2>The prompt</h2><div class="bench-prose">{{ question.prompt|linebreaksbr }}</div><details class="bench-disclosure"><summary>Judging rubric</summary><p>{{ question.rubric }}</p></details></section>
   <section class="bench-section"><h2>Question ranking</h2>{% include 'jev_benchmark/ranking_table.html' %}<p class="bench-footnote">Elo starts at 1,500, K = 32. Scores are provisional while pairs remain. <a href="{% url 'jev-benchmark' %}#methodology">Full methodology</a>.</p></section>
   <section class="bench-section"><h2>The answers</h2><p class="bench-muted">Original model output, displayed as escaped plain text. No generated code or HTML is executed.</p>
@@ -20,4 +21,5 @@
     </details>{% empty %}<p class="bench-empty">No judgments yet. Comparisons will appear after answers are collected.</p>{% endfor %}
   </section>
 </div>
+<script src="{% static 'js/jev-benchmark.js' %}" defer></script>
 {% endblock %}

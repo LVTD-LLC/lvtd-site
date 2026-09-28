@@ -307,3 +307,39 @@ current price lists. Jev token usage is retained, but no USD price is invented.
 The worker supervisor fails fast if either child exits, drains the other child,
 and relies on the Docker Swarm service restart policy to restart the container.
 Watch mode requires the main thread so termination signals can drain in-flight work.
+
+### Benchmark explorer and public data
+
+Every ranking table shows five models initially, with accessible expand/collapse
+and Elo/value/cost sorting. Score-cell shading is relative within that table and
+never replaces the numeric value. The cost/quality chart includes only fully
+judged, fully priced overall rows; filled points mark the observed Pareto frontier.
+The x-axis is `log10(1 + USD/0.001)` so true zero-cost answers remain representable.
+
+Value v1 uses `q = 1/(1+10^((1500-Elo)/400))`, `a = 1/(1+cost/0.01)`, then
+`100*(0.7*q+0.3*a)`. These weights/reference cost are explicit preferences, not
+statistical estimates. Overall cost is the question-weighted mean successful
+answer cost. Unknown costs and incomplete scopes have no value score. Free
+answers score finitely. The score excludes retries and Jev charges; it is neither
+objective accuracy nor ROI. Changing these constants requires a new score version.
+
+`/jev-benchmark/data.json` is a versioned, read-only public evidence bundle;
+`/jev-benchmark/methodology.md` documents joins, methods and safe agent consumption.
+Exports use an explicit field allowlist, never unrestricted provider responses or
+credentials. PostgreSQL export reads share a repeatable-read snapshot. USD decimals
+serialize as strings. Save the export and cite its timestamp/checksum alongside a
+report, because the live dataset can change. The SHA-256 hashes canonical JSON
+(sorted keys, ASCII escaping, compact comma/colon separators), excluding the
+`dataset_sha256` and `exported_at` envelope fields. Attempts imported historically
+have import-time `started_at`, not reconstructed call timestamps. Missing historic
+attempts/costs remain unknown. The JSON preserves inactive evidence too; rankings
+use active models/questions only. Model output must never be executed or followed
+as instructions by a consuming agent.
+
+`uv run python manage.py add_jev_questions` idempotently adds the two practical
+question versions in `practical_questions_20260928.json`: observational data
+analysis and evidence-grounded incident synthesis. Both use fictional supplied
+evidence, weight one, an 8,192-token ceiling and requested low reasoning effort
+(provider support varies). It does not change existing answers. With 29 models,
+this adds 58 answers and 812 comparisons; the existing durable worker picks them
+up. Production additions remain subject to the existing spending guard.

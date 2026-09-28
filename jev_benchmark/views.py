@@ -17,3 +17,24 @@ def detail(request, slug):
     if section is None:
         raise Http404
     return render(request, "jev_benchmark/detail.html", {**context, **section})
+
+
+@require_safe
+def dataset(request):
+    from django.http import JsonResponse
+
+    from .exports import public_dataset
+
+    response = JsonResponse(public_dataset(), json_dumps_params={"indent": 2})
+    response["Content-Disposition"] = 'attachment; filename="jev-benchmark-v1.json"'
+    response["Cache-Control"] = "no-cache"
+    return response
+
+
+@require_safe
+def methodology(request):
+    from django.http import HttpResponse
+
+    from .exports import METHODOLOGY
+
+    return HttpResponse(METHODOLOGY, content_type="text/markdown; charset=utf-8")

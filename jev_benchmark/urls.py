@@ -4,6 +4,8 @@ from django.views.generic import RedirectView
 from . import views
 
 urlpatterns = [
+    path("jev-benchmark/data.json", views.dataset, name="jev-data"),
+    path("jev-benchmark/methodology.md", views.methodology, name="jev-methodology"),
     path("jev-benchmark", views.index, name="jev-benchmark"),
     path(
         "jev-benchmark/",

@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-09-28 — Benchmark results explorer
+
+- Show five models per table with expand/collapse, sorting, and shaded numeric cells; remove eyebrow labels and the answer/judging coverage column.
+- Add transparent value-v1 scoring from Elo and actual weighted answer cost, plus an accessible cost/quality plot and observed frontier.
+- Publish a versioned, checksummed JSON evidence bundle and agent-readable methodology with explicit provenance and unknown-cost semantics.
+- Add two idempotent practical question versions covering observational data analysis and source-grounded incident synthesis; preserve all existing results.
+
+
 ## 2026-09-28 - Jev benchmark launch study
 
 - Publish a dated, illustrated study of 29 models and 1,624 Jev judgments, with task-level findings, saved-answer costs, and explicit methodology limits.
