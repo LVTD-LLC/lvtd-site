@@ -93,14 +93,18 @@ def post_json(url, key, payload):
     return data
 
 
-def generate(model, question, *, max_tokens=None):
+def generate(model, question, *, max_tokens=None, allow_budget_override=False):
+    if allow_budget_override and (
+        type(max_tokens) is not int or not 1024 <= max_tokens <= 65536
+    ):
+        raise ValueError("Explicit retry budget must be between 1024 and 65536")
     payload = {
         "model": model.openrouter_id,
         "messages": [{"role": "user", "content": question.prompt}],
         "max_tokens": model.max_tokens if max_tokens is None else max_tokens,
         "stream": False,
     }
-    if question.generation_max_tokens:
+    if question.generation_max_tokens and not allow_budget_override:
         payload["max_tokens"] = min(
             payload["max_tokens"], question.generation_max_tokens
         )

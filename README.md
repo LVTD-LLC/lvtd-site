@@ -352,3 +352,11 @@ minimum mapping, not a claim that all providers use identical reasoning budgets.
 Source: https://docs.mistral.ai/studio/conversations/reasoning . Reasoning-only
 responses with finish_reason=length are classified as truncated, retain actual
 costs, and require explicit retry instead of automatic repetition.
+
+The existing `run_jev_benchmark --retry-max-tokens N` flag is an explicit exception
+for failed length-truncated answers only, including reasoning-only truncations.
+It may exceed a question's initial token allowance without editing its frozen
+profile. It never lowers the previous allowance, never reruns completed answers,
+and records the actual per-attempt budget. Automatic queue retries do not get this
+exception. Check credit/spend before using the legacy operator command. The default
+question budget, rather than a model's higher ceiling, is the retry floor.

@@ -112,11 +112,17 @@ def run_benchmark(
                     and choices[0].get("finish_reason") == "length"
                 )
                 if truncated and retry_max_tokens is not None:
-                    options["max_tokens"] = max(
+                    default_budget = min(
                         model.max_tokens,
-                        retry_max_tokens,
-                        answer.request.get("max_tokens", model.max_tokens),
+                        question.generation_max_tokens or model.max_tokens,
                     )
+                    options["max_tokens"] = max(
+                        default_budget,
+                        retry_max_tokens,
+                        answer.request.get("max_tokens", default_budget),
+                    )
+                    if question.generation_max_tokens:
+                        options["allow_budget_override"] = True
                 yield answer, partial(generate, model, question, **options)
 
     def comparison_jobs():
@@ -232,6 +238,7 @@ def _run_stage(jobs, workers, limit, renew, stats, kind, report):
                     for field, value in result.items():
                         setattr(record, field, value)
                     record.status, record.error = "complete", ""
+                    record.error_kind, record.next_attempt_at = "", None
                     record.completed_at = timezone.now()
                     stats[kind] += 1
                 record.save()

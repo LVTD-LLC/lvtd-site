@@ -334,3 +334,59 @@ def test_reasoning_only_length_finish_is_truncated_not_invalid():
             generate(a, q)
     assert raised.value.kind == "truncated"
     assert raised.value.audit["response"]["usage"]["cost"] == 0.01
+
+
+def test_explicit_truncation_retry_uses_question_default_not_model_ceiling():
+    from jev_benchmark.runner import run_benchmark
+
+    q, a, _ = sample()
+    q.generation_max_tokens = 8192
+    q.save()
+    a.max_tokens = 64000
+    a.save()
+    Answer.objects.create(
+        model=a,
+        question=q,
+        status="failed",
+        error_kind="truncated",
+        request={"max_tokens": 8192},
+        response={"choices": [{"finish_reason": "length"}]},
+    )
+    with patch(
+        "jev_benchmark.runner.generate",
+        return_value={
+            "text": "complete",
+            "request": {"max_tokens": 16384},
+            "response": {},
+            "duration_ms": 1,
+        },
+    ) as generate:
+        run_benchmark(max_requests=1, retry_max_tokens=16384)
+    assert generate.call_args.kwargs == {
+        "max_tokens": 16384,
+        "allow_budget_override": True,
+    }
+    q.refresh_from_db()
+    assert q.generation_max_tokens == 8192
+    assert Answer.objects.get(model=a, question=q).error_kind == ""
+
+
+def test_question_budget_only_overridden_for_explicit_retry():
+    from jev_benchmark.clients import generate
+
+    q, a, _ = sample()
+    q.generation_max_tokens = 8192
+    q.save()
+    with patch(
+        "jev_benchmark.clients.post_json",
+        return_value={
+            "choices": [{"finish_reason": "stop", "message": {"content": "ok"}}]
+        },
+    ):
+        assert generate(a, q, max_tokens=16384)["request"]["max_tokens"] == 8192
+        assert (
+            generate(a, q, max_tokens=16384, allow_budget_override=True)["request"][
+                "max_tokens"
+            ]
+            == 16384
+        )

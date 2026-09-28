@@ -269,6 +269,8 @@ from question prompt and answer_a_id/answer_b_id. Default provider sampling appl
 where no parameter was recorded. Mistral Medium 3.5 maps a requested low
 profile to its supported minimal mode (effort none); the effective request is
 recorded per answer/attempt. Earlier failed low-effort calls remain in history.
+Explicit failed-truncation retries may exceed the initial question budget;
+the actual output allowance is recorded per answer and attempt.
 No tools or web access were supplied.
 
 Cost is actual provider-reported OpenRouter USD, not a current catalog estimate.
