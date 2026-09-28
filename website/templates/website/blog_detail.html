@@ -36,7 +36,7 @@
   <article class="mx-auto max-w-4xl py-12 sm:py-16">
     <header>
       <a class="btn btn-secondary" href="{% url 'blog-list' %}">Back to blog</a>
-      <p class="section-kicker mt-8">{{ post.published_at|date:"M j, Y" }}</p>
+      <p class="section-kicker mt-8">{{ post.published_at|date:"M j, Y" }} &middot; Rasul Kireev</p>
       <h1 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl ink">
         {{ post.title }}
       </h1>
@@ -44,7 +44,7 @@
     </header>
 
     <section class="surface-card article-body mt-10 p-6 text-base leading-8 sm:p-8 muted">
-      {{ post.body|linebreaks }}
+      {% block article_body %}{{ post.body|linebreaks }}{% endblock %}
     </section>
   </article>
 {% endblock %}

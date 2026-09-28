@@ -593,3 +593,32 @@ class AISteeringTests(TestCase):
             self.client.get(reverse("sitemap")),
             "<loc>https://lvtd.test/ai-steering</loc>",
         )
+
+
+class JevArticleTests(TestCase):
+    def test_seeded_article_is_discoverable_and_uses_trusted_markup(self):
+        post = BlogPost.objects.get(slug="jev-ai-model-benchmark")
+        url = reverse("blog-detail", kwargs={"slug": post.slug})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(
+            response, "website/articles/jev_ai_model_benchmark.html"
+        )
+        self.assertContains(response, '<figure class="jev-chart">')
+        self.assertNotContains(response, post.body)
+        for source in ("home", "blog-list", "sitemap", "jev-benchmark"):
+            self.assertContains(self.client.get(reverse(source)), url)
+        post.is_published = False
+        post.save()
+        self.assertEqual(self.client.get(url).status_code, 404)
+
+    def test_plain_text_blog_body_remains_escaped(self):
+        post = BlogPost.objects.create(
+            title="Plain text",
+            slug="plain-text",
+            summary="Summary",
+            body='<script>alert("unsafe")</script>',
+        )
+        response = self.client.get(reverse("blog-detail", kwargs={"slug": post.slug}))
+        self.assertNotContains(response, post.body)
+        self.assertContains(response, "&lt;script&gt;")
