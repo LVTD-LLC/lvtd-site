@@ -657,3 +657,20 @@ class JevArticleTests(TestCase):
         self.assertEqual(post.slug, original_slug)
         ordinary = BlogPost(title="Other", slug="other", body="Editable")
         self.assertIn("body", admin.get_form(request, ordinary).base_fields)
+
+    def test_updated_article_has_dedicated_social_image(self):
+        response = self.client.get("/blog/jev-ai-model-benchmark/")
+        self.assertContains(response, "2,436 comparisons")
+        self.assertContains(
+            response, 'name="twitter:card" content="summary_large_image"'
+        )
+        self.assertContains(
+            response, "images/blog/jev-ai-model-benchmark-og.png", count=2
+        )
+        self.assertContains(response, 'property="og:image"', count=1)
+        self.assertContains(response, 'name="twitter:image"', count=1)
+        self.assertContains(response, "18:59 UTC")
+        self.assertContains(
+            self.client.get("/"), 'name="twitter:card" content="summary"'
+        )
+        self.assertNotContains(self.client.get("/"), "jev-ai-model-benchmark-og.png")
