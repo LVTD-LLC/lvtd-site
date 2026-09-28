@@ -520,3 +520,154 @@ def test_null_request_template_lookup_is_safe(cohort):
         {"question": questions[0], "rows": [{"model": models[0], "answer": answer}]},
     )
     assert "Output budget: not recorded" in html
+
+
+def test_parallel_generation_is_bounded_and_resumable(cohort):
+    import threading
+    import time
+
+    lock = threading.Lock()
+    active = peak = 0
+
+    def slow_generate(*args, **kwargs):
+        nonlocal active, peak
+        with lock:
+            active += 1
+            peak = max(peak, active)
+        time.sleep(0.03)
+        with lock:
+            active -= 1
+        return generated()
+
+    with (
+        patch("jev_benchmark.runner.generate", side_effect=slow_generate) as gen,
+        patch("jev_benchmark.runner.judge", side_effect=judged),
+    ):
+        run_benchmark(workers=3, max_requests=4)
+        assert gen.call_count == 4
+        assert 1 < peak <= 3
+        assert Answer.objects.filter(status="complete").count() == 4
+        run_benchmark(workers=3)
+        assert gen.call_count == 6
+        assert Comparison.objects.filter(status="complete").count() == 6
+
+
+def test_explicit_initial_budgets_preserve_completed_answers(cohort):
+    model = cohort[0][0]
+    with patch("jev_benchmark.runner.generate", return_value=generated()) as gen:
+        run_benchmark(max_requests=1, initial_budgets={model.openrouter_id: 64000})
+        assert gen.call_args.kwargs == {"max_tokens": 64000}
+    with patch("jev_benchmark.runner.generate", return_value=generated()) as gen:
+        run_benchmark(max_requests=1, initial_budgets={model.openrouter_id: 64000})
+        assert gen.call_args.args[0] != model
+
+
+def test_parallel_fatal_failure_drains_without_refilling(cohort):
+    import time
+
+    from jev_benchmark.clients import FatalProviderError
+
+    def operation(model, question):
+        if model.pk == cohort[0][0].pk:
+            raise FatalProviderError("Provider HTTP 402")
+        time.sleep(0.03)
+        return generated()
+
+    with patch("jev_benchmark.runner.generate", side_effect=operation) as gen:
+        with pytest.raises(RuntimeError, match="402"):
+            run_benchmark(workers=2)
+        assert gen.call_count <= 2
+    assert RunnerLease.objects.get(pk=1).owner == ""
+
+
+def test_personal_category_and_large_new_model_budget():
+    m = BenchmarkModel(
+        name="New", provider="Lab", openrouter_id="lab/new", max_tokens=65536
+    )
+    m.full_clean()
+    q = Question(
+        title="Friendship",
+        slug="friendship",
+        category="personal",
+        prompt="Advice?",
+        rubric="Practical and kind",
+    )
+    q.full_clean()
+
+
+def test_expansion_seed_is_idempotent_and_missing_counts_are_correct():
+    from jev_benchmark.runner import pending_counts
+
+    call_command("seed_jev_benchmark")
+    with (
+        patch("jev_benchmark.runner.generate", side_effect=generated),
+        patch("jev_benchmark.runner.judge", side_effect=judged),
+    ):
+        run_benchmark()
+    call_command("expand_jev_benchmark")
+    call_command("expand_jev_benchmark")
+    assert BenchmarkModel.objects.count() == 29
+    assert Question.objects.count() == 4
+    assert pending_counts() == {"answers": 86, "comparisons": 1489}
+    assert Answer.objects.filter(status="complete").count() == 30
+    assert Comparison.objects.filter(status="complete").count() == 135
+
+
+def test_parallel_clients_do_not_query_database_from_threads(cohort):
+    def provider(url, key, payload):
+        if "openrouter" in url:
+            return {
+                "choices": [
+                    {"message": {"content": "Final answer"}, "finish_reason": "stop"}
+                ]
+            }
+        return {
+            "model": "jev-1.13.0",
+            "answers": {
+                "winner": {
+                    "type": "choice",
+                    "choice": "A",
+                    "confidence": 0.8,
+                    "probabilities": {"A": 0.8, "B": 0.2},
+                }
+            },
+        }
+
+    with patch("jev_benchmark.clients.post_json", side_effect=provider):
+        result = run_benchmark(workers=3)
+    assert result == {"answers": 6, "comparisons": 6, "failed": 0}
+
+
+def test_runner_renews_lease_while_http_requests_are_pending(cohort):
+    import threading
+    from concurrent.futures import wait as real_wait
+    from contextlib import contextmanager
+
+    release = threading.Event()
+    renewals = []
+
+    @contextmanager
+    def lease():
+        yield lambda: renewals.append(1)
+
+    first = True
+
+    def pending_wait(futures, **kwargs):
+        nonlocal first
+        if first:
+            first = False
+            release.set()
+            return set(), set(futures)
+        return real_wait(futures, **kwargs)
+
+    def operation(*args):
+        assert release.wait(timeout=3)
+        return generated()
+
+    with (
+        patch("jev_benchmark.runner.runner_lease", lease),
+        patch("jev_benchmark.runner.wait", pending_wait),
+        patch("jev_benchmark.runner.generate", side_effect=operation),
+    ):
+        run_benchmark(max_requests=1, workers=2)
+    assert len(renewals) >= 3

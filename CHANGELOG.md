@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-28 - Timed benchmark expansion
+
+- Add 19 requested model variants and an equally weighted personal-advice question through an idempotent seed command.
+- Add bounded parallel HTTP execution with main-thread database writes, lease heartbeat, fatal-error draining, UTC progress, and elapsed run timing.
+- Support explicit first-attempt budget files and new-model budgets up to 65,536 tokens; preserve existing results and frozen inputs.
+
 ## 2026-09-28 - Reasoning headroom for explicit retries
 
 - Permit an explicit retry ceiling of 65,536 tokens after production reasoning models exhausted 16,384; preserve default budgets and all successful work.

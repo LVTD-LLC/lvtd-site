@@ -35,7 +35,7 @@ class BenchmarkModel(FrozenInputs):
     openrouter_id = models.CharField(max_length=200, unique=True)
     active = models.BooleanField(default=True)
     max_tokens = models.PositiveIntegerField(
-        default=8192, validators=[MinValueValidator(1024), MaxValueValidator(16384)]
+        default=8192, validators=[MinValueValidator(1024), MaxValueValidator(65536)]
     )
     frozen_fields = ("openrouter_id", "max_tokens")
 
@@ -51,6 +51,7 @@ class Question(FrozenInputs):
         ("writing", "Writing"),
         ("coding", "Programming"),
         ("math", "Mathematics"),
+        ("personal", "Personal advice"),
     ]
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
