@@ -622,3 +622,38 @@ class JevArticleTests(TestCase):
         response = self.client.get(reverse("blog-detail", kwargs={"slug": post.slug}))
         self.assertNotContains(response, post.body)
         self.assertContains(response, "&lt;script&gt;")
+
+    def test_repo_article_admin_rejects_body_and_slug_edits(self):
+        from django.contrib.admin.sites import AdminSite
+        from django.test import RequestFactory
+
+        from website.admin import BlogPostAdmin
+
+        post = BlogPost.objects.get(slug="jev-ai-model-benchmark")
+        original_body, original_slug = post.body, post.slug
+        admin = BlogPostAdmin(BlogPost, AdminSite())
+        request = RequestFactory().get("/admin/")
+        form_class = admin.get_form(request, post)
+        self.assertNotIn("body", form_class.base_fields)
+        self.assertNotIn("slug", form_class.base_fields)
+        self.assertEqual(admin.get_prepopulated_fields(request, post), {})
+        self.assertIn("pull request", admin.article_source(post))
+        form = form_class(
+            data={
+                "title": post.title,
+                "summary": post.summary,
+                "published_at_0": "2026-09-28",
+                "published_at_1": "16:30:00",
+                "is_published": "on",
+                "body": "Forged edit",
+                "slug": "changed",
+            },
+            instance=post,
+        )
+        self.assertTrue(form.is_valid(), form.errors)
+        form.save()
+        post.refresh_from_db()
+        self.assertEqual(post.body, original_body)
+        self.assertEqual(post.slug, original_slug)
+        ordinary = BlogPost(title="Other", slug="other", body="Editable")
+        self.assertIn("body", admin.get_form(request, ordinary).base_fields)
