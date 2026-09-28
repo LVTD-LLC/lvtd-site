@@ -593,3 +593,67 @@ class AISteeringTests(TestCase):
             self.client.get(reverse("sitemap")),
             "<loc>https://lvtd.test/ai-steering</loc>",
         )
+
+
+class JevArticleTests(TestCase):
+    def test_seeded_article_is_discoverable_and_uses_trusted_markup(self):
+        post = BlogPost.objects.get(slug="jev-ai-model-benchmark")
+        url = reverse("blog-detail", kwargs={"slug": post.slug})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(
+            response, "website/articles/jev_ai_model_benchmark.html"
+        )
+        self.assertContains(response, '<figure class="jev-chart">')
+        self.assertNotContains(response, post.body)
+        for source in ("home", "blog-list", "sitemap", "jev-benchmark"):
+            self.assertContains(self.client.get(reverse(source)), url)
+        post.is_published = False
+        post.save()
+        self.assertEqual(self.client.get(url).status_code, 404)
+
+    def test_plain_text_blog_body_remains_escaped(self):
+        post = BlogPost.objects.create(
+            title="Plain text",
+            slug="plain-text",
+            summary="Summary",
+            body='<script>alert("unsafe")</script>',
+        )
+        response = self.client.get(reverse("blog-detail", kwargs={"slug": post.slug}))
+        self.assertNotContains(response, post.body)
+        self.assertContains(response, "&lt;script&gt;")
+
+    def test_repo_article_admin_rejects_body_and_slug_edits(self):
+        from django.contrib.admin.sites import AdminSite
+        from django.test import RequestFactory
+
+        from website.admin import BlogPostAdmin
+
+        post = BlogPost.objects.get(slug="jev-ai-model-benchmark")
+        original_body, original_slug = post.body, post.slug
+        admin = BlogPostAdmin(BlogPost, AdminSite())
+        request = RequestFactory().get("/admin/")
+        form_class = admin.get_form(request, post)
+        self.assertNotIn("body", form_class.base_fields)
+        self.assertNotIn("slug", form_class.base_fields)
+        self.assertEqual(admin.get_prepopulated_fields(request, post), {})
+        self.assertIn("pull request", admin.article_source(post))
+        form = form_class(
+            data={
+                "title": post.title,
+                "summary": post.summary,
+                "published_at_0": "2026-09-28",
+                "published_at_1": "16:30:00",
+                "is_published": "on",
+                "body": "Forged edit",
+                "slug": "changed",
+            },
+            instance=post,
+        )
+        self.assertTrue(form.is_valid(), form.errors)
+        form.save()
+        post.refresh_from_db()
+        self.assertEqual(post.body, original_body)
+        self.assertEqual(post.slug, original_slug)
+        ordinary = BlogPost(title="Other", slug="other", body="Editable")
+        self.assertIn("body", admin.get_form(request, ordinary).base_fields)

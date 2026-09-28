@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "domain": "https://lvtd.dev",
+  "stack": "Django",
+  "language": "Django templates / HTML with Python content seeds",
+  "content_dir": "website/migrations",
+  "content_layout": "website/templates/website/blog_detail.html",
+  "output_url_prefix": "/blog",
+  "content_store": {
+    "type": "repo_managed",
+    "model": "website.BlogPost",
+    "publishing": "Django data migrations seed public post metadata; dedicated Django article templates for rich editorial content."
+  },
+  "keyword_tool": "none",
+  "keyword_tool_note": "Launch topic selected by user. Volume, difficulty and domain authority are unmeasured; no ranking forecast.",
+  "ahrefs_project_id": null,
+  "research_store": {
+    "provider": "rowset",
+    "schema_version": 1,
+    "project_key": "6d9c2b6c-c019-4123-be0a-bd0b00f86068",
+    "section_key": "422202d1-592f-4b7b-9fcb-296f4821f1c2",
+    "section_name": "SEO",
+    "datasets": {
+      "content_research": {
+        "key": "971c0d7c-6110-4206-9d90-443924facd45",
+        "api_url": "https://rowset.lvtd.dev/api/datasets/971c0d7c-6110-4206-9d90-443924facd45",
+        "index_column": "record_id",
+        "record_types": [
+          "baseline",
+          "content",
+          "claim",
+          "source"
+        ]
+      }
+    },
+    "last_sync": "2026-09-28T16:38:26Z"
+  }
+}

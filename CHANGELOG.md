@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-09-28 - Jev benchmark launch study
+
+- Publish a dated, illustrated study of 29 models and 1,624 Jev judgments, with task-level findings, saved-answer costs, and explicit methodology limits.
+- Add a repository-owned rich article template while preserving escaped plain-text posts, seed publication metadata, and link the study from the benchmark and existing blog/home feeds.
+- Make the repository-owned article body and slug read-only in admin with a clear PR editing path.
+- Establish lightweight SEO voice, link, and private research-store pointers for future articles.
+
 ## 2026-09-28 - Durable benchmark jobs and real cost visibility
 
 - Separate collected answers from fully judged coverage; show provider-reported saved-answer costs beside scores with explicit unknown/partial coverage.

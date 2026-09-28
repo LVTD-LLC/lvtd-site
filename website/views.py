@@ -110,6 +110,12 @@ class BlogDetailView(DetailView):
     template_name = "website/blog_detail.html"
     context_object_name = "post"
 
+    def get_template_names(self):
+        # Only repository-owned templates can provide rich article markup.
+        if self.object.slug == "jev-ai-model-benchmark":
+            return ["website/articles/jev_ai_model_benchmark.html"]
+        return super().get_template_names()
+
     def get_queryset(self):
         return BlogPost.objects.filter(is_published=True)
 

@@ -1134,3 +1134,32 @@
   .bench-table th, .bench-table td { padding: .9rem; }
   .bench-answer { padding: 1rem; }
 }
+
+/* Repo-owned benchmark launch article: readable figures in both site themes. */
+.jev-story { color: var(--lvtd-ink); }
+.jev-story > * + * { margin-top: 1.4rem; }
+.jev-story h2 { font-size: 1.75rem; line-height: 1.25; margin-top: 3rem; font-weight: 700; scroll-margin-top: 6rem; }
+.jev-story h3 { font-size: 1.25rem; line-height: 1.4; margin-top: 2rem; font-weight: 700; }
+.jev-story a { text-decoration: underline; text-underline-offset: 3px; }
+.jev-story ul { list-style: disc; padding-left: 1.4rem; }
+.jev-story li + li { margin-top: .75rem; }
+.jev-story code { overflow-wrap: anywhere; }
+.jev-snapshot, .jev-chart, .jev-flow { border: 1px solid var(--lvtd-border); border-radius: .75rem; padding: 1.25rem; background: var(--lvtd-panel); }
+.jev-label, .jev-story figcaption { font-weight: 700; }
+.jev-snapshot dl { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1rem; margin: 1rem 0; }
+.jev-snapshot dt { font-size: .85rem; }
+.jev-snapshot dd { font-size: 2rem; line-height: 1.2; font-weight: 700; }
+.jev-snapshot p:last-child, .jev-chart > p { font-size: .85rem; line-height: 1.6; }
+.jev-flow ol { list-style: decimal; padding-left: 1.4rem; margin-top: 1rem; }
+.jev-flow li span { display: block; }
+.jev-table-wrap { overflow-x: auto; }
+.jev-story table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+.jev-story caption { text-align: left; font-weight: 700; margin-bottom: .5rem; }
+.jev-story th, .jev-story td { padding: .65rem; text-align: left; border-bottom: 1px solid var(--lvtd-border); }
+.jev-story thead th { font-size: .8rem; }
+.jev-story td:last-child { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.jev-bar-row { margin: 1.25rem 0; }
+.jev-bar-row > div:first-child { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 .75rem; font-size: .9rem; }
+.jev-track { height: .75rem; margin-top: .4rem; border-radius: .25rem; background: var(--lvtd-border); overflow: hidden; }
+.jev-track span { display: block; height: 100%; background: #b96128; }
+@media (min-width: 640px) { .jev-snapshot dl { grid-template-columns: repeat(4,minmax(0,1fr)); } }
