@@ -1,5 +1,14 @@
 # Changelog
 
+- Increase bounded ReviewGate review timeouts after repeated provider timeouts; review requirements and on-demand triggers are unchanged.
+
+## 2026-09-27 - Explicit truncated-answer retries
+
+- Add an opt-in bounded retry budget for answers truncated by reasoning/output
+  token limits, retaining all completed answers and pairwise judgments.
+- Show each answer's actual request budget rather than the model default.
+
+
 ## 2026-09-27 - Jev Benchmark
 
 - Add a public Jev-judged model benchmark with per-question Elo, weighted overall

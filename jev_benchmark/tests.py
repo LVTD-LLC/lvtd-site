@@ -413,3 +413,109 @@ def test_truncated_response_kept_for_audit_but_not_ranked(cohort):
     assert answer.response == response
     assert answer.request["model"] == cohort[0][0].openrouter_id
     assert leaderboard()["completed_answers"] == 0
+
+
+def test_larger_budget_retry_only_targets_truncated_answers(cohort):
+    models, questions = cohort
+    completed = Answer.objects.create(
+        model=models[0],
+        question=questions[0],
+        status="complete",
+        text="Preserved",
+        request={"max_tokens": 8192},
+    )
+    truncated = Answer.objects.create(
+        model=models[1],
+        question=questions[0],
+        status="failed",
+        response={"choices": [{"finish_reason": "length"}]},
+        request={"max_tokens": 8192},
+    )
+    other_failure = Answer.objects.create(
+        model=models[2],
+        question=questions[0],
+        status="failed",
+        error="HTTP 503",
+    )
+    with (
+        patch("jev_benchmark.runner.generate", return_value=generated()) as generate,
+        patch("jev_benchmark.runner.judge", side_effect=judged),
+    ):
+        run_benchmark(retry_max_tokens=16384)
+    assert generate.call_args_list[0].args == (models[1], questions[0])
+    assert generate.call_args_list[0].kwargs == {"max_tokens": 16384}
+    assert generate.call_args_list[1].args == (models[2], questions[0])
+    assert generate.call_args_list[1].kwargs == {}
+    assert all(not call.kwargs for call in generate.call_args_list[2:])
+    completed.refresh_from_db()
+    assert completed.text == "Preserved"
+    assert completed.request == {"max_tokens": 8192}
+    assert completed.attempts == 0
+    truncated.refresh_from_db()
+    other_failure.refresh_from_db()
+    assert truncated.status == other_failure.status == "complete"
+
+
+def test_explicit_retry_budget_is_recorded(cohort):
+    from jev_benchmark.clients import generate
+
+    response = {
+        "choices": [
+            {"message": {"content": "Complete answer"}, "finish_reason": "stop"}
+        ]
+    }
+    with patch("jev_benchmark.clients.post_json", return_value=response):
+        result = generate(cohort[0][0], cohort[1][0], max_tokens=16384)
+    assert result["request"]["max_tokens"] == 16384
+    assert cohort[0][0].max_tokens == 8192
+
+
+@pytest.mark.parametrize("budget", [0, 1023, 16385])
+def test_retry_budget_rejects_out_of_range_without_api_calls(budget):
+    with patch("jev_benchmark.runner.generate") as generate:
+        with pytest.raises(ValueError, match="Retry output budget"):
+            run_benchmark(retry_max_tokens=budget)
+        generate.assert_not_called()
+
+
+def test_question_shows_actual_retry_budget(cohort, client):
+    models, questions = cohort
+    Answer.objects.create(
+        model=models[0],
+        question=questions[0],
+        status="complete",
+        text="Final response",
+        request={"max_tokens": 16384},
+    )
+    page = client.get("/jev-benchmark/question-0")
+    assert b"Output budget: 16384 tokens" in page.content
+
+
+def test_missing_request_budget_is_labelled_not_recorded(cohort, client):
+    models, questions = cohort
+    Answer.objects.create(
+        model=models[0],
+        question=questions[0],
+        status="complete",
+        text="Older response",
+        request={},
+    )
+    page = client.get("/jev-benchmark/question-0")
+    assert page.status_code == 200
+    assert b"Output budget: not recorded" in page.content
+
+
+def test_null_request_template_lookup_is_safe(cohort):
+    # SQL NULL is forbidden by Answer.request, but verify the reviewer's
+    # hypothetical in-memory None case against the actual Django template.
+    from django.template.loader import render_to_string
+
+    models, questions = cohort
+    answer = Answer(
+        model=models[0], question=questions[0], text="Response", request=None
+    )
+    html = render_to_string(
+        "jev_benchmark/detail.html",
+        {"question": questions[0], "rows": [{"model": models[0], "answer": answer}]},
+    )
+    assert "Output budget: not recorded" in html

@@ -58,7 +58,11 @@ def pending_counts():
     }
 
 
-def run_benchmark(*, max_requests=None, report=lambda message: None):
+def run_benchmark(
+    *, max_requests=None, retry_max_tokens=None, report=lambda message: None
+):
+    if retry_max_tokens is not None and not 1024 <= retry_max_tokens <= 16384:
+        raise ValueError("Retry output budget must be between 1024 and 16384.")
     stats = {"answers": 0, "comparisons": 0, "failed": 0}
     requests = 0
     with runner_lease() as renew:
@@ -73,8 +77,27 @@ def run_benchmark(*, max_requests=None, report=lambda message: None):
                     continue
                 renew()
                 requests += 1
+                generation_options = {}
+                previous_choices = answer.response.get("choices", [])
+                truncated = (
+                    answer.status == "failed"
+                    and isinstance(previous_choices, list)
+                    and previous_choices
+                    and isinstance(previous_choices[0], dict)
+                    and previous_choices[0].get("finish_reason") == "length"
+                )
+                if truncated and retry_max_tokens is not None:
+                    generation_options["max_tokens"] = max(
+                        model.max_tokens,
+                        retry_max_tokens,
+                        answer.request.get("max_tokens", model.max_tokens),
+                    )
                 _perform(
-                    answer, partial(generate, model, question), stats, "answers", report
+                    answer,
+                    partial(generate, model, question, **generation_options),
+                    stats,
+                    "answers",
+                    report,
                 )
             answers = list(
                 Answer.objects.filter(
