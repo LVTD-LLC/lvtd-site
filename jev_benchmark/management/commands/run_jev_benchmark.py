@@ -22,7 +22,10 @@ class Command(BaseCommand):
         parser.add_argument(
             "--retry-max-tokens",
             type=int,
-            help="Retry budget (1024-65536) for failed truncated answers only.",
+            help=(
+                "Retry budget (1024-65536) for failed truncated answers only; "
+                "never below the model default or previous recorded allowance."
+            ),
         )
 
     def handle(self, *args, **options):

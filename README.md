@@ -204,3 +204,7 @@ It does not automatically escalate budgets or promise a successful completion.
 If a response still exhausts 16,384 tokens, an operator may explicitly retry with
 `--retry-max-tokens 65536`. Verify the provider supports that output allowance first.
 This is not automatic escalation; the default generation allowance stays unchanged.
+
+The effective truncated-retry allowance is the greatest of the model default,
+the explicit flag, and the previous recorded request allowance. A lower flag
+does not reduce an earlier larger allowance.
