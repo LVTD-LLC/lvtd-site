@@ -197,6 +197,10 @@ uv run python manage.py run_jev_benchmark --retry-max-tokens 16384
 
 This applies only to failed, truncated answers. New answers and other failure
 types retain the model's configured budget; completed answers and judgments are
-never repeated. The override is bounded to 16,384 tokens and may increase API
+never repeated. The override is bounded to 65,536 tokens and may increase API
 cost. Each saved request records the actual budget, shown on its question page.
 It does not automatically escalate budgets or promise a successful completion.
+
+If a response still exhausts 16,384 tokens, an operator may explicitly retry with
+`--retry-max-tokens 65536`. Verify the provider supports that output allowance first.
+This is not automatic escalation; the default generation allowance stays unchanged.
