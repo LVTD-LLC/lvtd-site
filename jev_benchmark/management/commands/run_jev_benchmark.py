@@ -22,7 +22,10 @@ class Command(BaseCommand):
         parser.add_argument(
             "--retry-max-tokens",
             type=int,
-            help="Retry budget (1024-16384) for failed truncated answers only.",
+            help=(
+                "Retry budget (1024-65536) for failed truncated answers only; "
+                "never below the model default or previous recorded allowance."
+            ),
         )
 
     def handle(self, *args, **options):
@@ -34,8 +37,8 @@ class Command(BaseCommand):
         if options["dry_run"]:
             return
         retry_budget = options["retry_max_tokens"]
-        if retry_budget is not None and not 1024 <= retry_budget <= 16384:
-            raise CommandError("--retry-max-tokens must be between 1024 and 16384")
+        if retry_budget is not None and not 1024 <= retry_budget <= 65536:
+            raise CommandError("--retry-max-tokens must be between 1024 and 65536")
         limit = options["max_requests"]
         if limit is not None and limit < 1:
             raise CommandError("--max-requests must be positive")

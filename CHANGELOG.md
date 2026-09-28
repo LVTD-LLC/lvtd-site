@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-09-28 - Reasoning headroom for explicit retries
+
+- Permit an explicit retry ceiling of 65,536 tokens after production reasoning models exhausted 16,384; preserve default budgets and all successful work.
+
 - Increase bounded ReviewGate review timeouts after repeated provider timeouts; review requirements and on-demand triggers are unchanged.
 
 ## 2026-09-27 - Explicit truncated-answer retries

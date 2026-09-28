@@ -415,7 +415,8 @@ def test_truncated_response_kept_for_audit_but_not_ranked(cohort):
     assert leaderboard()["completed_answers"] == 0
 
 
-def test_larger_budget_retry_only_targets_truncated_answers(cohort):
+@pytest.mark.parametrize("budget", [16384, 65536])
+def test_larger_budget_retry_only_targets_truncated_answers(cohort, budget):
     models, questions = cohort
     completed = Answer.objects.create(
         model=models[0],
@@ -441,9 +442,9 @@ def test_larger_budget_retry_only_targets_truncated_answers(cohort):
         patch("jev_benchmark.runner.generate", return_value=generated()) as generate,
         patch("jev_benchmark.runner.judge", side_effect=judged),
     ):
-        run_benchmark(retry_max_tokens=16384)
+        run_benchmark(retry_max_tokens=budget)
     assert generate.call_args_list[0].args == (models[1], questions[0])
-    assert generate.call_args_list[0].kwargs == {"max_tokens": 16384}
+    assert generate.call_args_list[0].kwargs == {"max_tokens": budget}
     assert generate.call_args_list[1].args == (models[2], questions[0])
     assert generate.call_args_list[1].kwargs == {}
     assert all(not call.kwargs for call in generate.call_args_list[2:])
@@ -470,7 +471,7 @@ def test_explicit_retry_budget_is_recorded(cohort):
     assert cohort[0][0].max_tokens == 8192
 
 
-@pytest.mark.parametrize("budget", [0, 1023, 16385])
+@pytest.mark.parametrize("budget", [0, 1023, 65537])
 def test_retry_budget_rejects_out_of_range_without_api_calls(budget):
     with patch("jev_benchmark.runner.generate") as generate:
         with pytest.raises(ValueError, match="Retry output budget"):

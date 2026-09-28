@@ -61,8 +61,8 @@ def pending_counts():
 def run_benchmark(
     *, max_requests=None, retry_max_tokens=None, report=lambda message: None
 ):
-    if retry_max_tokens is not None and not 1024 <= retry_max_tokens <= 16384:
-        raise ValueError("Retry output budget must be between 1024 and 16384.")
+    if retry_max_tokens is not None and not 1024 <= retry_max_tokens <= 65536:
+        raise ValueError("Retry output budget must be between 1024 and 65536.")
     stats = {"answers": 0, "comparisons": 0, "failed": 0}
     requests = 0
     with runner_lease() as renew:
