@@ -1163,3 +1163,33 @@
 .jev-track { height: .75rem; margin-top: .4rem; border-radius: .25rem; background: var(--lvtd-border); overflow: hidden; }
 .jev-track span { display: block; height: 100%; background: #b96128; }
 @media (min-width: 640px) { .jev-snapshot dl { grid-template-columns: repeat(4,minmax(0,1fr)); } }
+
+/* Benchmark explorer: restrained data color, no decorative labels. */
+.benchmark .bench-header { padding-block: 2.75rem 1rem; max-width: 58rem; }
+.benchmark .bench-header h1 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: .8rem; }
+.benchmark .bench-lead { font-size: 1.25rem; margin-bottom: .6rem; }
+.bench-links { display: flex; flex-wrap: wrap; gap: .7rem 1.5rem; padding-block: 1rem 1.75rem; font-size: .875rem; }
+.bench-links a { text-decoration: underline; text-underline-offset: .25em; }
+.bench-table-tools { display: flex; justify-content: space-between; align-items: center; gap: 1rem; font-size: .85rem; }
+.bench-table-tools select { background: var(--lvtd-panel); border: 1px solid var(--lvtd-border); padding: .4rem .6rem; border-radius: .3rem; color: var(--lvtd-ink); margin-left: .4rem; }
+.bench-muted-inline { color: var(--lvtd-muted); }
+.bench-toggle { border: 1px solid var(--lvtd-border); padding: .55rem 1rem; border-radius: .35rem; background: var(--lvtd-panel); font-size: .85rem; cursor: pointer; }
+.bench-toggle:hover { background: var(--lvtd-panel-muted); }
+.bench-table tbody .bench-heat { background: color-mix(in srgb, #54a993 var(--heat), var(--lvtd-panel)); }
+.bench-table [hidden] { display: none; }
+.bench-chart { border: 1px solid var(--lvtd-border); background: var(--lvtd-panel); border-radius: .5rem; padding: 1rem; }
+.bench-chart svg { width: 100%; height: auto; overflow: visible; }
+.bench-chart text { fill: var(--lvtd-muted); font-family: var(--font-mono); font-size: 12px; }
+.bench-axis { stroke: var(--lvtd-border); stroke-width: 1; }
+.bench-point { fill: var(--lvtd-panel); stroke: #368b76; stroke-width: 2; cursor: pointer; }
+.bench-frontier { fill: #368b76; }
+.bench-point:hover, .bench-point:focus { stroke: var(--lvtd-ink); stroke-width: 3; outline: none; }
+.bench-chart figcaption { font-size: .85rem; color: var(--lvtd-muted); min-height: 2.5rem; padding-top: 1rem; }
+.bench-value-method { padding: 1.25rem; border-left: 3px solid #368b76; background: var(--lvtd-panel); margin-block: 1.5rem 2rem; scroll-margin-top: 2rem; }
+.bench-value-method p { max-width: 65rem; margin-top: .7rem; font-size: .9rem; line-height: 1.7; }
+@media (max-width: 640px) {
+  .bench-table-tools { align-items: flex-start; }
+  .bench-chart { padding: .4rem; }
+  .bench-chart figcaption { padding: .7rem; }
+  .bench-table { min-width: 36rem; }
+}

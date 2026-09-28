@@ -1,4 +1,5 @@
 {% extends 'website/base.html' %}
+{% load static %}
 {% block title %}Jev Benchmark - Model comparisons | LVTD{% endblock %}
 {% block description %}An open experiment: Jev judges AI answers head to head across writing, programming, mathematics, and personal advice. Explore the rankings, prompts, and individual decisions.{% endblock %}
 {% block og_title %}Jev Benchmark | LVTD{% endblock %}
@@ -7,12 +8,13 @@
 <div class="benchmark">
   <nav class="bench-nav" aria-label="Breadcrumb"><a href="{% url 'home' %}">LVTD</a><span aria-hidden="true">/</span><span>Experiments</span></nav>
   <header class="bench-header">
-    <p class="bench-eyebrow">An experiment in AI judgment</p>
+
     <h1>Jev Benchmark</h1>
-    <p class="bench-lead">Different models. The same questions.<br>One judge, every head-to-head.</p>
-    <p class="bench-muted">Answers from OpenRouter, compared by <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">TypeSafe's Jev</a>. Explore what it prefers across writing, programming, mathematics, and personal advice.</p>
+    <p class="bench-lead">Compare model quality, cost, and the answers behind the scores.</p>
+    <p class="bench-muted">Answers from OpenRouter, compared by <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">TypeSafe's Jev</a>. A small, fully inspectable preference experiment. Not a claim of general intelligence or verified accuracy.</p>
     <p class="bench-muted"><a href="{% url 'blog-detail' 'jev-ai-model-benchmark' %}">Read the launch study: 29 models, 1,624 comparisons, and what stood out.</a></p>
   </header>
+  <nav class="bench-links" aria-label="Benchmark resources"><a href="#overall-title">Rankings</a><a href="#value-chart-title">Quality vs. cost</a><a href="#questions-title">Questions</a><a href="{% url 'jev-data' %}">Download data (JSON)</a><a href="{% url 'jev-methodology' %}">For AI agents (Markdown)</a></nav>
   <dl class="bench-stats">
     <div><dt>Models</dt><dd>{{ model_count }}</dd></div>
     <div><dt>Questions</dt><dd>{{ question_count }}</dd></div>
@@ -20,42 +22,34 @@
     <div><dt>Pairs judged</dt><dd>{{ completed_comparisons }}<span> / {{ expected_comparisons }}</span></dd></div>
   </dl>
   <section class="bench-section" aria-labelledby="overall-title">
-    <div class="bench-section-heading"><div><p class="bench-eyebrow">The combined view</p><h2 id="overall-title">Overall ranking</h2></div><a href="#methodology">How scoring works &darr;</a></div>
+    <div class="bench-section-heading"><div><h2 id="overall-title">Overall ranking</h2></div><a href="#methodology">How scoring works &darr;</a></div>
     <p class="bench-muted">Weighted mean of per-question Elo. A model receives an overall score only after completing every matchup across all active questions.</p>
-    {% if overall %}
-    <div class="bench-table-scroll" tabindex="0" role="region" aria-label="Overall model rankings">
-      <table class="bench-table"><caption class="sr-only">Overall weighted Elo and question coverage</caption>
-        <thead><tr><th scope="col">Rank</th><th scope="col">Model / creator</th><th scope="col">Weighted Elo</th><th scope="col">Answers / judging coverage</th><th scope="col">Saved answer cost (USD)</th></tr></thead>
-        <tbody>{% for row in overall %}<tr>
-          <td class="bench-number">{% if row.complete %}{{ forloop.counter }}{% else %}&mdash;{% endif %}</td>
-          <th scope="row">{{ row.model.name }}<span class="bench-subtext">{{ row.model.provider }}</span></th>
-          <td class="bench-score">{% if row.complete %}{{ row.rating|floatformat:1 }}{% else %}<span class="bench-pending">Pending</span>{% endif %}</td>
-          <td>{{ row.answers_count }} / {{ question_count }} answers<span class="bench-subtext">{{ row.games }} / {{ row.expected_games }} matchups judged</span><span class="bench-subtext">{{ row.questions_complete }} / {{ question_count }} fully judged questions</span></td>
-          <td>{% if row.cost_usd != None %}${{ row.cost_usd|floatformat:10 }}<span class="bench-subtext">{{ row.cost_known }} / {{ row.cost_count }} saved answers priced</span>{% else %}Unknown{% endif %}</td>
-        </tr>{% endfor %}</tbody>
-      </table>
-    </div>
-    {% else %}<p class="bench-empty">The first benchmark is being prepared. Rankings will appear here as answers are collected and judged.</p>{% endif %}
+    {% include 'jev_benchmark/ranking_table.html' with rows=overall overall_table=True %}
+    <p class="bench-footnote">Value v1 blends 70% Elo-derived quality with 30% affordability. Higher is better under this chosen tradeoff. <a href="#value-method">See the formula and limitations</a>. Mean cost uses the same question weights as Elo; unknown costs are never treated as free.</p>
     <p class="bench-footnote">Costs are actual USD reported by OpenRouter for saved successful answers, including provider-reported reasoning usage. Zero means reported free; Unknown means no cost was reported. Partial sums show their coverage. These totals exclude failed/retried attempts and Jev charges, and are not an account invoice. Attempts absent from retained responses and backups remain unknown.</p>
     {% if last_updated %}<p class="bench-footnote">Latest judgment: {{ last_updated|date:"M j, Y, H:i" }} UTC.</p>{% endif %}
   </section>
+  {% include 'jev_benchmark/scatter.html' %}
   <section class="bench-section" aria-labelledby="questions-title">
-    <p class="bench-eyebrow">Look closer</p><h2 id="questions-title">One question at a time</h2>
+    <h2 id="questions-title">One question at a time</h2>
     {% for section in sections %}
     <article class="bench-question">
-      <div class="bench-section-heading"><div><p class="bench-eyebrow">{{ section.question.get_category_display }} &middot; Weight {{ section.question.weight }}</p><h3><a href="{% url 'jev-question' section.question.slug %}">{{ section.question.title }}</a></h3></div><span class="bench-pending">{{ section.matches_count }} / {{ section.expected_matches }} pairs</span></div>
+      <div class="bench-section-heading"><div><h3><a href="{% url 'jev-question' section.question.slug %}">{{ section.question.title }}</a></h3></div><span class="bench-pending">{{ section.matches_count }} / {{ section.expected_matches }} pairs</span></div>
       {% include 'jev_benchmark/ranking_table.html' with rows=section.rows %}
       <a class="bench-detail-link" href="{% url 'jev-question' section.question.slug %}">Read the prompt, answers, and judgments &rarr;</a>
     </article>
     {% empty %}<p class="bench-muted">No active questions yet.</p>{% endfor %}
   </section>
   <section id="methodology" class="bench-section bench-methodology" aria-labelledby="methodology-title">
-    <p class="bench-eyebrow">Read this with the rankings</p><h2 id="methodology-title">Method, not mystique.</h2>
+    <h2 id="methodology-title">Methodology</h2>
+    <div id="value-method" class="bench-value-method"><h3>Value score v1</h3><p>Quality q = 1 / (1 + 10<sup>((1500 &minus; Elo) / 400)</sup>). Affordability a = 1 / (1 + cost / $0.01). <strong>Value = 100 &times; (0.7q + 0.3a).</strong></p><p>The 70/30 blend and one-cent reference are explicit design choices, not learned truths. Quality is an Elo-implied preference against a 1,500-rated reference, not factual accuracy. Free answers receive finite scores; unknown costs and incomplete scopes are not scored. Overall cost is the question-weighted mean per saved answer. Free-tier availability and prices can change.</p></div>
     <div class="bench-method-grid">
       <div><h3>One answer. Every opponent.</h3><p>Each model answers each question once, without tools or web access. The same prompt goes to every model; provider-default sampling settings apply. Reasoning effort can be explicitly configured on a new question version; existing inputs are frozen after use. Answers start with each model's configured output budget. Failed, truncated answers may be retried with an explicitly raised allowance, recorded on each answer. Truncated or failed answers are not scored.</p><p>Each unordered pair is judged once. Model labels are omitted from the judge's input, and A/B presentation is assigned by a stable hash. Answers may still reveal their origin. Probabilities and confidence are saved alongside each decision.</p></div>
       <div><h3>Reproducible Elo</h3><p>Every question starts all models at 1,500. Each stored win/loss is replayed once with K = 32 in a stable, hashed model-ID order. That makes the same dataset reproducible, not order-independent. Adding opponents can change existing ratings without rejudging their old matches.</p><p>Question weights default to one. The overall score is the weighted arithmetic mean of complete per-question ratings. Pending models have no overall rank; per-question results remain provisional until the round robin is complete.</p></div>
       <div><h3>A preference experiment</h3><p>Jev selects a winner, not a verified truth. This small sample measures one judge's preferences on these prompts, not general model ability. Code is not executed and mathematical proofs are not independently verified. A single presentation per pair does not eliminate position bias.</p><p>Confidence describes Jev's decision distribution; it is not the probability that the answer is factually correct. No repeated trials, error bars, or statistical-significance claims are implied.</p></div>
     </div>
   </section>
+  <section class="bench-section"><h2>Use this as a source</h2><p class="bench-muted">The <a href="{% url 'jev-data' %}">full JSON dataset</a> includes prompts, rubrics, original answers, generation settings, costs, attempt history, and every pairwise decision. The <a href="{% url 'jev-methodology' %}">agent-readable methodology</a> explains the schema and scoring. Save an export with its timestamp and SHA-256 checksum when citing a report: this live benchmark changes as questions and models are added.</p></section>
 </div>
+<script src="{% static 'js/jev-benchmark.js' %}" defer></script>
 {% endblock %}

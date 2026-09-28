@@ -1,13 +1,16 @@
-<div class="bench-table-scroll" tabindex="0" role="region" aria-label="Per-question rankings">
-  <table class="bench-table"><caption class="sr-only">Per-question Elo, wins, losses, and average judge confidence</caption>
-    <thead><tr><th scope="col">Model</th><th scope="col">Elo</th><th scope="col">W / L</th><th scope="col">Avg. confidence</th><th scope="col">Answer cost (USD)</th><th scope="col">Status</th></tr></thead>
-    <tbody>{% for row in rows %}<tr>
-      <th scope="row">{{ row.model.name }}</th>
-      <td class="bench-score">{% if row.rating != None %}{{ row.rating|floatformat:1 }}{% else %}&mdash;{% endif %}</td>
-      <td class="bench-number">{{ row.wins }} / {{ row.losses }}</td>
-      <td class="bench-number">{% if row.confidence != None %}{{ row.confidence|floatformat:2 }}{% else %}&mdash;{% endif %}</td>
-      <td>{% if row.cost_usd != None %}${{ row.cost_usd|floatformat:10 }}{% else %}Unknown{% endif %}</td>
-      <td><span class="bench-pending">{% if row.complete %}Complete{% elif row.games %}Provisional{% else %}Pending{% endif %}</span></td>
-    </tr>{% endfor %}</tbody>
-  </table>
+{% load l10n %}
+<div class="bench-ranking" data-ranking>
+  <div class="bench-table-tools"><span>Top 5 <span class="bench-muted-inline">of {{ rows|length }} models</span></span><label>Sort by <select data-sort aria-label="Sort {% if overall_table %}overall{% else %}question{% endif %} ranking"><option value="rating">Elo</option><option value="value">Value score</option><option value="cost">Lowest cost</option></select></label></div>
+  <div class="bench-table-scroll" tabindex="0" role="region" aria-label="{% if overall_table %}Overall{% else %}Per-question{% endif %} rankings">
+  <table class="bench-table"><caption class="sr-only">Model rankings. Value is an experimental quality and affordability blend. Costs are actual reported USD.</caption>
+    <thead><tr><th scope="col">Model</th><th scope="col">{% if overall_table %}Weighted {% endif %}Elo</th><th scope="col">{% if overall_table %}Mean answer{% else %}Answer{% endif %} cost</th><th scope="col">Value / 100</th>{% if not overall_table %}<th scope="col">W / L</th>{% endif %}</tr></thead>
+    <tbody>{% for row in rows %}<tr data-rating="{{ row.rating|default_if_none:''|unlocalize }}" data-value="{{ row.value_score|default_if_none:''|unlocalize }}" data-cost="{{ row.display_cost_usd|default_if_none:''|unlocalize }}"{% if forloop.counter > 5 %} data-extra-row hidden{% endif %}>
+      <th scope="row">{{ row.model.name }}<span class="bench-subtext">{{ row.model.provider }}{% if not row.complete %} &middot; {% if row.games %}Provisional{% else %}Pending{% endif %}{% endif %}</span></th>
+      <td class="bench-score bench-heat" style="--heat:{{ row.rating_heat|unlocalize }}%">{% if row.rating != None %}{{ row.rating|floatformat:1 }}{% else %}&mdash;{% endif %}</td>
+      <td class="bench-number">{% if row.display_cost_usd != None %}<span title="Exact reported cost: ${{ row.display_cost_usd|unlocalize }} USD">${{ row.display_cost_usd|floatformat:6 }}</span>{% else %}Unknown{% endif %}</td>
+      <td class="bench-score bench-heat" style="--heat:{{ row.value_score_heat|unlocalize }}%">{% if row.value_score != None %}{{ row.value_score|floatformat:1 }}{% else %}<span class="bench-pending">Not scored</span>{% endif %}</td>
+      {% if not overall_table %}<td class="bench-number">{{ row.wins }} / {{ row.losses }}</td>{% endif %}
+    </tr>{% empty %}<tr><td colspan="5">No models in this benchmark yet.</td></tr>{% endfor %}</tbody>
+  </table></div>
+  {% if rows|length > 5 %}<button type="button" class="bench-toggle" data-expand aria-expanded="false">Show all {{ rows|length }} models</button><noscript><p>Full results are available in the <a href="{% url 'jev-data' %}">JSON download</a>.</p></noscript>{% endif %}
 </div>

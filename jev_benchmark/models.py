@@ -52,6 +52,8 @@ class Question(FrozenInputs):
         ("coding", "Programming"),
         ("math", "Mathematics"),
         ("personal", "Personal advice"),
+        ("analysis", "Data analysis"),
+        ("synthesis", "Evidence synthesis"),
     ]
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)

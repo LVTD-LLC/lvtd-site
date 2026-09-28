@@ -1,0 +1,17 @@
+{% load l10n %}
+<section class="bench-section" aria-labelledby="value-chart-title">
+  <h2 id="value-chart-title">Quality and cost, together</h2>
+  <p class="bench-muted">Higher is stronger in Jev's rankings. Further left is cheaper. Solid points mark models with no strictly better-or-equal Elo at a lower-or-equal cost in this dataset. Select a point for its values.</p>
+  {% if scatter.points %}
+  <figure class="bench-chart">
+    <svg viewBox="0 0 800 380" role="group" aria-label="Weighted Elo versus mean answer cost in USD">
+      <line x1="65" y1="55" x2="65" y2="315" class="bench-axis"/><line x1="65" y1="315" x2="755" y2="315" class="bench-axis"/>
+      <text x="8" y="60">{{ scatter.high }}</text><text x="8" y="315">{{ scatter.low }}</text><text x="65" y="30">Weighted Elo</text>
+      {% for tick in scatter.ticks %}<line x1="{{ tick.x|unlocalize }}" y1="315" x2="{{ tick.x|unlocalize }}" y2="321" class="bench-axis"/><text x="{{ tick.x|unlocalize }}" y="342" text-anchor="middle">${{ tick.label }}</text>{% endfor %}
+      <text x="410" y="373" text-anchor="middle">Mean answer cost (USD, log1p scale; includes $0)</text>
+      {% for point in scatter.points %}<circle cx="{{ point.x|unlocalize }}" cy="{{ point.y|unlocalize }}" r="6" class="bench-point{% if point.frontier %} bench-frontier{% endif %}" tabindex="0" role="button" data-point aria-label="{{ point.name }}: Elo {{ point.rating|floatformat:1 }}, mean answer cost ${{ point.cost|unlocalize }} USD{% if point.frontier %}; on the observed frontier{% endif %}"><title>{{ point.name }}: {{ point.rating|floatformat:1 }} Elo; ${{ point.cost|unlocalize }}</title></circle>{% endfor %}
+    </svg>
+    <figcaption data-chart-readout aria-live="polite">Hover, tap, or keyboard-focus a model. All plotted values are also available in the overall table and JSON.</figcaption>
+  </figure>
+  {% else %}<p class="bench-empty">The plot appears when models have complete results and known costs across every active question. Completed per-question rankings remain available below.</p>{% endif %}
+</section>

@@ -1,9 +1,11 @@
 """Replay stored decisions only: no API calls and no persisted, drifting ratings."""
 
 import hashlib
+from decimal import Decimal
 
 from .costs import cost_summary, reported_cost
 from .models import Answer, BenchmarkModel, Comparison, Question
+from .value import decorate, scatter
 
 
 def leaderboard():
@@ -79,7 +81,7 @@ def leaderboard():
         sections.append(
             {
                 "question": question,
-                "rows": rows,
+                "rows": decorate(rows),
                 "matches": question_matches,
                 "answers_count": len(question_answers),
                 "matches_count": len(question_matches),
@@ -104,6 +106,12 @@ def leaderboard():
                 / sum(weight for weight, _ in entries)
                 if complete
                 else None,
+                "mean_cost_usd": sum(
+                    Decimal(weight) * row["cost_usd"] for weight, row in entries
+                )
+                / sum(weight for weight, _ in entries)
+                if entries and all(row["cost_usd"] is not None for _, row in entries)
+                else None,
                 "questions_complete": sum(row["complete"] for _, row in entries),
                 "answers_count": sum(row["answer"] is not None for _, row in entries),
                 "games": sum(row["games"] for _, row in entries),
@@ -114,7 +122,9 @@ def leaderboard():
     overall.sort(
         key=lambda row: (not row["complete"], -(row["rating"] or 0), row["model"].name)
     )
+    decorate(overall)
     return {
+        "scatter": scatter(overall),
         "models": models,
         "sections": sections,
         "overall": overall,
@@ -125,5 +135,7 @@ def leaderboard():
         "completed_comparisons": len(matches),
         "expected_comparisons": len(questions) * len(models) * (len(models) - 1) // 2,
         "answer_costs": cost_summary(answers),
-        "last_updated": max((m.completed_at for m in matches), default=None),
+        "last_updated": max(
+            (m.completed_at for m in matches if m.completed_at), default=None
+        ),
     }

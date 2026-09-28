@@ -33,7 +33,7 @@ def test_answers_and_judging_coverage_are_independent(client):
     assert row["questions_complete"] == 0
     assert row["cost_usd"] == Decimal("0.00125")
     page = client.get("/jev-benchmark").content.decode()
-    assert "1 / 1 answers" in page
+    assert "Answers / judging coverage" not in page
     assert "$0.001250" in page
     assert "Unknown" in page
 
