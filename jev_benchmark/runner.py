@@ -1,5 +1,7 @@
 import hashlib
+import time
 import uuid
+from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 from contextlib import contextmanager
 from datetime import timedelta
 from functools import partial
@@ -59,46 +61,58 @@ def pending_counts():
 
 
 def run_benchmark(
-    *, max_requests=None, retry_max_tokens=None, report=lambda message: None
+    *,
+    max_requests=None,
+    retry_max_tokens=None,
+    workers=1,
+    initial_budgets=None,
+    report=lambda message: None,
 ):
     if retry_max_tokens is not None and not 1024 <= retry_max_tokens <= 65536:
         raise ValueError("Retry output budget must be between 1024 and 65536.")
+    if type(workers) is not int or not 1 <= workers <= 8:
+        raise ValueError("Workers must be between 1 and 8.")
+    if max_requests is not None and max_requests < 1:
+        raise ValueError("Request limit must be positive.")
+    initial_budgets = {} if initial_budgets is None else initial_budgets
+    if not isinstance(initial_budgets, dict) or any(
+        not isinstance(k, str) or type(v) is not int or not 1024 <= v <= 65536
+        for k, v in initial_budgets.items()
+    ):
+        raise ValueError("Initial budgets must map model IDs to 1024-65536 tokens.")
     stats = {"answers": 0, "comparisons": 0, "failed": 0}
-    requests = 0
-    with runner_lease() as renew:
-        models = list(BenchmarkModel.objects.filter(active=True).order_by("pk"))
-        questions = list(Question.objects.filter(active=True))
+    models = list(BenchmarkModel.objects.filter(active=True).order_by("pk"))
+    questions = list(Question.objects.filter(active=True))
+    if set(initial_budgets) - {m.openrouter_id for m in models}:
+        raise ValueError("Initial budget references an unknown or inactive model.")
+
+    def answer_jobs():
         for question in questions:
             for model in models:
-                if max_requests is not None and requests >= max_requests:
-                    return stats
                 answer, _ = Answer.objects.get_or_create(model=model, question=question)
                 if answer.status == "complete":
                     continue
-                renew()
-                requests += 1
-                generation_options = {}
-                previous_choices = answer.response.get("choices", [])
+                options = {}
+                if answer.attempts == 0 and model.openrouter_id in initial_budgets:
+                    options["max_tokens"] = initial_budgets[model.openrouter_id]
+                choices = answer.response.get("choices", [])
                 truncated = (
                     answer.status == "failed"
-                    and isinstance(previous_choices, list)
-                    and previous_choices
-                    and isinstance(previous_choices[0], dict)
-                    and previous_choices[0].get("finish_reason") == "length"
+                    and isinstance(choices, list)
+                    and choices
+                    and isinstance(choices[0], dict)
+                    and choices[0].get("finish_reason") == "length"
                 )
                 if truncated and retry_max_tokens is not None:
-                    generation_options["max_tokens"] = max(
+                    options["max_tokens"] = max(
                         model.max_tokens,
                         retry_max_tokens,
                         answer.request.get("max_tokens", model.max_tokens),
                     )
-                _perform(
-                    answer,
-                    partial(generate, model, question, **generation_options),
-                    stats,
-                    "answers",
-                    report,
-                )
+                yield answer, partial(generate, model, question, **options)
+
+    def comparison_jobs():
+        for question in questions:
             answers = list(
                 Answer.objects.filter(
                     question=question, model__in=models, status="complete"
@@ -107,49 +121,108 @@ def run_benchmark(
                 .order_by("pk")
             )
             for left, right in combinations(answers, 2):
-                if max_requests is not None and requests >= max_requests:
-                    return stats
-                # Canonical storage is independent of presentation order.
                 identity = (
                     f"{question.pk}:{left.model.openrouter_id}:"
                     f"{right.model.openrouter_id}"
                 )
-                a_is_left = hashlib.sha256(identity.encode()).digest()[0] % 2 == 0
                 match, _ = Comparison.objects.get_or_create(
                     question=question,
                     left=left,
                     right=right,
-                    defaults={"a_is_left": a_is_left},
+                    defaults={
+                        "a_is_left": hashlib.sha256(identity.encode()).digest()[0] % 2
+                        == 0
+                    },
                 )
                 if match.status == "complete":
                     continue
-                renew()
-                requests += 1
-                _perform(match, partial(judge, match), stats, "comparisons", report)
+                # Fully populate relation caches before handing HTTP work to a thread.
+                match.left, match.right, match.question = left, right, question
+                yield match, partial(judge, match)
+
+    with runner_lease() as renew:
+        sent = _run_stage(
+            answer_jobs(), workers, max_requests, renew, stats, "answers", report
+        )
+        remaining = None if max_requests is None else max_requests - sent
+        _run_stage(
+            comparison_jobs(), workers, remaining, renew, stats, "comparisons", report
+        )
     return stats
 
 
-def _perform(record, operation, stats, kind, report):
-    record.attempts += 1
-    record.save(update_fields=["attempts", "updated_at"])
+def _call(operation):
+    start = time.monotonic()
     try:
-        result = operation()
-    except ProviderError as error:
-        for field, value in error.audit.items():
-            setattr(record, field, value)
-        record.status = "failed"
-        record.error = str(error)[:200]
-        record.save()
-        stats["failed"] += 1
-        report(f"{kind} #{record.pk}: {record.error}")
-        if isinstance(error, FatalProviderError):
-            raise RuntimeError(record.error) from error
-        return
-    for field, value in result.items():
-        setattr(record, field, value)
-    record.status = "complete"
-    record.error = ""
-    record.completed_at = timezone.now()
-    record.save()
-    stats[kind] += 1
-    report(f"{kind} #{record.pk}: complete")
+        return operation(), None, int((time.monotonic() - start) * 1000)
+    except Exception as error:
+        return None, error, int((time.monotonic() - start) * 1000)
+
+
+def _run_stage(jobs, workers, limit, renew, stats, kind, report):
+    """Only HTTP/parsing runs in threads. All ORM access stays in the main thread.
+
+    A bounded in-flight window prevents eager paid work. Heartbeat while waiting;
+    on fatal error stop submitting, drain/save already-paid requests, then fail.
+    """
+    sent, pending, exhausted, fatal = 0, {}, False, None
+    lease_active = True
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        while True:
+            if lease_active:
+                try:
+                    renew()
+                except Exception as error:
+                    fatal, lease_active = error, False
+            if fatal is None:
+                try:
+                    while (
+                        not exhausted
+                        and len(pending) < workers
+                        and (limit is None or sent < limit)
+                    ):
+                        job = next(jobs, None)
+                        if job is None:
+                            exhausted = True
+                            break
+                        record, operation = job
+                        record.attempts += 1
+                        record.save(update_fields=["attempts", "updated_at"])
+                        pending[pool.submit(_call, operation)] = record
+                        sent += 1
+                except Exception as error:
+                    fatal = error
+            if not pending:
+                break
+            done, _ = wait(pending, timeout=15, return_when=FIRST_COMPLETED)
+            for future in done:
+                record = pending.pop(future)
+                result, error, duration = future.result()
+                record.duration_ms = duration
+                if error is not None:
+                    if isinstance(error, ProviderError):
+                        for field, value in error.audit.items():
+                            setattr(record, field, value)
+                        record.error = str(error)[:200]
+                    else:
+                        record.error = "Unexpected provider execution error"
+                    record.status = "failed"
+                    stats["failed"] += 1
+                    if isinstance(error, FatalProviderError) or not isinstance(
+                        error, ProviderError
+                    ):
+                        fatal = RuntimeError(record.error)
+                else:
+                    for field, value in result.items():
+                        setattr(record, field, value)
+                    record.status, record.error = "complete", ""
+                    record.completed_at = timezone.now()
+                    stats[kind] += 1
+                record.save()
+                report(
+                    f"{timezone.now().isoformat()} {kind} #{record.pk}: "
+                    f"{record.error or 'complete'} ({duration / 1000:.2f}s)"
+                )
+    if fatal is not None:
+        raise fatal
+    return sent

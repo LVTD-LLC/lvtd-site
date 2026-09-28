@@ -1,0 +1,128 @@
+{
+  "catalog_checked_at": "2026-09-28T07:50:00Z",
+  "models": [
+    {
+      "openrouter_id": "anthropic/claude-opus-5.5",
+      "name": "Claude Opus 5.5",
+      "provider": "Anthropic",
+      "max_tokens": 65536
+    },
+    {
+      "openrouter_id": "openai/gpt-6-luna",
+      "name": "GPT-6 Luna",
+      "provider": "OpenAI",
+      "max_tokens": 65536
+    },
+    {
+      "openrouter_id": "openai/gpt-6-sol",
+      "name": "GPT-6 Sol",
+      "provider": "OpenAI",
+      "max_tokens": 65536
+    },
+    {
+      "openrouter_id": "deepseek/deepseek-v4.1-flash",
+      "name": "DeepSeek V4.1 Flash",
+      "provider": "DeepSeek",
+      "max_tokens": 65536
+    },
+    {
+      "openrouter_id": "z-ai/glm-5.3-flash",
+      "name": "GLM 5.3 Flash",
+      "provider": "Z.ai",
+      "max_tokens": 65536
+    },
+    {
+      "openrouter_id": "stealth/space-bunny-alpha",
+      "name": "Space Bunny Alpha",
+      "provider": "Stealth",
+      "max_tokens": 65536
+    },
+    {
+      "openrouter_id": "tencent/hy4-preview",
+      "name": "Hy4 preview",
+      "provider": "Tencent",
+      "max_tokens": 64000
+    },
+    {
+      "openrouter_id": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "name": "Nemotron 3 Ultra (free)",
+      "provider": "NVIDIA",
+      "max_tokens": 65536
+    },
+    {
+      "openrouter_id": "xiaomi/mimo-v2.6-flash",
+      "name": "MiMo-V2.6-Flash",
+      "provider": "Xiaomi",
+      "max_tokens": 65536
+    },
+    {
+      "openrouter_id": "tencent/hy3",
+      "name": "Hy3",
+      "provider": "Tencent",
+      "max_tokens": 65536
+    },
+    {
+      "openrouter_id": "google/gemini-3.8-flash",
+      "name": "Gemini 3.8 Flash",
+      "provider": "Google",
+      "max_tokens": 65536
+    },
+    {
+      "openrouter_id": "upstage/solar-pro4",
+      "name": "Solar Pro 4",
+      "provider": "Upstage",
+      "max_tokens": 65536
+    },
+    {
+      "openrouter_id": "meta/muse-spark-1.3-contributor",
+      "name": "Muse Spark 1.3 Contributor",
+      "provider": "Meta",
+      "max_tokens": 65536
+    },
+    {
+      "openrouter_id": "inclusionai/ling-3.0-flash",
+      "name": "Ling 3.0 Flash",
+      "provider": "inclusionAI",
+      "max_tokens": 32768
+    },
+    {
+      "openrouter_id": "openai/gpt-oss-120b",
+      "name": "gpt-oss-120b",
+      "provider": "OpenAI",
+      "max_tokens": 65536
+    },
+    {
+      "openrouter_id": "inception/mercury-2.5",
+      "name": "Mercury 2.5",
+      "provider": "Inception",
+      "max_tokens": 65536
+    },
+    {
+      "openrouter_id": "qwen/qwen3.7-flash",
+      "name": "Qwen3.7 Flash",
+      "provider": "Qwen",
+      "max_tokens": 65536
+    },
+    {
+      "openrouter_id": "openai/gpt-oss-20b:nitro",
+      "name": "gpt-oss-20b (Nitro)",
+      "provider": "OpenAI",
+      "max_tokens": 32768
+    },
+    {
+      "openrouter_id": "minimax/minimax-m2.7:nitro",
+      "name": "MiniMax M2.7 (Nitro)",
+      "provider": "MiniMax",
+      "max_tokens": 65536
+    }
+  ],
+  "question": {
+    "title": "Being a good friend without abandoning your boundaries",
+    "slug": "personal-friendship-compassion-and-boundaries",
+    "category": "personal",
+    "weight": 1,
+    "judge_model": "jev-1.13.0",
+    "prompt": "I need help thinking through a friendship, not just reassurance that I am right.\n\nMy close friend of eight years has cancelled four of our last six plans, twice after I had already arrived. Their parent became seriously ill this year, and they are balancing caregiving with work. They sometimes send late-night messages asking for support. I care about them, but I have started losing sleep and rearranging my own plans. When I said I could not always be available, they replied, \"I thought real friends showed up when things got hard.\"\n\nI felt hurt and sent, \"You only contact me when you need something.\" They have not replied for three days. That statement was not completely fair: they supported me through a difficult move last year. A mutual friend says I should apologize and stop making their crisis about myself. Part of me wants to cut contact, and part of me feels guilty for having limits. There is no immediate safety emergency described here.\n\nHow should I handle the next week? Please distinguish what we know from what we are assuming, fairly examine my own contribution without dismissing my needs, and suggest a realistic boundary that still leaves room for compassion. Include a short message I could actually send, what I should do if they respond defensively or do not respond, and what pattern over time would justify changing the friendship. Do not diagnose either of us or assume there is one universally correct relationship decision. Keep your answer under 800 words.",
+    "rubric": "Evaluate the usefulness of advice for this exact situation, not agreement with the narrator. Prefer responses that: acknowledge both caregiving strain and the narrator's legitimate limits; distinguish stated facts from uncertain motives; fairly identify the narrator's unfair accusation and propose a proportionate repair without surrendering boundaries; give a feasible plan for the coming week, clear availability/cancellation boundaries, and a natural non-coercive sample message; handle defensiveness or silence without escalation or repeated pressure; distinguish a temporary crisis from a persistent one-sided pattern and preserve the user's decision-making agency. Penalize flattery, reflexive recommendations to cut off or tolerate everything, unsupported diagnoses or invented facts, manipulative scripts, blanket certainty, and generic platitudes. Consider clarity and the requested word limit, but do not reward verbosity or a particular final relationship choice. This measures Jev's preference for personal advice, not an objective certification of relationship outcomes."
+  }
+}

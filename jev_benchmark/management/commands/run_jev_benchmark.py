@@ -1,5 +1,10 @@
+import json
+import time
+from pathlib import Path
+
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
+from django.utils import timezone
 
 from jev_benchmark.runner import pending_counts, run_benchmark
 
@@ -28,7 +33,23 @@ class Command(BaseCommand):
             ),
         )
 
+        parser.add_argument(
+            "--workers", type=int, default=1, help="Concurrent HTTP requests (1-8)."
+        )
+        parser.add_argument(
+            "--budget-file",
+            help="JSON model-ID to token-budget mapping for first attempts only.",
+        )
+
     def handle(self, *args, **options):
+        started = time.monotonic()
+        self.stdout.write(f"Started: {timezone.now().isoformat()}")
+        budgets = None
+        if options["budget_file"]:
+            try:
+                budgets = json.loads(Path(options["budget_file"]).read_text())
+            except (OSError, ValueError) as error:
+                raise CommandError("Cannot read initial budget JSON") from error
         pending = pending_counts()
         self.stdout.write(
             f"Missing answers: {pending['answers']}; "
@@ -56,12 +77,18 @@ class Command(BaseCommand):
                 max_requests=limit,
                 retry_max_tokens=retry_budget,
                 report=self.stdout.write,
+                workers=options["workers"],
+                initial_budgets=budgets,
             )
-        except RuntimeError as error:
+        except (RuntimeError, ValueError) as error:
             raise CommandError(str(error)) from error
         self.stdout.write(
             f"Generated: {stats['answers']}; judged: {stats['comparisons']}; "
             f"failed: {stats['failed']}"
+        )
+        self.stdout.write(
+            f"Finished: {timezone.now().isoformat()}; "
+            f"elapsed: {time.monotonic() - started:.2f}s"
         )
         if stats["failed"]:
             raise CommandError(

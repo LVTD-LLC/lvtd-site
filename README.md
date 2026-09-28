@@ -208,3 +208,37 @@ This is not automatic escalation; the default generation allowance stays unchang
 The effective truncated-retry allowance is the greatest of the model default,
 the explicit flag, and the previous recorded request allowance. A lower flag
 does not reduce an earlier larger allowance.
+
+### Timed expansion and bounded concurrency
+
+`expand_jev_benchmark` adds the dated 2026-09-28 manifest (19 models and a fictional
+personal-advice question, weight 1). It makes no paid calls and refuses to overwrite
+conflicting records. MiniMax's dated URL resolves to `minimax/minimax-m2.7:nitro`;
+Nitro and free variants are preserved. Provider output limits were checked against
+the OpenRouter catalog; Ling and GPT-OSS 20B are capped at 32,768, Hy4 at 64,000,
+and the other listed budgets at 65,536 where supported.
+
+```
+uv run python manage.py expand_jev_benchmark
+uv run python manage.py run_jev_benchmark --dry-run
+uv run python manage.py run_jev_benchmark --workers 4 --max-requests 1575 \
+  --budget-file jev_benchmark/data/budgets_20260928.json
+```
+
+The new cohort totals 116 answers and 1,624 comparisons. Starting with the original
+30/135 completed results requires 86 new answers and 1,489 new comparisons.
+The budget file affects first attempts only, is validated before paid calls, and
+records actual allowances in each answer's request without mutating frozen model
+inputs. Historical output budgets are not equal; see each saved request.
+
+Concurrency defaults to 1, is explicitly bounded to 8, and applies only to HTTP
+and response parsing. Database writes and progress reporting stay on the main
+thread. The runner completes the answer phase before the judgment phase, renews
+its lease every waiting interval (15 seconds), and stops scheduling on a fatal
+account error while saving already-in-flight work. Up to the configured worker
+count may already be billed when a fatal error is discovered. `--max-requests`
+counts logical submissions, not internal 429/503/529 retries. UTC timestamps and
+wall-clock elapsed seconds are printed; answer/comparison durations stay in DB.
+Run under a durable operator process with private logs, not a short-lived web
+request or the default 60-second task worker timeout. Admin saves still do not
+trigger paid work. No automatic retry of failed generation is introduced.
