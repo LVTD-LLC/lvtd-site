@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-09-28 — Native reasoning compatibility
+
+- Map requested low effort to Mistral Medium 3.5's documented minimal mode, with effective request settings visible in answer details and public data.
+- Restore explicit failed-truncation budget retries above a question's initial allowance without changing frozen inputs or inflating retries to the model ceiling.
+- Classify reasoning-only length finishes as truncation, retaining charged usage and requiring explicit retry; preserve completed answers and frozen question profiles.
+
+
 ## 2026-09-28 — Benchmark results explorer
 
 - Show five models per table with expand/collapse, sorting, and shaded numeric cells; remove eyebrow labels and the answer/judging coverage column.
