@@ -166,11 +166,16 @@ def _run_stage(jobs, workers, limit, renew, stats, kind, report):
     on fatal error stop submitting, drain/save already-paid requests, then fail.
     """
     sent, pending, exhausted, fatal = 0, {}, False, None
+    lease_active = True
     with ThreadPoolExecutor(max_workers=workers) as pool:
         while True:
-            if fatal is None:
+            if lease_active:
                 try:
                     renew()
+                except Exception as error:
+                    fatal, lease_active = error, False
+            if fatal is None:
+                try:
                     while (
                         not exhausted
                         and len(pending) < workers

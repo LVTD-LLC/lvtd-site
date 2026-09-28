@@ -671,3 +671,41 @@ def test_runner_renews_lease_while_http_requests_are_pending(cohort):
     ):
         run_benchmark(max_requests=1, workers=2)
     assert len(renewals) >= 3
+
+
+def test_lease_keeps_renewing_while_draining_after_fatal(cohort):
+    import threading
+    from concurrent.futures import wait as real_wait
+    from contextlib import contextmanager
+
+    from jev_benchmark.clients import FatalProviderError
+
+    release = threading.Event()
+    renewals = []
+    waits = []
+
+    @contextmanager
+    def lease():
+        yield lambda: renewals.append(1)
+
+    def operation(model, question):
+        if model.pk == cohort[0][0].pk:
+            raise FatalProviderError("Provider HTTP 402")
+        assert release.wait(timeout=3)
+        return generated()
+
+    def draining_wait(futures, **kwargs):
+        waits.append(1)
+        if len(waits) > 1:
+            assert len(renewals) >= 2
+            release.set()
+        return real_wait(futures, **kwargs)
+
+    with (
+        patch("jev_benchmark.runner.runner_lease", lease),
+        patch("jev_benchmark.runner.wait", draining_wait),
+        patch("jev_benchmark.runner.generate", side_effect=operation),
+    ):
+        with pytest.raises(RuntimeError, match="402"):
+            run_benchmark(workers=2)
+    assert Answer.objects.filter(status="complete").count() == 1
