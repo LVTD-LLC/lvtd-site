@@ -345,18 +345,15 @@ def test_bounded_rate_limit_retry_and_redacted_errors():
 
     from jev_benchmark.clients import ProviderError, post_json
 
-    throttled = Mock(status_code=429, headers={"Retry-After": "3"})
-    ok = Mock(status_code=200, ok=True)
-    ok.json.return_value = {"model": "test"}
-    with (
-        patch(
-            "jev_benchmark.clients.requests.post", side_effect=[throttled, ok]
-        ) as post,
-        patch("jev_benchmark.clients.time.sleep") as sleep,
-    ):
-        assert post_json("https://example.test", "secret", {}) == {"model": "test"}
-    assert post.call_count == 2
-    sleep.assert_called_once_with(3)
+    throttled = Mock(status_code=429, ok=False, headers={"Retry-After": "60"})
+    throttled.json.return_value = {"error": {"message": "secret private text"}}
+    with patch("jev_benchmark.clients.requests.post", return_value=throttled) as post:
+        with pytest.raises(ProviderError) as error:
+            post_json("https://example.test", "secret", {})
+    assert post.call_count == 1  # Retries are now durable jobs, not hidden HTTP calls.
+    assert error.value.kind == "transient"
+    assert error.value.retry_after == 60
+    assert "secret" not in str(error.value)
     with patch(
         "jev_benchmark.clients.requests.post",
         side_effect=requests.Timeout("secret private text"),

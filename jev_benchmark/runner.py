@@ -10,7 +10,15 @@ from itertools import combinations
 from django.utils import timezone
 
 from .clients import FatalProviderError, ProviderError, generate, judge
-from .models import Answer, BenchmarkModel, Comparison, Question, RunnerLease
+from .costs import reported_cost
+from .models import (
+    Answer,
+    BenchmarkModel,
+    Comparison,
+    Question,
+    RunnerLease,
+    WorkAttempt,
+)
 
 
 @contextmanager
@@ -188,6 +196,14 @@ def _run_stage(jobs, workers, limit, renew, stats, kind, report):
                         record, operation = job
                         record.attempts += 1
                         record.save(update_fields=["attempts", "updated_at"])
+                        record._work_attempt = WorkAttempt.objects.create(
+                            **{
+                                "answer"
+                                if isinstance(record, Answer)
+                                else "comparison": record
+                            },
+                            number=record.attempts,
+                        )
                         pending[pool.submit(_call, operation)] = record
                         sent += 1
                 except Exception as error:
@@ -219,6 +235,18 @@ def _run_stage(jobs, workers, limit, renew, stats, kind, report):
                     record.completed_at = timezone.now()
                     stats[kind] += 1
                 record.save()
+                attempt = record._work_attempt
+                attempt.status = record.status
+                evidence = result or (
+                    error.audit if isinstance(error, ProviderError) else {}
+                )
+                attempt.request = evidence.get("request", {})
+                attempt.response = evidence.get("response", {})
+                attempt.cost_usd = reported_cost(attempt.response)
+                attempt.duration_ms = duration
+                attempt.finished_at = timezone.now()
+                attempt.error_kind = getattr(error, "kind", "") if error else ""
+                attempt.save()
                 report(
                     f"{timezone.now().isoformat()} {kind} #{record.pk}: "
                     f"{record.error or 'complete'} ({duration / 1000:.2f}s)"

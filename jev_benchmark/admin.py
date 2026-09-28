@@ -1,6 +1,14 @@
 from django.contrib import admin
+from django.utils import timezone
 
-from .models import Answer, BenchmarkModel, Comparison, Question
+from .models import (
+    Answer,
+    BenchmarkModel,
+    BudgetState,
+    Comparison,
+    Question,
+    WorkAttempt,
+)
 
 
 @admin.register(BenchmarkModel)
@@ -18,7 +26,17 @@ class QuestionAdmin(admin.ModelAdmin):
 
 
 class ResultAdmin(admin.ModelAdmin):
-    list_filter = ("status", "question")
+    list_filter = ("status", "error_kind", "question")
+    actions = ["retry_failed"]
+
+    @admin.action(description="Retry selected failed work (may incur API charges)")
+    def retry_failed(self, request, queryset):
+        count = queryset.filter(status="failed").update(
+            error_kind="transient", retry_count=0, next_attempt_at=timezone.now()
+        )
+        self.message_user(
+            request, f"{count} failed jobs queued; completed results untouched."
+        )
 
     def get_readonly_fields(self, request, obj=None):
         return [field.name for field in self.model._meta.fields]
@@ -46,3 +64,26 @@ class ComparisonAdmin(ResultAdmin):
         "confidence",
         "completed_at",
     )
+
+
+@admin.register(WorkAttempt)
+class AttemptAdmin(ResultAdmin):
+    list_filter = ("status", "source", "error_kind")
+    list_display = (
+        "id",
+        "answer",
+        "comparison",
+        "number",
+        "status",
+        "cost_usd",
+        "source",
+        "started_at",
+    )
+    actions = None
+
+
+@admin.register(BudgetState)
+class BudgetAdmin(ResultAdmin):
+    list_filter = ()
+    list_display = ("checked_at", "openrouter_usage", "available_credit", "alert")
+    actions = None

@@ -237,8 +237,73 @@ thread. The runner completes the answer phase before the judgment phase, renews
 its lease every waiting interval (15 seconds), and stops scheduling on a fatal
 account error while saving already-in-flight work. Up to the configured worker
 count may already be billed when a fatal error is discovered. `--max-requests`
-counts logical submissions, not internal 429/503/529 retries. UTC timestamps and
+counts HTTP submissions. HTTP retries now live in the durable queue. UTC timestamps and
 wall-clock elapsed seconds are printed; answer/comparison durations stay in DB.
 Run under a durable operator process with private logs, not a short-lived web
-request or the default 60-second task worker timeout. Admin saves still do not
-trigger paid work. No automatic retry of failed generation is introduced.
+request or the default 60-second task worker timeout. Admin requests do not call providers directly. When the durable worker below is
+enabled, it discovers newly saved active models/questions and processes them.
+
+
+### Durable worker, truthful coverage, and actual costs
+
+Production worker command: `uv run python manage.py run_workers` (supervises
+Django-Q plus the benchmark coordinator). Before enabling on an existing dataset:
+
+```
+uv run python manage.py migrate
+uv run python manage.py backfill_jev_costs
+uv run python manage.py work_jev_benchmark --workers 8  # one pass over due work
+# or continuously discover admin additions and due retries:
+uv run python manage.py work_jev_benchmark --watch --workers 8
+```
+
+The legacy `run_jev_benchmark` remains an explicit operator command. Only the
+new durable worker does credit preflight, interleaving, and scheduled retries.
+Do not run either concurrently; the shared DB lease rejects competing runners.
+Quiesce paid work before deployment; allow a 30-minute container stop grace so
+SIGTERM can drain in-flight work. The watcher never runs in a web request or a
+60-second Django-Q job. No new deployment is needed for ordinary admin additions.
+
+- Each new HTTP submission gets an attempt row before dispatch. Main-thread DB
+  writes persist responses, reported costs, errors, and next retry time. A crash
+  leaves an **uncertain** attempt; it is not blindly replayed.
+- Capacity/rate-limit/budget failures get at most three attempts per retry cycle,
+  with provider backoff (minimum 30s) and exponential cooldown. Blocked models do
+  not stop other models. Account authentication failures pause that provider's
+  work. Admin's explicit "Retry selected failed work" resets the retry cycle;
+  it cannot regenerate completed work. Truncation/ambiguous outcomes need review.
+- Ready comparisons run while other answers are generating. No successful answer
+  or pair is regenerated. The original presentation identity and Elo stay intact.
+- OpenRouter key spend and available credits are fetched before generation.
+  Concurrent reservations use catalog prices and a conservative input/output
+  allowance, **not** a claimed bill. Unaffordable jobs wait, while judging can
+  continue. Unknown prices fail closed. `JEV_SPEND_ALERT_USD=18` pauses generation
+  before approaching the user's $20 threshold. This is the dedicated key's
+  cumulative OpenRouter usage, not combined vendor spend; Jev USD is unavailable.
+  Budget state/alerts are visible in admin; the operator's scheduled spend alarm
+  delivers a Slack alert. Provider prices/settlement can change; estimates are not
+  a guaranteed invoice cap. Raising the threshold is an explicit operator change.
+- New question versions can set an output ceiling and low/medium/high reasoning
+  effort. Settings freeze after use. Existing question defaults and completed
+  outputs are unchanged; providers may not support every reasoning setting.
+
+Public coverage distinguishes **answers collected**, **matchups judged**, and
+**fully judged questions**. Overall Elo remains withheld until coverage is complete.
+Costs next to scores come only from `response.usage.cost` on saved successful
+answers. Explicit zero is free; missing/malformed values are Unknown. Partial
+cost totals show priced-answer coverage. They exclude retry and Jev charges.
+There is deliberately no misleading Elo-per-dollar ratio (Elo is relative and
+has an arbitrary baseline).
+
+`WorkAttempt` retains every future attempt's provider-reported USD, including
+failed responses when a cost is supplied, separately from the successful-answer
+comparison. The idempotent backfill snapshots retained historical responses only;
+trusted same-database dumpdata snapshots can recover older actual responses via
+`--snapshot PATH` (repeatable). Unrecorded attempts remain unknown, not zero.
+Provider generation IDs are deduplicated, and conflicting evidence is rejected. OpenRouter account usage may
+therefore exceed the sum of public costs. No historical cost is inferred from
+current price lists. Jev token usage is retained, but no USD price is invented.
+
+The worker supervisor fails fast if either child exits, drains the other child,
+and relies on the Docker Swarm service restart policy to restart the container.
+Watch mode requires the main thread so termination signals can drain in-flight work.

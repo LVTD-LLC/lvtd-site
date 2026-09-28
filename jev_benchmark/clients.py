@@ -8,9 +8,10 @@ from django.conf import settings
 
 
 class ProviderError(Exception):
-    def __init__(self, message, *, audit=None):
+    def __init__(self, message, *, audit=None, kind="invalid", retry_after=60):
         super().__init__(message)
         self.audit = audit or {}
+        self.kind, self.retry_after = kind, retry_after
 
 
 class FatalProviderError(ProviderError):
@@ -19,43 +20,77 @@ class FatalProviderError(ProviderError):
 
 def post_json(url, key, payload):
     if not key:
-        raise ProviderError("Missing API credential")
-    for attempt in range(3):
-        try:
-            response = requests.post(
-                url,
-                headers={"Authorization": f"Bearer {key}"},
-                json=payload,
-                timeout=(15, 240),
-            )
-        except requests.RequestException:
-            # An ambiguous timeout may already have been billed: no hidden retry.
+        raise FatalProviderError("Missing API credential", kind="auth")
+    try:
+        response = requests.post(
+            url,
+            headers={"Authorization": f"Bearer {key}"},
+            json=payload,
+            timeout=(15, 240),
+        )
+    except requests.RequestException:
+        raise ProviderError(
+            "Network outcome uncertain; operator review required",
+            kind="ambiguous",
+            audit={"request": payload},
+        ) from None
+    try:
+        data = response.json()
+    except ValueError:
+        if response.ok:
             raise ProviderError(
-                "Network error; retry explicitly with the runner"
+                "Invalid provider JSON; outcome uncertain",
+                kind="ambiguous",
+                audit={"request": payload},
             ) from None
-        if response.status_code in (429, 503, 529) and attempt < 2:
-            try:
-                delay = float(response.headers.get("Retry-After", 2 ** (attempt + 1)))
-                if not math.isfinite(delay):
-                    raise ValueError
-            except ValueError:
-                delay = 2 ** (attempt + 1)
-            time.sleep(max(1, min(delay, 30)))
-            continue
-        if response.status_code in (401, 402, 403):
-            raise FatalProviderError(
-                f"Provider HTTP {response.status_code}; check credentials or credits"
-            )
-        if not response.ok:
-            raise ProviderError(f"Provider HTTP {response.status_code}")
+        data = {}
+    error = data.get("error") if isinstance(data, dict) else None
+    if not response.ok or error:
+        error = error if isinstance(error, dict) else {}
+        text = str(error.get("message", "")).lower()
+        code = response.status_code if not response.ok else error.get("code", 500)
         try:
-            data = response.json()
-        except ValueError:
-            raise ProviderError("Invalid provider JSON") from None
-        if not isinstance(data, dict) or "error" in data:
-            raise ProviderError("Invalid provider response")
-        return data
-    raise ProviderError("Provider unavailable")
+            code = int(code)
+        except (TypeError, ValueError):
+            code = 500
+        kind, message = "invalid", "Provider rejected request"
+        if code == 401:
+            kind, message = "auth", "Provider authentication failed"
+        elif code in (403, 404):
+            kind, message = (
+                "blocked",
+                "Model unavailable under account access/privacy settings",
+            )
+        elif code == 402:
+            kind, message = "budget", "Provider credit or in-flight spending limit"
+        elif (
+            code in (429, 500, 502, 503, 529)
+            or "capacity" in text
+            or "high demand" in text
+        ):
+            kind, message = "transient", "Provider capacity/rate limit; scheduled retry"
+        # Retain useful machine diagnostics, never arbitrary upstream text or tokens.
+        clean = {"error": {"code": code, "kind": kind}}
+        if isinstance(data, dict) and isinstance(data.get("usage"), dict):
+            clean["usage"] = data["usage"]
+        try:
+            delay = float(response.headers.get("Retry-After", 60))
+            if not math.isfinite(delay):
+                raise ValueError
+        except (TypeError, ValueError):
+            delay = 60
+        exception = FatalProviderError if kind == "auth" else ProviderError
+        raise exception(
+            message,
+            kind=kind,
+            retry_after=max(30, min(delay, 3600)),
+            audit={"request": payload, "response": clean},
+        )
+    if not isinstance(data, dict):
+        raise ProviderError(
+            "Invalid provider response", kind="invalid", audit={"request": payload}
+        )
+    return data
 
 
 def generate(model, question, *, max_tokens=None):
@@ -65,6 +100,12 @@ def generate(model, question, *, max_tokens=None):
         "max_tokens": model.max_tokens if max_tokens is None else max_tokens,
         "stream": False,
     }
+    if question.generation_max_tokens:
+        payload["max_tokens"] = min(
+            payload["max_tokens"], question.generation_max_tokens
+        )
+    if question.reasoning_effort:
+        payload["reasoning"] = {"effort": question.reasoning_effort}
     start = time.monotonic()
     data = post_json(
         "https://openrouter.ai/api/v1/chat/completions",
@@ -81,9 +122,12 @@ def generate(model, question, *, max_tokens=None):
             raise ProviderError(
                 "Incomplete answer; inspect token limit or provider refusal",
                 audit={**audit, "text": content},
+                kind="truncated",
             )
     except (KeyError, IndexError, TypeError, ValueError):
-        raise ProviderError("Missing answer content", audit=audit) from None
+        raise ProviderError(
+            "Missing answer content", audit=audit, kind="invalid"
+        ) from None
     return {
         "text": content,
         "request": payload,

@@ -1,6 +1,6 @@
 {% extends 'website/base.html' %}
 {% block title %}Jev Benchmark - Model comparisons | LVTD{% endblock %}
-{% block description %}An open experiment: Jev judges AI answers head to head across writing, programming, and mathematics. Explore the rankings, prompts, and individual decisions.{% endblock %}
+{% block description %}An open experiment: Jev judges AI answers head to head across writing, programming, mathematics, and personal advice. Explore the rankings, prompts, and individual decisions.{% endblock %}
 {% block og_title %}Jev Benchmark | LVTD{% endblock %}
 {% block twitter_title %}Jev Benchmark | LVTD{% endblock %}
 {% block content %}
@@ -10,7 +10,7 @@
     <p class="bench-eyebrow">An experiment in AI judgment</p>
     <h1>Jev Benchmark</h1>
     <p class="bench-lead">Different models. The same questions.<br>One judge, every head-to-head.</p>
-    <p class="bench-muted">Answers from OpenRouter, compared by <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">TypeSafe's Jev</a>. Explore what it prefers across writing, programming, and mathematics.</p>
+    <p class="bench-muted">Answers from OpenRouter, compared by <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">TypeSafe's Jev</a>. Explore what it prefers across writing, programming, mathematics, and personal advice.</p>
   </header>
   <dl class="bench-stats">
     <div><dt>Models</dt><dd>{{ model_count }}</dd></div>
@@ -24,16 +24,18 @@
     {% if overall %}
     <div class="bench-table-scroll" tabindex="0" role="region" aria-label="Overall model rankings">
       <table class="bench-table"><caption class="sr-only">Overall weighted Elo and question coverage</caption>
-        <thead><tr><th scope="col">Rank</th><th scope="col">Model / creator</th><th scope="col">Weighted Elo</th><th scope="col">Coverage</th></tr></thead>
+        <thead><tr><th scope="col">Rank</th><th scope="col">Model / creator</th><th scope="col">Weighted Elo</th><th scope="col">Answers / judging coverage</th><th scope="col">Saved answer cost (USD)</th></tr></thead>
         <tbody>{% for row in overall %}<tr>
           <td class="bench-number">{% if row.complete %}{{ forloop.counter }}{% else %}&mdash;{% endif %}</td>
           <th scope="row">{{ row.model.name }}<span class="bench-subtext">{{ row.model.provider }}</span></th>
           <td class="bench-score">{% if row.complete %}{{ row.rating|floatformat:1 }}{% else %}<span class="bench-pending">Pending</span>{% endif %}</td>
-          <td>{{ row.questions_complete }} / {{ question_count }} questions</td>
+          <td>{{ row.answers_count }} / {{ question_count }} answers<span class="bench-subtext">{{ row.games }} / {{ row.expected_games }} matchups judged</span><span class="bench-subtext">{{ row.questions_complete }} / {{ question_count }} fully judged questions</span></td>
+          <td>{% if row.cost_usd != None %}${{ row.cost_usd|floatformat:10 }}<span class="bench-subtext">{{ row.cost_known }} / {{ row.cost_count }} saved answers priced</span>{% else %}Unknown{% endif %}</td>
         </tr>{% endfor %}</tbody>
       </table>
     </div>
     {% else %}<p class="bench-empty">The first benchmark is being prepared. Rankings will appear here as answers are collected and judged.</p>{% endif %}
+    <p class="bench-footnote">Costs are actual USD reported by OpenRouter for saved successful answers, including provider-reported reasoning usage. Zero means reported free; Unknown means no cost was reported. Partial sums show their coverage. These totals exclude failed/retried attempts and Jev charges, and are not an account invoice. Attempts absent from retained responses and backups remain unknown.</p>
     {% if last_updated %}<p class="bench-footnote">Latest judgment: {{ last_updated|date:"M j, Y, H:i" }} UTC.</p>{% endif %}
   </section>
   <section class="bench-section" aria-labelledby="questions-title">
@@ -49,7 +51,7 @@
   <section id="methodology" class="bench-section bench-methodology" aria-labelledby="methodology-title">
     <p class="bench-eyebrow">Read this with the rankings</p><h2 id="methodology-title">Method, not mystique.</h2>
     <div class="bench-method-grid">
-      <div><h3>One answer. Every opponent.</h3><p>Each model answers each question once, without tools or web access. The same prompt goes to every model; provider-default sampling and reasoning settings apply. Answers start with each model's configured output budget. Failed, truncated answers may be retried with an explicitly raised allowance, recorded on each answer. Truncated or failed answers are not scored.</p><p>Each unordered pair is judged once. Model labels are omitted from the judge's input, and A/B presentation is assigned by a stable hash. Answers may still reveal their origin. Probabilities and confidence are saved alongside each decision.</p></div>
+      <div><h3>One answer. Every opponent.</h3><p>Each model answers each question once, without tools or web access. The same prompt goes to every model; provider-default sampling settings apply. Reasoning effort can be explicitly configured on a new question version; existing inputs are frozen after use. Answers start with each model's configured output budget. Failed, truncated answers may be retried with an explicitly raised allowance, recorded on each answer. Truncated or failed answers are not scored.</p><p>Each unordered pair is judged once. Model labels are omitted from the judge's input, and A/B presentation is assigned by a stable hash. Answers may still reveal their origin. Probabilities and confidence are saved alongside each decision.</p></div>
       <div><h3>Reproducible Elo</h3><p>Every question starts all models at 1,500. Each stored win/loss is replayed once with K = 32 in a stable, hashed model-ID order. That makes the same dataset reproducible, not order-independent. Adding opponents can change existing ratings without rejudging their old matches.</p><p>Question weights default to one. The overall score is the weighted arithmetic mean of complete per-question ratings. Pending models have no overall rank; per-question results remain provisional until the round robin is complete.</p></div>
       <div><h3>A preference experiment</h3><p>Jev selects a winner, not a verified truth. This small sample measures one judge's preferences on these prompts, not general model ability. Code is not executed and mathematical proofs are not independently verified. A single presentation per pair does not eliminate position bias.</p><p>Confidence describes Jev's decision distribution; it is not the probability that the answer is factually correct. No repeated trials, error bars, or statistical-significance claims are implied.</p></div>
     </div>

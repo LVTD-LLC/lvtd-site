@@ -61,7 +61,28 @@ class Question(FrozenInputs):
     weight = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1)])
     active = models.BooleanField(default=True)
     judge_model = models.CharField(max_length=100, default="jev-1.13.0")
-    frozen_fields = ("prompt", "rubric", "judge_model")
+    generation_max_tokens = models.PositiveIntegerField(
+        null=True,
+        blank=True,
+        validators=[MinValueValidator(1024), MaxValueValidator(65536)],
+    )
+    reasoning_effort = models.CharField(
+        max_length=10,
+        blank=True,
+        choices=[
+            ("", "Provider default"),
+            ("low", "Low"),
+            ("medium", "Medium"),
+            ("high", "High"),
+        ],
+    )
+    frozen_fields = (
+        "prompt",
+        "rubric",
+        "judge_model",
+        "generation_max_tokens",
+        "reasoning_effort",
+    )
 
     class Meta:
         ordering = ("pk",)
@@ -79,6 +100,9 @@ class WorkResult(models.Model):
     status = models.CharField(max_length=10, choices=Status, default=Status.PENDING)
     attempts = models.PositiveIntegerField(default=0)
     error = models.CharField(max_length=200, blank=True)
+    error_kind = models.CharField(max_length=20, blank=True)
+    retry_count = models.PositiveIntegerField(default=0)
+    next_attempt_at = models.DateTimeField(null=True, blank=True)
     request = models.JSONField(default=dict, blank=True)
     response = models.JSONField(default=dict, blank=True)
     duration_ms = models.PositiveIntegerField(null=True, blank=True)
@@ -162,3 +186,54 @@ class RunnerLease(models.Model):
 
     owner = models.CharField(max_length=36, blank=True)
     expires_at = models.DateTimeField()
+
+
+class WorkAttempt(models.Model):
+    """Append-only attempt evidence, including uncertain interrupted calls."""
+
+    answer = models.ForeignKey(
+        Answer, null=True, blank=True, on_delete=models.PROTECT, related_name="history"
+    )
+    comparison = models.ForeignKey(
+        Comparison,
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT,
+        related_name="history",
+    )
+    number = models.PositiveIntegerField()
+    source = models.CharField(max_length=30, default="live")
+    status = models.CharField(max_length=20, default="started")
+    started_at = models.DateTimeField(auto_now_add=True)
+    finished_at = models.DateTimeField(null=True, blank=True)
+    request = models.JSONField(default=dict, blank=True)
+    response = models.JSONField(default=dict, blank=True)
+    error_kind = models.CharField(max_length=20, blank=True)
+    duration_ms = models.PositiveIntegerField(null=True, blank=True)
+    cost_usd = models.DecimalField(
+        max_digits=18, decimal_places=10, null=True, blank=True
+    )
+
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                condition=(
+                    Q(answer__isnull=False, comparison__isnull=True)
+                    | Q(answer__isnull=True, comparison__isnull=False)
+                ),
+                name="jev_attempt_one_result",
+            ),
+            models.UniqueConstraint(
+                fields=["answer", "number"], name="jev_answer_attempt_number"
+            ),
+            models.UniqueConstraint(
+                fields=["comparison", "number"], name="jev_comparison_attempt_number"
+            ),
+        ]
+
+
+class BudgetState(models.Model):
+    checked_at = models.DateTimeField(auto_now=True)
+    openrouter_usage = models.DecimalField(max_digits=18, decimal_places=10, null=True)
+    available_credit = models.DecimalField(max_digits=18, decimal_places=10, null=True)
+    alert = models.CharField(max_length=200, blank=True)
