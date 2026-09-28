@@ -303,3 +303,7 @@ trusted same-database dumpdata snapshots can recover older actual responses via
 Provider generation IDs are deduplicated, and conflicting evidence is rejected. OpenRouter account usage may
 therefore exceed the sum of public costs. No historical cost is inferred from
 current price lists. Jev token usage is retained, but no USD price is invented.
+
+The worker supervisor fails fast if either child exits, drains the other child,
+and relies on the Docker Swarm service restart policy to restart the container.
+Watch mode requires the main thread so termination signals can drain in-flight work.

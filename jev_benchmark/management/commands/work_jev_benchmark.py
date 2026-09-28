@@ -1,7 +1,7 @@
 import signal
 import threading
 
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand, CommandError
 
 from jev_benchmark.queue import run_queue
 
@@ -16,6 +16,13 @@ class Command(BaseCommand):
         parser.add_argument("--poll-seconds", type=int, default=30)
 
     def handle(self, *args, **options):
+        if (
+            options["watch"]
+            and threading.current_thread() is not threading.main_thread()
+        ):
+            raise CommandError(
+                "Watch mode must run in the main thread for signal handling."
+            )
         stop = threading.Event()
         if threading.current_thread() is threading.main_thread():
             for sig in (signal.SIGTERM, signal.SIGINT):

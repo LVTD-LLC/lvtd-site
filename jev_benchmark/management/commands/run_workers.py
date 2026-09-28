@@ -32,7 +32,10 @@ class Command(BaseCommand):
             while all(child.poll() is None for child in children):
                 time.sleep(1)
             if not stopping:
-                raise CommandError("Worker child exited; supervisor restarting.")
+                raise CommandError(
+                    "Worker child exited; supervisor stopping. "
+                    "Deployment restart policy must restart it."
+                )
         finally:
             stop()
             for child in children:
