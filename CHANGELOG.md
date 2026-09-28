@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-09-28 - Durable benchmark jobs and real cost visibility
+
+- Separate collected answers from fully judged coverage; show provider-reported saved-answer costs beside scores with explicit unknown/partial coverage.
+- Persist attempt-level cost/audit history, safely backfill retained responses, and keep completed outputs immutable during retries.
+- Add a long-lived missing-work coordinator: overlap judging with generation, isolate blocked models, schedule bounded durable retries, recover interrupted calls as uncertain, and reserve OpenRouter credits before submission.
+- Add a conservative $18 OpenRouter alert/pause threshold, administrative retry controls, and frozen per-question generation profiles.
+
 ## 2026-09-28 - Timed benchmark expansion
 
 - Add 19 requested model variants and an equally weighted personal-advice question through an idempotent seed command.

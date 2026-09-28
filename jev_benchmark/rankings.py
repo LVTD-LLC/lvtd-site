@@ -2,6 +2,7 @@
 
 import hashlib
 
+from .costs import cost_summary, reported_cost
 from .models import Answer, BenchmarkModel, Comparison, Question
 
 
@@ -59,6 +60,9 @@ def leaderboard():
                 "losses": games[m.pk] - wins[m.pk],
                 "confidence": confidence[m.pk] / games[m.pk] if games[m.pk] else None,
                 "answer": question_answers.get(m.pk),
+                "cost_usd": reported_cost(question_answers[m.pk].response)
+                if m.pk in question_answers
+                else None,
                 "complete": len(models) > 1
                 and games[m.pk] == len(models) - 1
                 and m.pk in question_answers,
@@ -101,6 +105,10 @@ def leaderboard():
                 if complete
                 else None,
                 "questions_complete": sum(row["complete"] for _, row in entries),
+                "answers_count": sum(row["answer"] is not None for _, row in entries),
+                "games": sum(row["games"] for _, row in entries),
+                "expected_games": len(questions) * max(len(models) - 1, 0),
+                **cost_summary(a for a in answers if a.model_id == model.pk),
             }
         )
     overall.sort(
@@ -116,5 +124,6 @@ def leaderboard():
         "expected_answers": len(models) * len(questions),
         "completed_comparisons": len(matches),
         "expected_comparisons": len(questions) * len(models) * (len(models) - 1) // 2,
+        "answer_costs": cost_summary(answers),
         "last_updated": max((m.completed_at for m in matches), default=None),
     }
