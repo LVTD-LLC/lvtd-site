@@ -26,7 +26,7 @@
     <p class="bench-muted">Weighted mean of per-question Elo. A model receives an overall score only after completing every matchup across all active questions.</p>
     {% include 'jev_benchmark/ranking_table.html' with rows=overall overall_table=True %}
     <p class="bench-footnote">Value v1 blends 70% Elo-derived quality with 30% affordability. Higher is better under this chosen tradeoff. <a href="#value-method">See the formula and limitations</a>. Mean cost uses the same question weights as Elo; unknown costs are never treated as free.</p>
-    <p class="bench-footnote">Costs are actual USD reported by OpenRouter for saved successful answers, including provider-reported reasoning usage. Zero means reported free; Unknown means no cost was reported. Partial sums show their coverage. These totals exclude failed/retried attempts and Jev charges, and are not an account invoice. Attempts absent from retained responses and backups remain unknown.</p>
+    <p class="bench-footnote">Costs are actual USD reported by OpenRouter for saved successful answers, including provider-reported reasoning usage. Zero means reported free; Unknown means no cost was reported. These totals exclude failed/retried attempts and Jev charges, and are not an account invoice. Attempts absent from retained responses and backups remain unknown.</p>
     {% if last_updated %}<p class="bench-footnote">Latest judgment: {{ last_updated|date:"M j, Y, H:i" }} UTC.</p>{% endif %}
   </section>
   {% include 'jev_benchmark/scatter.html' %}

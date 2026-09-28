@@ -1,7 +1,7 @@
 {% load l10n %}
 <section class="bench-section" aria-labelledby="value-chart-title">
   <h2 id="value-chart-title">Quality and cost, together</h2>
-  <p class="bench-muted">Higher is stronger in Jev's rankings. Further left is cheaper. Solid points mark models with no strictly better-or-equal Elo at a lower-or-equal cost in this dataset. Select a point for its values.</p>
+  <p class="bench-muted">Higher is stronger in Jev's rankings. Further left is cheaper. Solid points mark the observed frontier: no other model is at least as strong and at least as cheap, with one strict improvement. Select a point for its values.</p>
   {% if scatter.points %}
   <figure class="bench-chart">
     <svg viewBox="0 0 800 380" role="group" aria-label="Weighted Elo versus mean answer cost in USD">
