@@ -105,7 +105,13 @@ def generate(model, question, *, max_tokens=None):
             payload["max_tokens"], question.generation_max_tokens
         )
     if question.reasoning_effort:
-        payload["reasoning"] = {"effort": question.reasoning_effort}
+        # Mistral Medium 3.5 exposes high/none, not low. Preserve the
+        # requested question profile; audit the effective native minimum.
+        # https://docs.mistral.ai/studio/conversations/reasoning
+        effort = question.reasoning_effort
+        if model.openrouter_id == "mistralai/mistral-medium-3-5" and effort == "low":
+            effort = "none"
+        payload["reasoning"] = {"effort": effort}
     start = time.monotonic()
     data = post_json(
         "https://openrouter.ai/api/v1/chat/completions",
@@ -116,6 +122,12 @@ def generate(model, question, *, max_tokens=None):
     try:
         choice = data["choices"][0]
         content = choice["message"]["content"]
+        if choice.get("finish_reason") == "length":
+            raise ProviderError(
+                "Incomplete answer; reasoning/output exhausted token limit",
+                audit={**audit, "text": content if isinstance(content, str) else ""},
+                kind="truncated",
+            )
         if not isinstance(content, str) or not content.strip():
             raise ValueError
         if choice.get("finish_reason") != "stop":

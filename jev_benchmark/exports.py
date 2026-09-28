@@ -96,6 +96,11 @@ def public_dataset():
                 ),
             },
             "value": VALUE_METHOD,
+            "reasoning_compatibility": (
+                "Mistral Medium 3.5 maps requested low to native minimal (none). "
+                "Per-answer/attempt parameters record the effective request. "
+                "Other profiles are unchanged; providers need not use equal compute."
+            ),
             "cost": (
                 "Actual OpenRouter usage.cost in USD; null means unknown, zero "
                 "means reported free. Successful-answer costs exclude retries and "
@@ -261,7 +266,10 @@ Prompts, rubrics, output budgets, reasoning settings, actual answer text, return
 model identifiers, usage, costs, durations, timestamps, A/B ordering, winners,
 probabilities and stored judging instructions are in JSON. Reconstruct judge state
 from question prompt and answer_a_id/answer_b_id. Default provider sampling applies
-where no parameter was recorded. No tools or web access were supplied.
+where no parameter was recorded. Mistral Medium 3.5 maps a requested low
+profile to its supported minimal mode (effort none); the effective request is
+recorded per answer/attempt. Earlier failed low-effort calls remain in history.
+No tools or web access were supplied.
 
 Cost is actual provider-reported OpenRouter USD, not a current catalog estimate.
 Saved-answer costs exclude retries and judging; attempt costs include only retained

@@ -343,3 +343,12 @@ evidence, weight one, an 8,192-token ceiling and requested low reasoning effort
 (provider support varies). It does not change existing answers. With 29 models,
 this adds 58 answers and 812 comparisons; the existing durable worker picks them
 up. Production additions remain subject to the existing spending guard.
+
+Mistral Medium 3.5 low-effort compatibility: its documented native options are
+`high` and `none` (minimal). For requested low profiles only, the adapter sends
+`reasoning.effort=none`, recorded in each answer/attempt and displayed on the
+answer detail. Existing completed answers are never changed. This is a native
+minimum mapping, not a claim that all providers use identical reasoning budgets.
+Source: https://docs.mistral.ai/studio/conversations/reasoning . Reasoning-only
+responses with finish_reason=length are classified as truncated, retain actual
+costs, and require explicit retry instead of automatic repetition.

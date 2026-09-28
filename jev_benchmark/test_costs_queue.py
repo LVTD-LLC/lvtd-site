@@ -297,3 +297,40 @@ def test_worker_rejects_non_main_thread(watch):
         future = pool.submit(call_command, "work_jev_benchmark", watch=watch)
         with pytest.raises(CommandError, match="main thread"):
             future.result()
+
+
+def test_mistral_low_uses_documented_minimal_mode_without_changing_question():
+    from jev_benchmark.clients import generate
+
+    q, a, _ = sample()
+    q.reasoning_effort = "low"
+    q.save()
+    a.openrouter_id = "mistralai/mistral-medium-3-5"
+    a.save()
+    with patch(
+        "jev_benchmark.clients.post_json",
+        return_value={
+            "choices": [{"finish_reason": "stop", "message": {"content": "Answer"}}]
+        },
+    ):
+        result = generate(a, q)
+    assert result["request"]["reasoning"] == {"effort": "none"}
+    q.refresh_from_db()
+    assert q.reasoning_effort == "low"
+
+
+def test_reasoning_only_length_finish_is_truncated_not_invalid():
+    from jev_benchmark.clients import ProviderError, generate
+
+    q, a, _ = sample()
+    with patch(
+        "jev_benchmark.clients.post_json",
+        return_value={
+            "choices": [{"finish_reason": "length", "message": {"content": None}}],
+            "usage": {"cost": 0.01},
+        },
+    ):
+        with pytest.raises(ProviderError) as raised:
+            generate(a, q)
+    assert raised.value.kind == "truncated"
+    assert raised.value.audit["response"]["usage"]["cost"] == 0.01
