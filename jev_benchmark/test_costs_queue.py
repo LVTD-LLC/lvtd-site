@@ -239,3 +239,48 @@ def test_versioned_reasoning_settings_are_frozen_after_use():
     q.reasoning_effort = "low"
     with pytest.raises(ValidationError):
         q.save()
+
+
+def test_historical_snapshot_recovers_actual_retry_cost_without_changing_result(
+    tmp_path,
+):
+    import json
+
+    from django.core.management import call_command
+
+    from jev_benchmark.models import WorkAttempt
+
+    q, a, b = sample()
+    row = Answer.objects.create(
+        model=a,
+        question=q,
+        attempts=2,
+        status="complete",
+        text="preserved",
+        response={"id": "new", "usage": {"cost": 0.02}},
+    )
+    before = Answer.objects.values().get(pk=row.pk)
+    snapshot = tmp_path / "snapshot.json"
+    snapshot.write_text(
+        json.dumps(
+            [
+                {
+                    "model": "jev_benchmark.answer",
+                    "pk": row.pk,
+                    "fields": {
+                        "model": a.pk,
+                        "question": q.pk,
+                        "attempts": 1,
+                        "status": "failed",
+                        "response": {"id": "old", "usage": {"cost": 0.01}},
+                        "updated_at": timezone.now().isoformat(),
+                    },
+                }
+            ]
+        )
+    )
+    call_command("backfill_jev_costs", snapshot=[str(snapshot)])
+    call_command("backfill_jev_costs", snapshot=[str(snapshot)])
+    assert WorkAttempt.objects.count() == 2
+    assert WorkAttempt.objects.get(number=1).cost_usd == Decimal("0.01")
+    assert Answer.objects.values().get(pk=row.pk) == before

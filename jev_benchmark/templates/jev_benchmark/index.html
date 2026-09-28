@@ -35,7 +35,7 @@
       </table>
     </div>
     {% else %}<p class="bench-empty">The first benchmark is being prepared. Rankings will appear here as answers are collected and judged.</p>{% endif %}
-    <p class="bench-footnote">Costs are actual USD reported by OpenRouter for saved successful answers, including provider-reported reasoning usage. Zero means reported free; Unknown means no cost was reported. Partial sums show their coverage. These totals exclude failed/retried attempts and Jev charges, and are not an account invoice. Historical overwritten attempts cannot be reconstructed.</p>
+    <p class="bench-footnote">Costs are actual USD reported by OpenRouter for saved successful answers, including provider-reported reasoning usage. Zero means reported free; Unknown means no cost was reported. Partial sums show their coverage. These totals exclude failed/retried attempts and Jev charges, and are not an account invoice. Attempts absent from retained responses and backups remain unknown.</p>
     {% if last_updated %}<p class="bench-footnote">Latest judgment: {{ last_updated|date:"M j, Y, H:i" }} UTC.</p>{% endif %}
   </section>
   <section class="bench-section" aria-labelledby="questions-title">

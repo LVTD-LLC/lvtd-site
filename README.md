@@ -298,6 +298,8 @@ has an arbitrary baseline).
 `WorkAttempt` retains every future attempt's provider-reported USD, including
 failed responses when a cost is supplied, separately from the successful-answer
 comparison. The idempotent backfill snapshots retained historical responses only;
-earlier overwritten attempts are unknown, not zero. OpenRouter account usage may
+trusted same-database dumpdata snapshots can recover older actual responses via
+`--snapshot PATH` (repeatable). Unrecorded attempts remain unknown, not zero.
+Provider generation IDs are deduplicated, and conflicting evidence is rejected. OpenRouter account usage may
 therefore exceed the sum of public costs. No historical cost is inferred from
 current price lists. Jev token usage is retained, but no USD price is invented.
