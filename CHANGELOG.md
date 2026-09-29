@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-09-29
+
+### Removed
+
+- Remove this repository's ReviewGate PR-review GitHub Actions workflow; retain application CI and deployment workflows.
+
+
 ## 2026-09-29 - Jev value-score reader guide
 
 - Expand Value v1 into a dedicated article section with the exact 70/30 formula, a source-checked Elo/cost/value comparison, and guidance for choosing or recalculating a personal tradeoff.
