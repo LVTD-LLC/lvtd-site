@@ -674,3 +674,31 @@ class JevArticleTests(TestCase):
             self.client.get("/"), 'name="twitter:card" content="summary"'
         )
         self.assertNotContains(self.client.get("/"), "jev-ai-model-benchmark-og.png")
+
+    def test_reader_rewrite_metadata_preserves_independent_edits(self):
+        from importlib import import_module
+        from types import SimpleNamespace
+
+        from django.apps import apps
+
+        migration = import_module("website.migrations.0006_jev_reader_first")
+        editor = SimpleNamespace(connection=SimpleNamespace(alias="default"))
+        post = BlogPost.objects.get(slug=migration.SLUG)
+        post.title = "An independently edited title"
+        post.summary = migration.OLD_SUMMARY
+        post.save()
+        migration.rewrite_metadata(apps, editor)
+        post.refresh_from_db()
+        self.assertEqual(post.title, "An independently edited title")
+        self.assertEqual(post.summary, migration.NEW_SUMMARY)
+        post.title = migration.OLD_TITLE
+        post.summary = "An independently edited summary"
+        post.save()
+        migration.rewrite_metadata(apps, editor)
+        post.refresh_from_db()
+        self.assertEqual(post.title, migration.NEW_TITLE)
+        self.assertEqual(post.summary, "An independently edited summary")
+        migration.reverse_metadata(apps, editor)
+        post.refresh_from_db()
+        self.assertEqual(post.title, migration.OLD_TITLE)
+        self.assertEqual(post.summary, "An independently edited summary")

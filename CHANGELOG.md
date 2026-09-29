@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-29 - Reader-first Jev model guide
+
+- Rewrite the benchmark article around overall, task-specific, and value winners, with methodology after the reader shortlist.
+- Add four data graphics: overall Elo, six task winners, stacked value contributions, and saved-answer costs; animate bars once on entry with reduced-motion and no-JavaScript fallbacks.
+- Replace revision-history metadata and inbound copy while preserving the article URL, OG image, and independently edited metadata.
+
 ## 2026-09-29
 
 ### Removed
