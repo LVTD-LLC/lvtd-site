@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-28 - Expanded Jev study and social preview
+
+- Update the article to the completed six-question, 2,436-comparison snapshot, revised leaders, practical-task findings, costs, value-score explanation, and data provenance.
+- Add an article-specific social image and Open Graph/Twitter large-image metadata while retaining the default branding for other pages.
+- Refresh the summary and benchmark inbound link without overwriting intervening editorial summary changes.
+
 ## 2026-09-28 — Native reasoning compatibility
 
 - Map requested low effort to Mistral Medium 3.5's documented minimal mode, with effective request settings visible in answer details and public data.
