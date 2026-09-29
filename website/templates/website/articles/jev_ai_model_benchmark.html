@@ -22,7 +22,7 @@
   <dl><div><dt>Models</dt><dd>29</dd></div><div><dt>Questions</dt><dd>6</dd></div><div><dt>Saved answers</dt><dd>174</dd></div><div><dt>Pairs judged</dt><dd>2,436</dd></div></dl>
   <p>All answers and comparisons complete. Latest judgment: 17:58 UTC. This update replaces the original four-question snapshot. Figures below describe this snapshot; the <a href="{% url 'jev-benchmark' %}">live leaderboard</a> can change.</p>
 </aside>
-<nav class="jev-toc" aria-label="In this article"><strong>In this article</strong><ul><li><a href="#setup">How we built the benchmark</a></li><li><a href="#results">What stood out</a></li><li><a href="#costs">What the answers cost</a></li><li><a href="#limits">How to read the rankings</a></li></ul></nav>
+<nav class="jev-toc" aria-label="In this article"><strong>In this article</strong><ul><li><a href="#setup">How we built the benchmark</a></li><li><a href="#results">What stood out</a></li><li><a href="#costs">What the answers cost</a></li><li><a href="#value">Balancing Elo and cost</a></li><li><a href="#limits">How to read the rankings</a></li></ul></nav>
 <h2 id="setup">How we used Jev to benchmark AI models</h2>
 <p>The original idea was small: ten models, three questions, and one comparison for every pair of answers. The completed run now includes 29 models and six questions: the original writing, programming, mathematics, and personal-advice prompts, plus two practical workplace tasks.</p>
 <p>We chose tasks with enough constraints to make a polished but incomplete answer distinguishable from a useful one. Each question has its own rubric, so the judge gets more guidance than "pick whichever sounds better."</p>
@@ -69,7 +69,32 @@
 <h2 id="costs">The cheaper answers were worth a closer look</h2>
 <p>The cost column adds another useful dimension. OpenRouter reported <strong>$0.01715819 for MiMo-V2.6-Flash's six saved answers</strong>, compared with <strong>$1.35776 for Claude Fable 5.1's six saved answers</strong>. Flash placed first overall; Fable placed second. For these saved responses, Fable's total was about 79 times higher.</p>
 <p>That is enough to make Flash worth testing on a relevant workload. It is not enough to call it 79 times better value in production. These totals depend on the prompts, generated output, reasoning usage, and provider pricing for this run. They exclude failed or retried attempts and Jev's judging charges. They are not the experiment's full bill.</p>
-<p>The explorer now shows a <strong>weighted mean cost per answer</strong> beside the overall ranking, rather than the sum used above: about $0.00286 for Flash and $0.22629 for Fable. It also offers a Value v1 score, a chosen 70% quality / 30% affordability blend using transformed Elo and cost, with 1,500 Elo and $0.01 reference points. Flash scores 76.5 and Fable 53.2. This is our stated tradeoff, not an accuracy score, a return-on-investment calculation, or a universal definition of value. Free-tier prices can also change.</p>
+<p>The explorer shows a <strong>weighted mean cost per answer</strong> beside the overall ranking, rather than the six-answer sum used above. With six equally weighted questions, that is the total divided by six.</p>
+<h2 id="value">Value v1: weigh Elo against cost</h2>
+<p>A model can rank highly and still be too expensive for your workload. We added <strong>Value v1</strong> to make that tradeoff explicit: a score on a 0-100 scale combining <strong>70% quality and 30% affordability</strong>. Here, "quality" means transformed Jev-preference Elo, not independently verified correctness. Higher Elo raises the score; higher answer cost lowers it.</p>
+<p>We first put Elo and cost on comparable scales, then combine them:</p>
+<ul>
+<li><strong>Quality component:</strong> <code>Q = 1 / (1 + 10^((1500 - Elo) / 400))</code>. At 1,500 Elo, Q is 0.5.</li>
+<li><strong>Affordability component:</strong> <code>A = 1 / (1 + cost / 0.01)</code>. Cost is the weighted mean USD per saved answer. At $0.01, A is 0.5; at a reported $0, it is 1.</li>
+<li><strong>Combined score:</strong> <code>Value v1 = 100 &times; (0.7 &times; Q + 0.3 &times; A)</code>. A model at both reference points scores 50.</li>
+</ul>
+<p>The table keeps the inputs visible so you can disagree with the weighting. These are four illustrative models from the same September 28 snapshot, not the top four by value. Scores use unrounded inputs; displayed figures are rounded.</p>
+<div class="jev-table-wrap" tabindex="0" role="region" aria-label="Selected models: Elo, cost and Value v1">
+<table><caption>Selected models: preference, cost, and the resulting tradeoff</caption><thead><tr><th scope="col">Model</th><th scope="col">Elo</th><th scope="col">USD / answer</th><th scope="col">Value v1</th></tr></thead><tbody>
+<tr><th scope="row">MiMo-V2.6-Flash</th><td>1,699.3</td><td>$0.00286</td><td>76.5</td></tr>
+<tr><th scope="row">Muse Spark 1.3 Contributor</th><td>1,587.6</td><td>$0.00116</td><td>70.5</td></tr>
+<tr><th scope="row">MiMo V2.6 Pro</th><td>1,681.2</td><td>$0.01055</td><td>66.4</td></tr>
+<tr><th scope="row">Claude Fable 5.1</th><td>1,682.8</td><td>$0.22629</td><td>53.2</td></tr>
+</tbody></table></div>
+<p>Muse Spark illustrates why this differs from sorting by Elo alone: its lower saved-answer cost lifts its Value v1 score above MiMo Pro and Fable despite a lower preference rating. That is the formula expressing our chosen tradeoff, not evidence that Muse is the better model for every job.</p>
+<h3>Use the score as a shortlist, not a verdict</h3>
+<ul>
+<li><strong>If answer quality matters most:</strong> start with Elo for the task closest to yours, then inspect and validate the answers. A cost saving is irrelevant if the output fails your requirements.</li>
+<li><strong>If you have a strict budget:</strong> compare cost among models whose answers meet your needs. The overall average can hide a more expensive task.</li>
+<li><strong>If you want our default balance:</strong> sort the <a href="{% url 'jev-benchmark' %}">live explorer</a> by Value v1 and inspect its cost-versus-Elo plot. Both original inputs remain visible.</li>
+<li><strong>If you prefer different weights:</strong> download the <a href="{% url 'jev-data' %}">JSON data</a> and recalculate <code>100 &times; (w &times; Q + (1 - w) &times; A)</code>, choosing w between 0 and 1. For example, w = 0.9 gives quality 90% and affordability 10%. The published Value v1 stays fixed at 70/30; this is your own alternative, not a setting in the explorer.</li>
+</ul>
+<p>Only complete results with known saved-answer costs receive a score; missing cost is not treated as free. Reported free-tier prices may be temporary. Costs still exclude retries and judge charges, and the score does not measure latency, reliability, accuracy, or return on investment. The weights and reference points are explicit choices, not a universal definition of value. The <a href="{% url 'jev-methodology' %}">methodology</a> documents them so you can reproduce or replace the calculation.</p>
 <p>Generation settings were not identical budgets across models either. The app records the requested output allowance on each answer, and some truncated attempts needed a higher allowance before producing a complete answer. The two new prompts requested low reasoning with an initial 8,192-token cap; Mistral maps that to its supported minimal mode, recorded as effort <code>none</code>. Explicit truncation retries can exceed the initial cap. Other sampling parameters use provider defaults. We therefore describe these as the results of our configured workflow, not a controlled equal-compute comparison.</p>
 <h2 id="limits">How to read the Elo rankings without overreading them</h2>
 <p>Elo turns a sequence of head-to-head wins and losses into a relative rating. Here, each model starts each question at 1,500. Every saved match is replayed once with K = 32, which controls the size of rating updates. The overall score is the weighted arithmetic mean of completed per-question ratings.</p>
