@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-09-29 - Jev value-score reader guide
+
+- Expand Value v1 into a dedicated article section with the exact 70/30 formula, a source-checked Elo/cost/value comparison, and guidance for choosing or recalculating a personal tradeoff.
+
 ## 2026-09-28 - Expanded Jev study and social preview
 
 - Update the article to the completed six-question, 2,436-comparison snapshot, revised leaders, practical-task findings, costs, value-score explanation, and data provenance.
