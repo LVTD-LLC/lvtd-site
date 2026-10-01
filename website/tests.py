@@ -98,7 +98,7 @@ class ProjectsPageTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "<h1", count=1)
         self.assertContains(response, "<strong>ReviewGate</strong>", count=1)
-        self.assertContains(response, 'class="project-card-slot"', count=18)
+        self.assertContains(response, 'class="project-card-slot"', count=24)
         self.assertContains(
             response,
             '<link rel="canonical" href="https://lvtd.test/projects/" />',
@@ -121,7 +121,13 @@ class ProjectsPageTests(TestCase):
             "LevReview",
             "AI Steering",
             "Tech Job Alerts",
-            "Is it Keto",
+            "Is It Keto",
+            "TastefulKit",
+            "nitpick",
+            "Built with Rust",
+            "Built with Bend",
+            "LVTD Games",
+            "Jev Benchmark",
             "OSIG",
             "StatusHen",
             "TuxSEO",
@@ -134,10 +140,10 @@ class ProjectsPageTests(TestCase):
         self.assertContains(response, "https://github.com/LVTD-LLC")
         self.assertContains(response, "https://github.com/LVTD-LLC/tuxseo")
         self.assertContains(response, "https://github.com/LVTD-LLC/osig")
-        self.assertContains(response, "https://reviewgate.lvtd.dev/")
+        self.assertContains(response, "https://github.com/LVTD-LLC/reviewgate")
         self.assertNotContains(response, "https://osig.app?ref=lvtd.dev")
         self.assertNotContains(response, "https://statushen.com")
-        self.assertNotContains(response, "https://isitketo.org")
+        self.assertContains(response, "https://isitketo.org/")
 
 
 class CanonicalRedirectTests(TestCase):

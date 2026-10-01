@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-01 - Current project portfolio
+
+- Add TastefulKit, nitpick, Built with Rust, Built with Bend, LVTD Games, and Jev Benchmark to the active projects page.
+- Restore Is It Keto as an active project with its live website link; move ReviewGate to the archive with its public repository link.
+- Feature TastefulKit instead of ReviewGate in the homepage studio summary.
+
 ## 2026-09-29 - Reader-first Jev model guide
 
 - Rewrite the benchmark article around overall, task-specific, and value winners, with methodology after the reader shortlist.
