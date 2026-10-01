@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-01 - Project links and website credits
+
+- Add explicit website and verified public repository links throughout the catalog; switch PGSandbox to pgsandbox.dev.
+- Remove the retired Skills listing and move Ask HN Digest and LevReview to the archive.
+- Add rasulkireev.com and Meliora Advisory with explicit website-only credits; retain the new product listings.
+
 ## 2026-10-01 - Current project portfolio
 
 - Add TastefulKit, nitpick, Built with Rust, Built with Bend, LVTD Games, and Jev Benchmark to the active projects page.

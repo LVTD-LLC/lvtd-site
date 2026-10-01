@@ -98,7 +98,7 @@ class ProjectsPageTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "<h1", count=1)
         self.assertContains(response, "<strong>ReviewGate</strong>", count=1)
-        self.assertContains(response, 'class="project-card-slot"', count=24)
+        self.assertContains(response, 'class="project-card-slot"', count=25)
         self.assertContains(
             response,
             '<link rel="canonical" href="https://lvtd.test/projects/" />',
@@ -111,7 +111,6 @@ class ProjectsPageTests(TestCase):
             "PGSandbox",
             "ReviewGate",
             "CiteGuild",
-            "Skills",
             "Djass",
             "Awesome",
             "Ask HN Digest",
@@ -128,17 +127,31 @@ class ProjectsPageTests(TestCase):
             "Built with Bend",
             "LVTD Games",
             "Jev Benchmark",
+            "rasulkireev.com",
+            "Meliora Advisory",
             "OSIG",
             "StatusHen",
             "TuxSEO",
         ):
             self.assertContains(response, project_name)
 
+        active, archived = content.split('id="active"', 1)[1].split('id="archive"', 1)
+        for name in ("Ask HN Digest", "LevReview", "ReviewGate"):
+            self.assertNotIn(f"<strong>{name}</strong>", active)
+            self.assertIn(f"<strong>{name}</strong>", archived)
+        self.assertIn("<strong>Is It Keto</strong>", active)
+        self.assertNotContains(response, "https://skills.lvtd.dev")
+        self.assertContains(response, "https://pgsandbox.dev/")
+        self.assertNotContains(response, "https://pgsandbox-mcp.lvtd.dev/")
+        self.assertContains(response, "https://github.com/LVTD-LLC/pgsandbox")
+        self.assertContains(response, "https://github.com/rasulkireev/apw")
+        self.assertContains(response, "Website build only", count=2)
+        self.assertContains(response, "LVTD does not own or operate the business.")
         self.assertNotContains(response, "FileBridge")
         self.assertNotContains(response, "https://filebridge.lvtd.dev")
         self.assertNotContains(response, "Cleanapp")
         self.assertContains(response, "https://github.com/LVTD-LLC")
-        self.assertContains(response, "https://github.com/LVTD-LLC/tuxseo")
+        self.assertContains(response, "https://github.com/LVTD-LLC/TuxSEO")
         self.assertContains(response, "https://github.com/LVTD-LLC/osig")
         self.assertContains(response, "https://github.com/LVTD-LLC/reviewgate")
         self.assertNotContains(response, "https://osig.app?ref=lvtd.dev")
