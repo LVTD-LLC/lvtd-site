@@ -7,6 +7,7 @@ urlpatterns = [
     path("robots.txt", views.robots_txt, name="robots"),
     path("sitemap.xml", views.sitemap_xml, name="sitemap"),
     path("", views.HomePageView.as_view(), name="home"),
+    path("projects/", views.ProjectsView.as_view(), name="projects"),
     path("ai-steering", views.AISteeringView.as_view(), name="ai-steering"),
     path(
         "ai-steering/",

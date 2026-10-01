@@ -75,8 +75,9 @@ This file explains where things belong in `lvtd-site`.
 
 - `base.html` owns the document shell, metadata defaults, navigation, theme
   toggle, Plausible script, footer, and block definitions.
-- `home.html` owns the main LVTD homepage, project proof, service offer cards,
+- `home.html` owns the main LVTD homepage, service offer cards,
   process, writing preview, and closing CTA.
+- `projects.html` owns the active project catalog and archive of earlier work.
 - `hosted_openclaw.html` owns the service detail page for Hosted OpenClaw.
 - `blog_list.html` and `blog_detail.html` own public writing pages.
 - `terms.html` and `privacy.html` own legal copy.
