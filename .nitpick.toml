@@ -1,0 +1,13 @@
+# Review source files; Tailwind output is regenerated with npm run build:css.
+model = "stealth/space-bunny-alpha"
+fail_on = "high"
+ignore = ["**/*.lock", "**/*.snap", "**/generated/**", "static/css/app.css"]
+
+instructions = """
+This is a server-rendered Django site with Tailwind CSS.
+Follow AGENTS.md and the repository steering files.
+Check routing, canonical URLs, sitemap coverage, accessibility, responsive
+layout, and preservation of existing project links and service flows.
+CSS source lives in assets/css/app.css; static/css/app.css is generated.
+Do not request tests that only mirror low-impact styling changes.
+"""
