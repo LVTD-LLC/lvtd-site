@@ -28,46 +28,13 @@ class HomePageTests(TestCase):
         self.assertContains(response, "$5,000")
         self.assertContains(response, "Reserve your MVP")
         self.assertContains(response, "Reserve OpenClaw setup")
-        self.assertContains(response, "Products we have shipped.")
-        self.assertContains(response, "Active projects")
-        self.assertContains(response, "Archived projects")
+        self.assertContains(response, reverse("projects"))
+        self.assertNotContains(response, 'class="project-card')
+        self.assertNotContains(response, 'href="#work"')
         self.assertContains(response, "Have an MVP in mind?")
         self.assertNotContains(response, "data-uidotsh-pick")
         self.assertNotContains(response, "data-uidotsh-option")
         self.assertNotContains(response, "https://ui.sh/ui-picker.js")
-
-        for project_name in (
-            "Rowset",
-            "PGSandbox",
-            "ReviewGate",
-            "CiteGuild",
-            "Skills",
-            "Djass",
-            "Awesome",
-            "Ask HN Digest",
-            "PageFresh",
-            "Talent Leads",
-            "Built with Django",
-            "LevReview",
-            "ReviewGate",
-            "Tech Job Alerts",
-            "Is it Keto",
-            "OSIG",
-            "StatusHen",
-            "TuxSEO",
-        ):
-            self.assertContains(response, project_name)
-
-        self.assertNotContains(response, "FileBridge")
-        self.assertNotContains(response, "https://filebridge.lvtd.dev")
-        self.assertNotContains(response, "Cleanapp")
-        self.assertContains(response, "https://github.com/LVTD-LLC")
-        self.assertContains(response, "https://github.com/LVTD-LLC/tuxseo")
-        self.assertContains(response, "https://github.com/LVTD-LLC/osig")
-        self.assertContains(response, "https://reviewgate.lvtd.dev/")
-        self.assertNotContains(response, "https://osig.app?ref=lvtd.dev")
-        self.assertNotContains(response, "https://statushen.com")
-        self.assertNotContains(response, "https://isitketo.org")
 
     def test_homepage_has_hosted_openclaw_actions(self) -> None:
         client = Client()
@@ -122,6 +89,55 @@ class HomePageTests(TestCase):
         self.assertContains(response, 'name="twitter:card"')
         self.assertContains(response, 'type="application/ld+json"')
         self.assertContains(response, '"logo": "https://lvtd.test/static/')
+
+
+class ProjectsPageTests(TestCase):
+    @override_settings(SITE_URL="https://lvtd.test")
+    def test_projects_catalog(self) -> None:
+        response = self.client.get(reverse("projects"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "<h1", count=1)
+        self.assertContains(response, "<strong>ReviewGate</strong>", count=1)
+        self.assertContains(response, 'class="project-card-slot"', count=18)
+        self.assertContains(
+            response,
+            '<link rel="canonical" href="https://lvtd.test/projects/" />',
+            html=True,
+        )
+        content = response.content.decode()
+        self.assertLess(content.index('id="active"'), content.index('id="archive"'))
+        for project_name in (
+            "Rowset",
+            "PGSandbox",
+            "ReviewGate",
+            "CiteGuild",
+            "Skills",
+            "Djass",
+            "Awesome",
+            "Ask HN Digest",
+            "PageFresh",
+            "Talent Leads",
+            "Built with Django",
+            "LevReview",
+            "AI Steering",
+            "Tech Job Alerts",
+            "Is it Keto",
+            "OSIG",
+            "StatusHen",
+            "TuxSEO",
+        ):
+            self.assertContains(response, project_name)
+
+        self.assertNotContains(response, "FileBridge")
+        self.assertNotContains(response, "https://filebridge.lvtd.dev")
+        self.assertNotContains(response, "Cleanapp")
+        self.assertContains(response, "https://github.com/LVTD-LLC")
+        self.assertContains(response, "https://github.com/LVTD-LLC/tuxseo")
+        self.assertContains(response, "https://github.com/LVTD-LLC/osig")
+        self.assertContains(response, "https://reviewgate.lvtd.dev/")
+        self.assertNotContains(response, "https://osig.app?ref=lvtd.dev")
+        self.assertNotContains(response, "https://statushen.com")
+        self.assertNotContains(response, "https://isitketo.org")
 
 
 class CanonicalRedirectTests(TestCase):
@@ -248,6 +264,7 @@ class CrawlEndpointTests(TestCase):
         self.assertIn("<loc>https://lvtd.test/</loc>", content)
         self.assertIn("<lastmod>2026-06-12</lastmod>", content)
         self.assertIn("<loc>https://lvtd.test/blog/</loc>", content)
+        self.assertIn("<loc>https://lvtd.test/projects/</loc>", content)
         self.assertIn("<loc>https://lvtd.test/services/hosted-openclaw/</loc>", content)
         self.assertIn("<loc>https://lvtd.test/tos/</loc>", content)
         self.assertIn("<loc>https://lvtd.test/privacy/</loc>", content)
@@ -588,7 +605,7 @@ class AISteeringTests(TestCase):
 
     @override_settings(SITE_URL="https://lvtd.test")
     def test_catalog_is_discoverable(self):
-        self.assertContains(self.client.get(reverse("home")), 'href="/ai-steering"')
+        self.assertContains(self.client.get(reverse("projects")), 'href="/ai-steering"')
         self.assertContains(
             self.client.get(reverse("sitemap")),
             "<loc>https://lvtd.test/ai-steering</loc>",

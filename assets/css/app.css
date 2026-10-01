@@ -467,6 +467,40 @@
     line-height: 1.62;
   }
 
+  .projects-intro {
+    display: grid;
+    justify-items: start;
+    gap: 1.25rem;
+    max-width: 52rem;
+    padding-block: clamp(1rem, 4vw, 3rem);
+  }
+
+  .projects-intro .btn {
+    gap: 0.5rem;
+  }
+
+  .projects-intro .hero-title {
+    margin: 0;
+  }
+
+  .projects-catalog .project-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .projects-catalog .project-card-slot {
+    grid-column: auto;
+  }
+
+  .projects-catalog .project-group {
+    scroll-margin-top: 2rem;
+  }
+
+  @media (max-width: 640px) {
+    .projects-catalog .project-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
   .project-group {
     display: grid;
     gap: 1rem;
@@ -485,7 +519,7 @@
     gap: 1.25rem;
   }
 
-  .project-group-head h3 {
+  .project-group-head h2 {
     color: var(--lvtd-ink);
     font-size: clamp(1.35rem, 2vw, 1.9rem);
     font-weight: 780;

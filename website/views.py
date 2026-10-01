@@ -41,6 +41,7 @@ def sitemap_xml(request: HttpRequest) -> HttpResponse:
 
     static_urls = [
         (reverse("home"), settings.SITE_LASTMOD, "weekly", "1.0"),
+        (reverse("projects"), settings.SITE_LASTMOD, "monthly", "0.8"),
         (reverse("blog-list"), settings.SITE_LASTMOD, "weekly", "0.7"),
         (reverse("ai-steering"), settings.SITE_LASTMOD, "monthly", "0.7"),
         (reverse("jev-benchmark"), settings.SITE_LASTMOD, "weekly", "0.7"),
@@ -86,6 +87,10 @@ class HomePageView(TemplateView):
         )
         context["latest_blog_posts"] = BlogPost.objects.filter(is_published=True)[:3]
         return context
+
+
+class ProjectsView(TemplateView):
+    template_name = "website/projects.html"
 
 
 class AISteeringView(TemplateView):
