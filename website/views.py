@@ -42,6 +42,7 @@ def sitemap_xml(request: HttpRequest) -> HttpResponse:
     static_urls = [
         (reverse("home"), settings.SITE_LASTMOD, "weekly", "1.0"),
         (reverse("projects"), settings.SITE_LASTMOD, "monthly", "0.8"),
+        (reverse("research"), settings.SITE_LASTMOD, "monthly", "0.7"),
         (reverse("blog-list"), settings.SITE_LASTMOD, "weekly", "0.7"),
         (reverse("ai-steering"), settings.SITE_LASTMOD, "monthly", "0.7"),
         (reverse("jev-benchmark"), settings.SITE_LASTMOD, "weekly", "0.7"),
@@ -89,8 +90,24 @@ class HomePageView(TemplateView):
         return context
 
 
-class ProjectsView(TemplateView):
+class PortfolioView(TemplateView):
+    def get_context_data(self, **kwargs: object) -> dict[str, object]:
+        context = super().get_context_data(**kwargs)
+        catalog_path = Path(__file__).parent / "data" / "portfolio.json"
+        entries = json.loads(catalog_path.read_text())
+        for section in ("active", "archive", "research"):
+            context[f"{section}_entries"] = [
+                entry for entry in entries if entry["section"] == section
+            ]
+        return context
+
+
+class ProjectsView(PortfolioView):
     template_name = "website/projects.html"
+
+
+class ResearchView(PortfolioView):
+    template_name = "website/research.html"
 
 
 class AISteeringView(TemplateView):

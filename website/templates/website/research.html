@@ -1,0 +1,25 @@
+{% extends "website/base.html" %}
+{% block title %}Research - LVTD{% endblock %}
+{% block description %}LVTD research and experiments: explore the Jev AI model benchmark and practical AI steering guidance, with results and source code.{% endblock %}
+{% block og_title %}Research - LVTD{% endblock %}
+{% block og_description %}Benchmarks, experiments, and practical guidance for working with AI.{% endblock %}
+{% block twitter_title %}Research - LVTD{% endblock %}
+{% block twitter_description %}Benchmarks, experiments, and practical guidance for working with AI.{% endblock %}
+{% block content %}
+  <section class="catalog-intro" aria-labelledby="research-heading">
+    <a class="text-link" href="{% url 'home' %}">&larr; LVTD</a>
+    <h1 id="research-heading">Research.</h1>
+    <p>Experiments and reference work from the studio. Explore the findings, inspect the methods, and use the source.</p>
+    <nav class="catalog-nav" aria-label="Browse our work">
+      <a href="{% url 'projects' %}">&larr; Projects</a>
+      <a href="{% url 'research' %}" aria-current="page">Research</a>
+    </nav>
+  </section>
+  <section class="catalog-section" aria-labelledby="research-table-heading">
+    <div class="catalog-section-head">
+      <h2 id="research-table-heading">Studies &amp; references</h2>
+      <span>{{ research_entries|length }} entries</span>
+    </div>
+    {% include "website/includes/portfolio_table.html" with entries=research_entries show_logos=False table_id="research-table" caption="Research and references" only %}
+  </section>
+{% endblock %}

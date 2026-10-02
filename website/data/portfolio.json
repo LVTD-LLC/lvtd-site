@@ -1,0 +1,405 @@
+[
+  {
+    "name": "TastefulKit",
+    "description": "Discover real landing pages, UI components, libraries, and AI skills for you and your coding agent.",
+    "category": "Design reference library",
+    "links": [
+      {
+        "label": "Website",
+        "url": "https://tastefulkit.com/?ref=lvtd.dev&utm_source=lvtd.dev"
+      },
+      {
+        "label": "Repository",
+        "url": "https://github.com/LVTD-LLC/tastefulkit"
+      }
+    ],
+    "logo": "images/projects/tastefulkit.svg",
+    "section": "active"
+  },
+  {
+    "name": "nitpick",
+    "description": "Get a second model to review your diff and surrounding code, with structured findings your agent can fix.",
+    "category": "AI code review CLI",
+    "links": [
+      {
+        "label": "Website",
+        "url": "https://nitpick.sh/?ref=lvtd.dev&utm_source=lvtd.dev"
+      },
+      {
+        "label": "Repository",
+        "url": "https://github.com/LVTD-LLC/nitpick"
+      }
+    ],
+    "logo": "images/projects/nitpick.png",
+    "section": "active"
+  },
+  {
+    "name": "Built with Rust",
+    "description": "Explore websites, apps, and tools built with Rust, in a directory itself built with Rust.",
+    "category": "Rust project directory",
+    "links": [
+      {
+        "label": "Website",
+        "url": "https://builtwithrust.com/?ref=lvtd.dev&utm_source=lvtd.dev"
+      },
+      {
+        "label": "Repository",
+        "url": "https://github.com/LVTD-LLC/builtwithrust"
+      }
+    ],
+    "logo": "images/projects/built-with-rust.svg",
+    "section": "active"
+  },
+  {
+    "name": "Built with Bend",
+    "description": "A human-reviewed collection of apps, games, tools, and experiments built with Bend 2.",
+    "category": "Bend project directory",
+    "links": [
+      {
+        "label": "Website",
+        "url": "https://builtwithbend.com/?ref=lvtd.dev&utm_source=lvtd.dev"
+      },
+      {
+        "label": "Repository",
+        "url": "https://github.com/LVTD-LLC/built-with-bend"
+      }
+    ],
+    "logo": "images/projects/built-with-bend.svg",
+    "section": "active"
+  },
+  {
+    "name": "LVTD Games",
+    "description": "Small, independently built browser games. Pick a game and play.",
+    "category": "Browser game collection",
+    "links": [
+      {
+        "label": "Website",
+        "url": "https://games.lvtd.dev/?ref=lvtd.dev&utm_source=lvtd.dev"
+      },
+      {
+        "label": "Repository",
+        "url": "https://github.com/LVTD-LLC/games"
+      }
+    ],
+    "logo": "images/projects/lvtd-games.svg",
+    "section": "active"
+  },
+  {
+    "name": "Jev Benchmark",
+    "description": "Compare AI answers judged head to head by Jev, with rankings, answer costs, and individual decisions.",
+    "category": "AI model benchmark",
+    "links": [
+      {
+        "label": "Website",
+        "route": "jev-benchmark"
+      },
+      {
+        "label": "Repository",
+        "url": "https://github.com/LVTD-LLC/lvtd-site"
+      }
+    ],
+    "section": "research"
+  },
+  {
+    "name": "Rowset",
+    "description": "Private MCP and REST backend for agent-managed datasets, row updates, exports, and previews.",
+    "category": "Agent dataset product",
+    "links": [
+      {
+        "label": "Website",
+        "url": "https://rowset.lvtd.dev/?ref=lvtd.dev&utm_source=lvtd.dev"
+      },
+      {
+        "label": "Repository",
+        "url": "https://github.com/LVTD-LLC/rowset"
+      }
+    ],
+    "logo": "images/projects/rowset.png",
+    "section": "active"
+  },
+  {
+    "name": "PGSandbox",
+    "description": "Agent-facing MCP server for disposable Postgres sandboxes with TTLs and cleanup built in.",
+    "category": "Alpha / developer infrastructure",
+    "links": [
+      {
+        "label": "Website",
+        "url": "https://pgsandbox.dev/?ref=lvtd.dev&utm_source=lvtd.dev"
+      },
+      {
+        "label": "Repository",
+        "url": "https://github.com/LVTD-LLC/pgsandbox"
+      }
+    ],
+    "logo": "images/projects/pgsandbox.svg",
+    "section": "active"
+  },
+  {
+    "name": "CiteGuild",
+    "description": "A searchable network of member articles that helps AI content agents discover relevant sources to cite.",
+    "category": "Editorial source network",
+    "links": [
+      {
+        "label": "Website",
+        "url": "https://citeguild.dev/?ref=lvtd.dev&utm_source=lvtd.dev"
+      },
+      {
+        "label": "Repository",
+        "url": "https://github.com/LVTD-LLC/citeguild"
+      }
+    ],
+    "logo": "images/projects/citeguild.svg",
+    "section": "active"
+  },
+  {
+    "name": "AI Steering",
+    "description": "Choose the right context files for coding agents, with practical guidance, references, and examples.",
+    "category": "Repository context library",
+    "links": [
+      {
+        "label": "Website",
+        "route": "ai-steering"
+      },
+      {
+        "label": "Repository",
+        "url": "https://github.com/LVTD-LLC/ai-steering"
+      }
+    ],
+    "section": "research"
+  },
+  {
+    "name": "Djass",
+    "description": "Generate production-ready Django SaaS codebases with deployment paths and agent instructions.",
+    "category": "Django SaaS generator",
+    "links": [
+      {
+        "label": "Website",
+        "url": "https://djass.dev/?ref=lvtd.dev&utm_source=lvtd.dev"
+      },
+      {
+        "label": "Agent skills",
+        "url": "https://github.com/LVTD-LLC/djass-skills"
+      }
+    ],
+    "logo": "images/projects/djass.svg",
+    "section": "active"
+  },
+  {
+    "name": "Awesome",
+    "description": "Search and monitor repositories discovered across curated awesome lists.",
+    "category": "Repository discovery",
+    "links": [
+      {
+        "label": "Website",
+        "url": "https://awesome.lvtd.dev/?ref=lvtd.dev&utm_source=lvtd.dev"
+      },
+      {
+        "label": "Repository",
+        "url": "https://github.com/LVTD-LLC/awesome"
+      }
+    ],
+    "logo": "images/projects/awesome.svg",
+    "section": "active"
+  },
+  {
+    "name": "PageFresh",
+    "description": "Scheduled page review reminders for every sitemap, sent as practical email digests.",
+    "category": "Website maintenance",
+    "links": [
+      {
+        "label": "Website",
+        "url": "https://pagefresh.lvtd.dev/?ref=lvtd.dev&utm_source=lvtd.dev"
+      },
+      {
+        "label": "Repository",
+        "url": "https://github.com/LVTD-LLC/pagefresh"
+      }
+    ],
+    "logo": "images/projects/pagefresh.svg",
+    "section": "active"
+  },
+  {
+    "name": "Talent Leads",
+    "description": "Lead generation for startup hiring teams that need targeted outreach inputs.",
+    "category": "Lead generation / hiring",
+    "links": [
+      {
+        "label": "Website",
+        "url": "https://gettalentleads.com?ref=lvtd.dev&utm_source=lvtd.dev"
+      },
+      {
+        "label": "Repository",
+        "url": "https://github.com/LVTD-LLC/talentleads"
+      }
+    ],
+    "logo": "images/projects/talent-leads.png",
+    "section": "active"
+  },
+  {
+    "name": "Built with Django",
+    "description": "Developer education, product discovery, and useful examples for Django builders.",
+    "category": "Developer site",
+    "links": [
+      {
+        "label": "Website",
+        "url": "https://builtwithdjango.com?ref=lvtd.dev&utm_source=lvtd.dev"
+      },
+      {
+        "label": "Repository",
+        "url": "https://github.com/LVTD-LLC/builtwithdjango"
+      }
+    ],
+    "logo": "images/projects/built-with-django.png",
+    "section": "active"
+  },
+  {
+    "name": "Tech Job Alerts",
+    "description": "Automated matching and alerts for people tracking technical roles.",
+    "category": "Automation product",
+    "links": [
+      {
+        "label": "Website",
+        "url": "https://gettjalerts.com?ref=lvtd.dev&utm_source=lvtd.dev"
+      },
+      {
+        "label": "Repository",
+        "url": "https://github.com/LVTD-LLC/tjalerts"
+      }
+    ],
+    "logo": "images/projects/tech-job-alerts.png",
+    "section": "active"
+  },
+  {
+    "name": "Is It Keto",
+    "description": "Look up foods and ingredients to find out whether they fit a keto diet.",
+    "category": "Food and nutrition directory",
+    "links": [
+      {
+        "label": "Website",
+        "url": "https://isitketo.org/?ref=lvtd.dev&utm_source=lvtd.dev"
+      },
+      {
+        "label": "Repository",
+        "url": "https://github.com/rasulkireev/isitketo-django"
+      }
+    ],
+    "logo": "images/projects/is-it-keto.png",
+    "section": "active"
+  },
+  {
+    "name": "rasulkireev.com",
+    "description": "Website built by LVTD for Rasul Kireev. The writing, projects, and ongoing work are Rasul's.",
+    "category": "Website build only",
+    "links": [
+      {
+        "label": "Website",
+        "url": "https://rasulkireev.com/"
+      },
+      {
+        "label": "Repository",
+        "url": "https://github.com/rasulkireev/apw"
+      }
+    ],
+    "logo": "images/projects/rasulkireev-com.png",
+    "section": "active"
+  },
+  {
+    "name": "Meliora Advisory",
+    "description": "Website built by LVTD for an independently owned advisory business. LVTD does not own or operate the business.",
+    "category": "Website build only",
+    "links": [
+      {
+        "label": "Website",
+        "url": "https://meliora-advisory.com/"
+      }
+    ],
+    "logo": "images/projects/meliora-advisory.png",
+    "section": "active"
+  },
+  {
+    "name": "Ask HN Digest",
+    "description": "Summaries of the most engaging Ask HN discussions for readers who want the signal.",
+    "category": "Newsletter",
+    "links": [
+      {
+        "label": "Website",
+        "url": "https://askhndigests.com/?ref=lvtd.dev&utm_source=lvtd.dev"
+      },
+      {
+        "label": "Repository",
+        "url": "https://github.com/LVTD-LLC/ask-hn-digests"
+      }
+    ],
+    "logo": "images/projects/ask-hn-digest.svg",
+    "section": "archive"
+  },
+  {
+    "name": "LevReview",
+    "description": "Review collection workflows for operators who need better customer proof.",
+    "category": "Review collection",
+    "links": [
+      {
+        "label": "Website",
+        "url": "https://levreview.com?ref=lvtd.dev&utm_source=lvtd.dev"
+      },
+      {
+        "label": "Repository",
+        "url": "https://github.com/rasulkireev/levreview"
+      }
+    ],
+    "logo": "images/projects/levreview.jpg",
+    "section": "archive"
+  },
+  {
+    "name": "ReviewGate",
+    "description": "AI pre-merge checks for agent-written pull requests, preserved in a public read-only repository.",
+    "category": "AI code review",
+    "links": [
+      {
+        "label": "Repository",
+        "url": "https://github.com/LVTD-LLC/reviewgate"
+      }
+    ],
+    "logo": "images/projects/reviewgate.svg",
+    "section": "archive"
+  },
+  {
+    "name": "TuxSEO",
+    "description": "Programmatic SEO tooling, now archived and available as a public read-only repository.",
+    "category": "SEO tooling",
+    "links": [
+      {
+        "label": "Repository",
+        "url": "https://github.com/LVTD-LLC/TuxSEO"
+      }
+    ],
+    "logo": "images/projects/tuxseo.png",
+    "section": "archive"
+  },
+  {
+    "name": "OSIG",
+    "description": "Open-source social image generation utility, now archived and available as a public read-only repository.",
+    "category": "Social images",
+    "links": [
+      {
+        "label": "Repository",
+        "url": "https://github.com/LVTD-LLC/osig"
+      }
+    ],
+    "logo": "images/projects/osig.svg",
+    "section": "archive"
+  },
+  {
+    "name": "StatusHen",
+    "description": "Uptime monitoring and status page product, preserved in a public repository.",
+    "category": "Uptime monitoring",
+    "links": [
+      {
+        "label": "Repository",
+        "url": "https://github.com/rasulkireev/statushen"
+      }
+    ],
+    "logo": "images/projects/statushen.svg",
+    "section": "archive"
+  }
+]

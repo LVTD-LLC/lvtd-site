@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-02 - Project and research tables
+
+- Replace the project cards with accessible active/archive tables and locally hosted, source-verified logos for all 23 projects.
+- Add a logo-free research table at /research/ for Jev Benchmark and AI Steering; preserve their existing URLs and add research navigation and sitemap coverage.
+- Point CiteGuild to citeguild.dev; centralize catalog content and document logo provenance.
+
 ## 2026-10-01 - Project links and website credits
 
 - Add explicit website and verified public repository links throughout the catalog; switch PGSandbox to pgsandbox.dev.

@@ -98,7 +98,8 @@ class ProjectsPageTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "<h1", count=1)
         self.assertContains(response, "<strong>ReviewGate</strong>", count=1)
-        self.assertContains(response, 'class="project-card-slot"', count=25)
+        self.assertContains(response, "<table", count=2)
+        self.assertContains(response, "<img", count=23)
         self.assertContains(
             response,
             '<link rel="canonical" href="https://lvtd.test/projects/" />',
@@ -118,7 +119,6 @@ class ProjectsPageTests(TestCase):
             "Talent Leads",
             "Built with Django",
             "LevReview",
-            "AI Steering",
             "Tech Job Alerts",
             "Is It Keto",
             "TastefulKit",
@@ -126,7 +126,6 @@ class ProjectsPageTests(TestCase):
             "Built with Rust",
             "Built with Bend",
             "LVTD Games",
-            "Jev Benchmark",
             "rasulkireev.com",
             "Meliora Advisory",
             "OSIG",
@@ -140,6 +139,11 @@ class ProjectsPageTests(TestCase):
             self.assertNotIn(f"<strong>{name}</strong>", active)
             self.assertIn(f"<strong>{name}</strong>", archived)
         self.assertIn("<strong>Is It Keto</strong>", active)
+        self.assertNotContains(response, "<strong>AI Steering</strong>")
+        self.assertNotContains(response, "<strong>Jev Benchmark</strong>")
+        self.assertContains(response, reverse("research"))
+        self.assertContains(response, "https://citeguild.dev/")
+        self.assertNotContains(response, "https://citeguild.app/")
         self.assertNotContains(response, "https://skills.lvtd.dev")
         self.assertContains(response, "https://pgsandbox.dev/")
         self.assertNotContains(response, "https://pgsandbox-mcp.lvtd.dev/")
@@ -157,6 +161,28 @@ class ProjectsPageTests(TestCase):
         self.assertNotContains(response, "https://osig.app?ref=lvtd.dev")
         self.assertNotContains(response, "https://statushen.com")
         self.assertContains(response, "https://isitketo.org/")
+
+
+class ResearchPageTests(TestCase):
+    @override_settings(SITE_URL="https://lvtd.test")
+    def test_research_catalog(self) -> None:
+        response = self.client.get(reverse("research"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "<table", count=1)
+        self.assertContains(response, '<th scope="row">', count=2)
+        self.assertNotContains(response, "<img")
+        self.assertContains(response, "<strong>Jev Benchmark</strong>")
+        self.assertContains(response, "<strong>AI Steering</strong>")
+        self.assertContains(response, f'href="{reverse("jev-benchmark")}"')
+        self.assertContains(response, f'href="{reverse("ai-steering")}"')
+        self.assertContains(response, "https://github.com/LVTD-LLC/ai-steering")
+        self.assertContains(response, "https://github.com/LVTD-LLC/lvtd-site")
+        self.assertContains(response, "https://lvtd.test/research/")
+        self.assertContains(self.client.get(reverse("home")), reverse("research"))
+        self.assertContains(
+            self.client.get(reverse("sitemap")),
+            "<loc>https://lvtd.test/research/</loc>",
+        )
 
 
 class CanonicalRedirectTests(TestCase):
@@ -624,7 +650,7 @@ class AISteeringTests(TestCase):
 
     @override_settings(SITE_URL="https://lvtd.test")
     def test_catalog_is_discoverable(self):
-        self.assertContains(self.client.get(reverse("projects")), 'href="/ai-steering"')
+        self.assertContains(self.client.get(reverse("research")), 'href="/ai-steering"')
         self.assertContains(
             self.client.get(reverse("sitemap")),
             "<loc>https://lvtd.test/ai-steering</loc>",
