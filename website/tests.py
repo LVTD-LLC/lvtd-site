@@ -113,7 +113,7 @@ class ProjectsPageTests(TestCase):
             "ReviewGate",
             "CiteGuild",
             "Djass",
-            "Awesome",
+            "Browse Awesome",
             "Ask HN Digest",
             "PageFresh",
             "Talent Leads",
@@ -139,6 +139,9 @@ class ProjectsPageTests(TestCase):
             self.assertNotIn(f"<strong>{name}</strong>", active)
             self.assertIn(f"<strong>{name}</strong>", archived)
         self.assertIn("<strong>Is It Keto</strong>", active)
+        self.assertNotIn(": Website", archived)
+        self.assertContains(response, "https://browseawesome.com/")
+        self.assertNotContains(response, "https://awesome.lvtd.dev/")
         self.assertNotContains(response, "<strong>AI Steering</strong>")
         self.assertNotContains(response, "<strong>Jev Benchmark</strong>")
         self.assertContains(response, reverse("research"))
