@@ -185,13 +185,13 @@
     "section": "active"
   },
   {
-    "name": "Awesome",
+    "name": "Browse Awesome",
     "description": "Search and monitor repositories discovered across curated awesome lists.",
     "category": "Repository discovery",
     "links": [
       {
         "label": "Website",
-        "url": "https://awesome.lvtd.dev/?ref=lvtd.dev&utm_source=lvtd.dev"
+        "url": "https://browseawesome.com/?ref=lvtd.dev&utm_source=lvtd.dev"
       },
       {
         "label": "Repository",
@@ -322,10 +322,6 @@
     "category": "Newsletter",
     "links": [
       {
-        "label": "Website",
-        "url": "https://askhndigests.com/?ref=lvtd.dev&utm_source=lvtd.dev"
-      },
-      {
         "label": "Repository",
         "url": "https://github.com/LVTD-LLC/ask-hn-digests"
       }
@@ -338,10 +334,6 @@
     "description": "Review collection workflows for operators who need better customer proof.",
     "category": "Review collection",
     "links": [
-      {
-        "label": "Website",
-        "url": "https://levreview.com?ref=lvtd.dev&utm_source=lvtd.dev"
-      },
       {
         "label": "Repository",
         "url": "https://github.com/rasulkireev/levreview"

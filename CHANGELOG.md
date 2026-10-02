@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-02 - Browse Awesome and archive links
+
+- Rename Awesome to Browse Awesome and point its website link to browseawesome.com.
+- Remove website links from archived projects while retaining their public repository links.
+
 ## 2026-10-02 - Project and research tables
 
 - Replace the project cards with accessible active/archive tables and locally hosted, source-verified logos for all 23 projects.
