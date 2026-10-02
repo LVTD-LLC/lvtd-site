@@ -1,0 +1,37 @@
+{% load static %}
+<p class="catalog-scroll-hint" id="{{ table_id }}-hint">Scroll sideways to view the full table.</p>
+<div class="catalog-scroll" role="region" aria-label="{{ caption }}" aria-describedby="{{ table_id }}-hint" tabindex="0">
+  <table class="catalog-table" id="{{ table_id }}">
+    <caption class="sr-only">{{ caption }}</caption>
+    <thead>
+      <tr>
+        <th scope="col">{% if show_logos %}Project{% else %}Research{% endif %}</th>
+        <th scope="col">About</th>
+        <th scope="col">Explore</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for entry in entries %}
+        <tr>
+          <th scope="row">
+            <div class="catalog-identity">
+              {% if show_logos %}<img src="{% static entry.logo %}" width="56" height="48" loading="lazy" decoding="async" alt="" class="catalog-logo" />{% endif %}
+              <strong>{{ entry.name }}</strong>
+            </div>
+          </th>
+          <td>
+            <span class="catalog-category">{{ entry.category }}</span>
+            <p>{{ entry.description }}</p>
+          </td>
+          <td>
+            <div class="catalog-links">
+              {% for link in entry.links %}
+                <a href="{% if link.route %}{% url link.route %}{% else %}{{ link.url }}{% endif %}" aria-label="{{ entry.name }}: {{ link.label }}">{{ link.label }} <span aria-hidden="true">&rarr;</span></a>
+              {% endfor %}
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

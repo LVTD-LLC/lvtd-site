@@ -78,6 +78,7 @@ This file explains where things belong in `lvtd-site`.
 - `home.html` owns the main LVTD homepage, service offer cards,
   process, writing preview, and closing CTA.
 - `projects.html` owns the active project catalog and archive of earlier work.
+- `research.html` lists research entries without logos; both pages share `includes/portfolio_table.html` and `website/data/portfolio.json`. Logo provenance is recorded in `docs/portfolio-logos.md`.
 - `hosted_openclaw.html` owns the service detail page for Hosted OpenClaw.
 - `blog_list.html` and `blog_detail.html` own public writing pages.
 - `terms.html` and `privacy.html` own legal copy.
