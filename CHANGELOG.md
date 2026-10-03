@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-03 - Rowset website link
+
+- Point Rowset's project website link to rowset.app, retaining its repository link and logo.
+
 ## 2026-10-02 - Browse Awesome and archive links
 
 - Rename Awesome to Browse Awesome and point its website link to browseawesome.com.
