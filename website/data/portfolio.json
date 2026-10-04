@@ -224,16 +224,12 @@
     "category": "Lead generation / hiring",
     "links": [
       {
-        "label": "Website",
-        "url": "https://gettalentleads.com?ref=lvtd.dev&utm_source=lvtd.dev"
-      },
-      {
         "label": "Repository",
         "url": "https://github.com/LVTD-LLC/talentleads"
       }
     ],
     "logo": "images/projects/talent-leads.png",
-    "section": "active"
+    "section": "archive"
   },
   {
     "name": "Built with Django",
@@ -258,16 +254,12 @@
     "category": "Automation product",
     "links": [
       {
-        "label": "Website",
-        "url": "https://gettjalerts.com?ref=lvtd.dev&utm_source=lvtd.dev"
-      },
-      {
         "label": "Repository",
         "url": "https://github.com/LVTD-LLC/tjalerts"
       }
     ],
     "logo": "images/projects/tech-job-alerts.png",
-    "section": "active"
+    "section": "archive"
   },
   {
     "name": "Is It Keto",
