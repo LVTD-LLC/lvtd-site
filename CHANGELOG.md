@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-04 - Archive hiring projects
+
+- Move Talent Leads and Tech Job Alerts to the archive, retaining repository links and local logos.
+- Remove their website links because LVTD no longer owns the domains.
+
 ## 2026-10-03 - Rowset website link
 
 - Point Rowset's project website link to rowset.app, retaining its repository link and logo.

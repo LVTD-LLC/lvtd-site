@@ -135,11 +135,19 @@ class ProjectsPageTests(TestCase):
             self.assertContains(response, project_name)
 
         active, archived = content.split('id="active"', 1)[1].split('id="archive"', 1)
-        for name in ("Ask HN Digest", "LevReview", "ReviewGate"):
+        for name in (
+            "Ask HN Digest",
+            "LevReview",
+            "ReviewGate",
+            "Talent Leads",
+            "Tech Job Alerts",
+        ):
             self.assertNotIn(f"<strong>{name}</strong>", active)
             self.assertIn(f"<strong>{name}</strong>", archived)
         self.assertIn("<strong>Is It Keto</strong>", active)
         self.assertNotIn(": Website", archived)
+        self.assertNotContains(response, "gettalentleads.com")
+        self.assertNotContains(response, "gettjalerts.com")
         self.assertContains(response, "https://browseawesome.com/")
         self.assertNotContains(response, "https://awesome.lvtd.dev/")
         self.assertNotContains(response, "<strong>AI Steering</strong>")
