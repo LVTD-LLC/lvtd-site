@@ -14,7 +14,7 @@ Verified 2026-10-02. Assets are copied locally from the project's own website or
 | CiteGuild | `images/projects/citeguild.svg` | https://raw.githubusercontent.com/LVTD-LLC/citeguild/HEAD/apps/core/static/images/citeguild-logo.svg | `cfb8cb38e701b5bcf4943ac96a3007423de0c766033b9256e467368c5ce5154f` |
 | Djass | `images/projects/djass.svg` | https://djass.dev/static/vendors/images/logo.dbc6395ed338.svg | `38b9d311203b19b7118e7df915944a28c886694aee3eb306aa2da7cf259aa9d9` |
 | Browse Awesome | `images/projects/awesome.svg` | https://awesome.lvtd.dev/static/brand/awesome-repos-mark.24c052447336.svg | `be2cd2d88f418cc0f84e7c7dc4f9e82a8163ae91e56b2582014244cec324d3cb` |
-| PageFresh | `images/projects/pagefresh.svg` | https://pagefresh.lvtd.dev/static/vendors/images/logo.448905a47c8a.svg | `00aa30f6cc2214895d1ef788430647ccaef033cbe6fac0e034a1d8032c3543c7` |
+| Staleaway | `images/projects/staleaway.svg` | https://staleaway.com/static/vendors/images/logo.5b81b602ddc7.svg (verified 2026-10-04) | `cb1fd34c5e227350e9ec96f77c2d7efc1b548182c8decfd53d90c88724f2c476` |
 | Talent Leads | `images/projects/talent-leads.png` | https://raw.githubusercontent.com/LVTD-LLC/talentleads/HEAD/frontend/vendors/images/logo-2.png | `a7737965bf6057cee1ca0b0fd30c731fc790af6dbb039b5b01fd6909510db748` |
 | Built with Django | `images/projects/built-with-django.png` | https://builtwithdjango.com/static/vendors/favicon/logo.ee701a5f0ffc.png | `798d38054c84b1dcd39b98f7cb8e5193d1c078d96bda5662ebc47dd981ad0bd7` |
 | Tech Job Alerts | `images/projects/tech-job-alerts.png` | https://raw.githubusercontent.com/LVTD-LLC/tjalerts/HEAD/frontend/vendors/images/logo.png | `453452fe806a366d6ba8ada8f62aa01fc29b097db475133b3350be2552153ce8` |
