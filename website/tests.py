@@ -115,7 +115,7 @@ class ProjectsPageTests(TestCase):
             "Djass",
             "Browse Awesome",
             "Ask HN Digest",
-            "PageFresh",
+            "Staleaway",
             "Talent Leads",
             "Built with Django",
             "LevReview",

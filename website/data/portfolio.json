@@ -202,20 +202,20 @@
     "section": "active"
   },
   {
-    "name": "PageFresh",
+    "name": "Staleaway",
     "description": "Scheduled page review reminders for every sitemap, sent as practical email digests.",
     "category": "Website maintenance",
     "links": [
       {
         "label": "Website",
-        "url": "https://pagefresh.lvtd.dev/?ref=lvtd.dev&utm_source=lvtd.dev"
+        "url": "https://staleaway.com/?ref=lvtd.dev&utm_source=lvtd.dev"
       },
       {
         "label": "Repository",
-        "url": "https://github.com/LVTD-LLC/pagefresh"
+        "url": "https://github.com/LVTD-LLC/staleaway"
       }
     ],
-    "logo": "images/projects/pagefresh.svg",
+    "logo": "images/projects/staleaway.svg",
     "section": "active"
   },
   {

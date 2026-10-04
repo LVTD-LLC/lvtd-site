@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-04 - Staleaway project rebrand
+
+- Rename PageFresh to Staleaway and point its website and public repository links to staleaway.com and LVTD-LLC/staleaway.
+- Refresh its local logo from the current Staleaway website and record the source.
+
 ## 2026-10-04 - Archive hiring projects
 
 - Move Talent Leads and Tech Job Alerts to the archive, retaining repository links and local logos.
