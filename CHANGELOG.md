@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-05 - Client work section
+
+- Add a Client work table and jump link on the Projects page; move Meliora Advisory there while preserving its logo, website link, and website-only credit.
+
 ## 2026-10-04 - Staleaway project rebrand
 
 - Rename PageFresh to Staleaway and point its website and public repository links to staleaway.com and LVTD-LLC/staleaway.

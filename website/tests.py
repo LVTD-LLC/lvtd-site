@@ -98,7 +98,7 @@ class ProjectsPageTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "<h1", count=1)
         self.assertContains(response, "<strong>ReviewGate</strong>", count=1)
-        self.assertContains(response, "<table", count=2)
+        self.assertContains(response, "<table", count=3)
         self.assertContains(response, "<img", count=23)
         self.assertContains(
             response,
@@ -134,7 +134,16 @@ class ProjectsPageTests(TestCase):
         ):
             self.assertContains(response, project_name)
 
-        active, archived = content.split('id="active"', 1)[1].split('id="archive"', 1)
+        active, remaining = content.split('id="active"', 1)[1].split(
+            'id="client-work"', 1
+        )
+        client_work, archived = remaining.split('id="archive"', 1)
+        self.assertIn("<strong>Meliora Advisory</strong>", client_work)
+        self.assertNotIn("<strong>Meliora Advisory</strong>", active)
+        self.assertNotIn("<strong>Meliora Advisory</strong>", archived)
+        self.assertIn("https://meliora-advisory.com/", client_work)
+        self.assertIn("Website build only", client_work)
+        self.assertContains(response, 'href="#client-work"')
         for name in (
             "Ask HN Digest",
             "LevReview",

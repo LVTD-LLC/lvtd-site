@@ -95,7 +95,7 @@ class PortfolioView(TemplateView):
         context = super().get_context_data(**kwargs)
         catalog_path = Path(__file__).parent / "data" / "portfolio.json"
         entries = json.loads(catalog_path.read_text())
-        for section in ("active", "archive", "research"):
+        for section in ("active", "client", "archive", "research"):
             context[f"{section}_entries"] = [
                 entry for entry in entries if entry["section"] == section
             ]
