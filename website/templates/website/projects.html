@@ -1,6 +1,6 @@
 {% extends "website/base.html" %}
 {% block title %}Projects - LVTD{% endblock %}
-{% block description %}Products, developer tools, and websites built by LVTD. Browse active projects and the archive, with website and source links.{% endblock %}
+{% block description %}Products, developer tools, and websites built by LVTD. Browse active projects, client work, and the archive, with website and source links.{% endblock %}
 {% block og_title %}Projects - LVTD{% endblock %}
 {% block og_description %}Products, developer tools, and websites built by LVTD.{% endblock %}
 {% block twitter_title %}Projects - LVTD{% endblock %}
@@ -13,6 +13,7 @@
     <nav class="catalog-nav" aria-label="Browse our work">
       <a href="{% url 'projects' %}" aria-current="page">Projects</a>
       <a href="{% url 'research' %}">Research &rarr;</a>
+      <a href="#client-work">Client work &darr;</a>
       <a href="#archive">Jump to archive &darr;</a>
     </nav>
   </section>
@@ -22,6 +23,14 @@
       <span>{{ active_entries|length }} projects</span>
     </div>
     {% include "website/includes/portfolio_table.html" with entries=active_entries show_logos=True table_id="active-table" caption="Active projects" only %}
+  </section>
+  <section id="client-work" class="catalog-section" aria-labelledby="client-work-heading">
+    <div class="catalog-section-head">
+      <h2 id="client-work-heading">Client work</h2>
+      <span>{{ client_entries|length }} project{{ client_entries|length|pluralize }}</span>
+    </div>
+    <p class="catalog-note">Work delivered for clients, with our role noted on each project.</p>
+    {% include "website/includes/portfolio_table.html" with entries=client_entries show_logos=True table_id="client-work-table" caption="Client work" only %}
   </section>
   <section id="archive" class="catalog-section" aria-labelledby="archived-projects-heading">
     <div class="catalog-section-head">
