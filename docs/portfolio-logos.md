@@ -4,6 +4,7 @@ Verified 2026-10-02. Assets are copied locally from the project's own website or
 
 | Project | Local file | Original source | SHA-256 |
 | --- | --- | --- | --- |
+| ShipRust | `images/projects/shiprust.svg` | https://shiprust.com/assets/favicon.svg?v=113ae428cb59 (verified 2026-10-06) | `ddfdde53a6ebaa7169cded3651e5fa36a045b2aad04ace385673dcc8a37a01a1` |
 | TastefulKit | `images/projects/tastefulkit.svg` | https://tastefulkit.com/static/brand/favicon.2055f1344d5d.svg | `5f4fafdd952a6f3d6ae6128217bbaec9696dab8223ebb73c63a882713b00aaad` |
 | nitpick | `images/projects/nitpick.png` | https://nitpick.sh/logo.png | `f5c57799891753aa97b916fb18c8c05832a0230b013fabf16929a446bcbc430a` |
 | Built with Rust | `images/projects/built-with-rust.svg` | https://builtwithrust.com/assets/favicon.svg?v=9275b11c5b41 | `6942877fe9781572ac87b4440ad09e2ec8e6a39505fc31b010d3fe9a02d2a2f1` |

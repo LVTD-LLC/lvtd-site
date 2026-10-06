@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-06 - ShipRust project
+
+- Add ShipRust to active projects with its website, Rust SaaS starter description, and locally hosted official favicon.
+
 ## 2026-10-05 - Client work section
 
 - Add a Client work table and jump link on the Projects page; move Meliora Advisory there while preserving its logo, website link, and website-only credit.
