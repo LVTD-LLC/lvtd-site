@@ -1,5 +1,18 @@
 [
   {
+    "name": "ShipRust",
+    "description": "Generate a Rust SaaS starter with accounts, sessions, a dashboard, and deployment tooling, built with Axum, Maud, and Postgres.",
+    "category": "Rust SaaS starter",
+    "links": [
+      {
+        "label": "Website",
+        "url": "https://shiprust.com/?ref=lvtd.dev&utm_source=lvtd.dev"
+      }
+    ],
+    "logo": "images/projects/shiprust.svg",
+    "section": "active"
+  },
+  {
     "name": "TastefulKit",
     "description": "Discover real landing pages, UI components, libraries, and AI skills for you and your coding agent.",
     "category": "Design reference library",

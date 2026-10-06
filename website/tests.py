@@ -99,7 +99,7 @@ class ProjectsPageTests(TestCase):
         self.assertContains(response, "<h1", count=1)
         self.assertContains(response, "<strong>ReviewGate</strong>", count=1)
         self.assertContains(response, "<table", count=3)
-        self.assertContains(response, "<img", count=23)
+        self.assertContains(response, "<img", count=24)
         self.assertContains(
             response,
             '<link rel="canonical" href="https://lvtd.test/projects/" />',
@@ -108,6 +108,7 @@ class ProjectsPageTests(TestCase):
         content = response.content.decode()
         self.assertLess(content.index('id="active"'), content.index('id="archive"'))
         for project_name in (
+            "ShipRust",
             "Rowset",
             "PGSandbox",
             "ReviewGate",
