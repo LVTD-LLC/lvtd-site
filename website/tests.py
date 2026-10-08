@@ -163,7 +163,7 @@ class ProjectsPageTests(TestCase):
         self.assertNotContains(response, "<strong>AI Steering</strong>")
         self.assertNotContains(response, "<strong>Jev Benchmark</strong>")
         self.assertContains(response, reverse("research"))
-        self.assertContains(response, "https://citeguild.dev/")
+        self.assertContains(response, "https://citeguild.com/")
         self.assertNotContains(response, "https://citeguild.app/")
         self.assertNotContains(response, "https://skills.lvtd.dev")
         self.assertContains(response, "https://pgsandbox.dev/")

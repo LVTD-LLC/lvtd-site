@@ -29,6 +29,6 @@ Verified 2026-10-02. Assets are copied locally from the project's own website or
 | OSIG | `images/projects/osig.svg` | https://raw.githubusercontent.com/LVTD-LLC/osig/HEAD/frontend/vendors/images/logo-square.svg | `6750098da3c1046b5013baef8a3fdb53ddf3632d909bf7adbece568e73dfc150` |
 | StatusHen | `images/projects/statushen.svg` | https://raw.githubusercontent.com/rasulkireev/statushen/HEAD/frontend/vendors/images/logo.svg | `0a6bd92e8c65311a2be0c61e3c58c38cbe3e2d9d63569552812ee9c455db85af` |
 
-CiteGuild's logo comes from its repository. The requested `https://citeguild.dev/` destination did not resolve from the operator environment during this update; changing DNS is outside this catalog change.
+CiteGuild's logo comes from its repository. Its website destination was updated to `https://citeguild.com/` on 2026-10-08; the logo asset is unchanged.
 
 The catalog is `website/data/portfolio.json`. Research entries intentionally have no logo. Website-only credits must remain explicit for Rasul's site and Meliora Advisory.
