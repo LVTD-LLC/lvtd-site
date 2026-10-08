@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-08 - CiteGuild website link
+
+- Point CiteGuild to citeguild.com, retaining its repository link and logo.
+
 ## 2026-10-06 - ShipRust project
 
 - Add ShipRust to active projects with its website, Rust SaaS starter description, and locally hosted official favicon.
