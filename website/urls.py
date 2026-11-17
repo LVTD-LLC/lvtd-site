@@ -1,12 +1,13 @@
 from django.urls import path
 from django.views.generic import RedirectView
 
-from website import views
+from website import games, views
 
 urlpatterns = [
     path("robots.txt", views.robots_txt, name="robots"),
     path("sitemap.xml", views.sitemap_xml, name="sitemap"),
     path("", views.HomePageView.as_view(), name="home"),
+    path("games/", games.games_index, name="games"),
     path("projects/", views.ProjectsView.as_view(), name="projects"),
     path("research/", views.ResearchView.as_view(), name="research"),
     path("ai-steering", views.AISteeringView.as_view(), name="ai-steering"),

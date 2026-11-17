@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-17 - Games catalogue
+
+- List released games at /games/ and serve each registered game at its own top-level URL.
+
 ## 2026-10-08 - CiteGuild website link
 
 - Point CiteGuild to citeguild.com, retaining its repository link and logo.

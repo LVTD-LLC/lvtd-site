@@ -44,6 +44,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "website.middleware.CanonicalHostMiddleware",
+    "website.games.GameRoutingMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -134,6 +135,9 @@ CANONICAL_HOST_REDIRECT_ENABLED = (
     os.getenv("CANONICAL_HOST_REDIRECT_ENABLED", "true").lower() in {"1", "true", "yes"}
     and not DEBUG
     and not TESTING
+)
+GAMES_MANIFEST_URL = os.getenv(
+    "GAMES_MANIFEST_URL", "http://srv-captain--games/games/manifest.json"
 )
 SITE_LASTMOD = os.getenv("SITE_LASTMOD", "2026-06-12")
 
