@@ -131,3 +131,14 @@ Do not hard-code production secrets or customer data.
 - Add tests for payment, webhook, Mailgun, sitemap, and robots behavior whenever
   those paths change.
 - Use mocks for Stripe and Mailgun. Do not hit real external services in tests.
+
+## Games on the main domain
+
+The Django /games/ page reads the games app's deployed registry through
+GAMES_MANIFEST_URL. Each worker refreshes its copy every 30 seconds and keeps
+the previous release during short outages. The routing middleware reserves
+Django's top-level URL namespaces and selects the internal Nginx location in
+ops/games-location.conf for registered games, their shared assets, and the
+three existing game API namespaces. Include that location in the lvtd-site
+CapRover server block. Nginx streams the original request and response.
+New games use URLs below their slug and require only a games-repo release.

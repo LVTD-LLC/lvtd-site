@@ -1,0 +1,26 @@
+{% extends "website/base.html" %}
+{% block title %}Games - LVTD{% endblock %}
+{% block description %}Pick a browser game from the LVTD arcade and play.{% endblock %}
+{% block og_title %}Games - LVTD{% endblock %}
+{% block twitter_title %}Games - LVTD{% endblock %}
+{% block content %}
+  <section class="catalog-intro" aria-labelledby="games-heading">
+    <a class="text-link" href="{% url 'projects' %}">&larr; Projects</a>
+    <h1 id="games-heading">Games.</h1>
+  </section>
+  <section class="catalog-section" aria-label="Game collection">
+    {% for game in games %}
+      <article class="surface-card p-6 mb-4">
+        <a class="catalog-identity text-link" href="/{{ game.slug }}/" data-game="{{ game.slug }}">
+          <img src="/games{{ game.logo }}" width="48" height="48" alt="" />
+          <strong lang="{{ game.language }}">{{ game.title }}</strong>
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+        <p>{{ game.description }}</p>
+      </article>
+    {% empty %}
+      <p>The games catalogue is temporarily unavailable. Please try again shortly.</p>
+    {% endfor %}
+  </section>
+  <script type="module" src="/games/tracking/catalogue.js"></script>
+{% endblock %}

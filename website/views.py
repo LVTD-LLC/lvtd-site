@@ -41,6 +41,7 @@ def sitemap_xml(request: HttpRequest) -> HttpResponse:
 
     static_urls = [
         (reverse("home"), settings.SITE_LASTMOD, "weekly", "1.0"),
+        (reverse("games"), settings.SITE_LASTMOD, "weekly", "0.8"),
         (reverse("projects"), settings.SITE_LASTMOD, "monthly", "0.8"),
         (reverse("research"), settings.SITE_LASTMOD, "monthly", "0.7"),
         (reverse("blog-list"), settings.SITE_LASTMOD, "weekly", "0.7"),
