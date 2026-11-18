@@ -76,8 +76,9 @@ This file explains where things belong in `lvtd-site`.
 - `base.html` owns the document shell, metadata defaults, navigation, theme
   toggle, Plausible script, footer, and block definitions.
 - `home.html` features work from the project directory, arcade, research index, and blog.
-- `projects.html` and `research.html` use `includes/portfolio_list.html` and
-  `website/data/portfolio.json`. Project logo provenance is recorded in `docs/portfolio-logos.md`.
+- `website/data/portfolio.json` supplies the project directory, project detail pages,
+  and research list. Active projects and client work have stable slugs and an overview.
+  Project logo provenance is recorded in `docs/portfolio-logos.md`.
 - `games.html` lists the published games from the games service manifest.
 - `blog_list.html` and `blog_detail.html` own public writing pages.
 - `terms.html` and `privacy.html` own legal copy.

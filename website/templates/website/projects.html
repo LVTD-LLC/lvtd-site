@@ -1,14 +1,13 @@
 {% extends "website/base.html" %}
 {% block title %}Projects - LVTD{% endblock %}
-{% block description %}Products, developer tools, and websites built by LVTD. Browse active projects, client work, and the archive, with website and source links.{% endblock %}
+{% block description %}Products, developer tools, and websites built by LVTD. Explore the apps, read about the work, and visit each project.{% endblock %}
 {% block og_title %}Projects - LVTD{% endblock %}
 {% block og_description %}Products, developer tools, and websites built by LVTD.{% endblock %}
 {% block twitter_title %}Projects - LVTD{% endblock %}
 {% block twitter_description %}Products, developer tools, and websites built by LVTD.{% endblock %}
 {% block content %}
 <header class="index-intro motif-tiles"><h1>Projects &amp; apps</h1></header>
-  <nav class="jump-links" aria-label="Project sections"><a href="#active">Active projects</a><a href="#client-work">Client work</a><a href="#archive">Archive</a></nav>
-  <section id="active" class="shelf"><h2>Active projects</h2>{% include "website/includes/portfolio_list.html" with entries=active_entries only %}</section>
-  <section id="client-work" class="shelf"><h2>Client work</h2>{% include "website/includes/portfolio_list.html" with entries=client_entries only %}</section>
-  <section id="archive" class="shelf"><h2>Archive</h2>{% include "website/includes/portfolio_list.html" with entries=archive_entries only %}</section>
+  <nav class="jump-links" aria-label="Project sections"><a href="#active">Active projects</a><a href="#client-work">Client work</a></nav>
+  <section id="active" class="shelf"><h2>Active projects</h2>{% include "website/includes/project_list.html" with entries=active_entries only %}</section>
+  <section id="client-work" class="shelf"><h2>Client work</h2>{% include "website/includes/project_list.html" with entries=client_entries only %}</section>
 {% endblock %}

@@ -7,7 +7,7 @@ from xml.etree import ElementTree
 import requests
 import stripe
 from django.conf import settings
-from django.http import HttpRequest, HttpResponse, JsonResponse
+from django.http import Http404, HttpRequest, HttpResponse, JsonResponse
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -15,6 +15,13 @@ from django.views.generic import DetailView, ListView, TemplateView, View
 
 from website.games import catalogue
 from website.models import BlogPost, StripeWebhookEvent
+
+PORTFOLIO = json.loads((Path(__file__).parent / "data" / "portfolio.json").read_text())
+PROJECTS = {
+    entry["slug"]: entry
+    for entry in PORTFOLIO
+    if entry["section"] in ("active", "client")
+}
 
 
 def _absolute_url(path: str) -> str:
@@ -48,6 +55,15 @@ def sitemap_xml(request: HttpRequest) -> HttpResponse:
         (reverse("terms-of-service"), settings.SITE_LASTMOD, "yearly", "0.3"),
         (reverse("privacy-policy"), settings.SITE_LASTMOD, "yearly", "0.3"),
     ]
+    static_urls.extend(
+        (
+            reverse("project-detail", args=[slug]),
+            settings.SITE_LASTMOD,
+            "monthly",
+            "0.6",
+        )
+        for slug in PROJECTS
+    )
     for path, lastmod, changefreq, priority in static_urls:
         url = ElementTree.SubElement(urlset, "url")
         ElementTree.SubElement(url, "loc").text = _absolute_url(path)
@@ -71,11 +87,9 @@ def sitemap_xml(request: HttpRequest) -> HttpResponse:
 class PortfolioView(TemplateView):
     def get_context_data(self, **kwargs: object) -> dict[str, object]:
         context = super().get_context_data(**kwargs)
-        catalog_path = Path(__file__).parent / "data" / "portfolio.json"
-        entries = json.loads(catalog_path.read_text())
-        for section in ("active", "client", "archive", "research"):
+        for section in ("active", "client", "research"):
             context[f"{section}_entries"] = [
-                entry for entry in entries if entry["section"] == section
+                entry for entry in PORTFOLIO if entry["section"] == section
             ]
         return context
 
@@ -95,6 +109,16 @@ class HomePageView(PortfolioView):
 
 class ProjectsView(PortfolioView):
     template_name = "website/projects.html"
+
+
+class ProjectDetailView(TemplateView):
+    template_name = "website/project_detail.html"
+
+    def get_context_data(self, **kwargs):
+        project = PROJECTS.get(kwargs["slug"])
+        if project is None:
+            raise Http404("Project not found")
+        return super().get_context_data(project=project, **kwargs)
 
 
 class ResearchView(PortfolioView):

@@ -9,6 +9,11 @@ urlpatterns = [
     path("", views.HomePageView.as_view(), name="home"),
     path("games/", games.games_index, name="games"),
     path("projects/", views.ProjectsView.as_view(), name="projects"),
+    path(
+        "projects/<slug:slug>/",
+        views.ProjectDetailView.as_view(),
+        name="project-detail",
+    ),
     path("research/", views.ResearchView.as_view(), name="research"),
     path("ai-steering", views.AISteeringView.as_view(), name="ai-steering"),
     path(

@@ -5,9 +5,8 @@ is served locally for interface text. Use a system serif for collection headings
 Preserve the system dark theme, visible keyboard focus, and the skip link.
 
 Projects, Games, Research, and Blog are always visible in the navigation. Mark
-the current collection. Let project names link directly to the work and give
-source links descriptive accessible names. Preserve client credits and distinguish
-archived projects from active ones.
+the current collection. Each project row opens a studio profile with links to the work and its source.
+Keep client credits visible. List active projects and client work.
 
 The homepage uses three illustrated project covers. Geometric line drawings
 appear beside headings, with a different motif for each collection. Keep them

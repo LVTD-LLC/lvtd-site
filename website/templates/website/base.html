@@ -95,7 +95,7 @@
         <a class="wordmark" href="{% url 'home' %}" aria-label="LVTD home"><img src="{% static 'images/brand/favicon-32.png' %}" alt="" width="28" height="28"> LVTD</a>
         <nav aria-label="Primary navigation">
           {% with route=request.resolver_match.url_name %}
-          <a href="{% url 'projects' %}" {% if route == 'projects' %}aria-current="page"{% endif %}>Projects</a>
+          <a href="{% url 'projects' %}" {% if route == 'projects' %}aria-current="page"{% elif route == 'project-detail' %}aria-current="location"{% endif %}>Projects</a>
           <a href="{% url 'games' %}" {% if route == 'games' %}aria-current="page"{% endif %}>Games</a>
           <a href="{% url 'research' %}" {% if route == 'research' %}aria-current="page"{% elif route == 'ai-steering' or route == 'jev-benchmark' or route == 'jev-question' %}aria-current="location"{% endif %}>Research</a>
           <a href="{% url 'blog-list' %}" {% if route == 'blog-list' %}aria-current="page"{% elif route == 'blog-detail' %}aria-current="location"{% endif %}>Blog</a>
