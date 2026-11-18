@@ -32,3 +32,5 @@ Verified 2026-10-02. Assets are copied locally from the project's own website or
 CiteGuild's logo comes from its repository. Its website destination was updated to `https://citeguild.com/` on 2026-10-08; the logo asset is unchanged.
 
 The catalog is `website/data/portfolio.json`. Research entries intentionally have no logo. Website-only credits must remain explicit for Rasul's site and Meliora Advisory.
+
+Drape uses the iPhone AppIcon from the LVTD-LLC/drape repository, resized for the directory.

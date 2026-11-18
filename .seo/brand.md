@@ -3,17 +3,8 @@
 ## Product
 
 - **Name:** LVTD, LLC.
-- **One-liner:** Product engineering, automation, and AI workflows from a builder-led product lab.
-- **What we do:** Build useful software and operate systems for founders and small teams. Shipped projects demonstrate the work.
-- **Pricing:** Named service offers and deposit-led engagements; verify current scope and price before quoting.
-- **Free surfaces:** Public writing, project demonstrations, AI steering catalog, and the Jev benchmark. These are not a free service tier.
-
-## Audience
-
-- Technical founders and small teams evaluating hands-on engineering help.
-- Operators who need a manual process or unfinished product turned into working software.
-- Builders comparing AI workflows who want the actual implementation, results, and limits.
-- Jobs: understand a technical tradeoff; inspect proof of shipped work; decide whether LVTD can help.
+- **One-liner:** Software, games, and experiments from an independent studio.
+- **Audience:** People exploring software, playing browser games, or inspecting research results. Link to the project, its source, or the relevant publication.
 
 ## Brand voice
 
@@ -28,7 +19,7 @@
 
 1. Not a generic AI consultancy.
 2. Not fully autonomous delivery without an accountable engineer.
-3. Not a passive portfolio with no hiring path.
+3. No sales calls to action.
 4. Not a universal model leaderboard or independent benchmark authority.
 5. No fabricated clients, timelines, revenue, testimonials or performance guarantees.
 
@@ -59,7 +50,9 @@ No competitor set established for this user-selected launch article. Research co
 - https://lvtd.dev/blog/
 - https://lvtd.dev/jev-benchmark
 - https://lvtd.dev/ai-steering
-- https://lvtd.dev/services/hosted-openclaw/
+- https://lvtd.dev/projects/
+- https://lvtd.dev/games/
+- https://lvtd.dev/research/
 
 ## Foundation provenance
 

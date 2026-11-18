@@ -1,7 +1,7 @@
 [
   {
     "name": "ShipRust",
-    "description": "Generate a Rust SaaS starter with accounts, sessions, a dashboard, and deployment tooling, built with Axum, Maud, and Postgres.",
+    "description": "Generate a Rust SaaS codebase with accounts, billing, and deployment built in.",
     "category": "Rust SaaS starter",
     "links": [
       {
@@ -10,11 +10,12 @@
       }
     ],
     "logo": "images/projects/shiprust.svg",
-    "section": "active"
+    "section": "active",
+    "cover": "images/prints/shiprust.svg"
   },
   {
     "name": "TastefulKit",
-    "description": "Discover real landing pages, UI components, libraries, and AI skills for you and your coding agent.",
+    "description": "A searchable library of real websites, components, and design guides.",
     "category": "Design reference library",
     "links": [
       {
@@ -27,11 +28,26 @@
       }
     ],
     "logo": "images/projects/tastefulkit.svg",
-    "section": "active"
+    "section": "active",
+    "cover": "images/prints/tastefulkit.svg"
+  },
+  {
+    "name": "Drape",
+    "description": "Photograph your clothes and put together outfits on your phone.",
+    "category": "Wardrobe app",
+    "links": [
+      {
+        "label": "Repository",
+        "url": "https://github.com/LVTD-LLC/drape"
+      }
+    ],
+    "logo": "images/projects/drape.webp",
+    "section": "active",
+    "cover": "images/prints/drape.svg"
   },
   {
     "name": "nitpick",
-    "description": "Get a second model to review your diff and surrounding code, with structured findings your agent can fix.",
+    "description": "Get a second opinion on a code change before you merge it.",
     "category": "AI code review CLI",
     "links": [
       {
@@ -48,7 +64,7 @@
   },
   {
     "name": "Built with Rust",
-    "description": "Explore websites, apps, and tools built with Rust, in a directory itself built with Rust.",
+    "description": "Discover apps, websites, and tools written in Rust.",
     "category": "Rust project directory",
     "links": [
       {
@@ -65,7 +81,7 @@
   },
   {
     "name": "Built with Bend",
-    "description": "A human-reviewed collection of apps, games, tools, and experiments built with Bend 2.",
+    "description": "A human-reviewed directory of projects built with Bend.",
     "category": "Bend project directory",
     "links": [
       {
@@ -99,7 +115,7 @@
   },
   {
     "name": "Jev Benchmark",
-    "description": "Compare AI answers judged head to head by Jev, with rankings, answer costs, and individual decisions.",
+    "description": "Compare AI answers head to head and inspect what each answer cost.",
     "category": "AI model benchmark",
     "links": [
       {
@@ -115,7 +131,7 @@
   },
   {
     "name": "Rowset",
-    "description": "Private MCP and REST backend for agent-managed datasets, row updates, exports, and previews.",
+    "description": "Give an agent a private dataset it can query, edit, and export.",
     "category": "Agent dataset product",
     "links": [
       {
@@ -132,7 +148,7 @@
   },
   {
     "name": "PGSandbox",
-    "description": "Agent-facing MCP server for disposable Postgres sandboxes with TTLs and cleanup built in.",
+    "description": "Test SQL in a disposable Postgres database.",
     "category": "Alpha / developer infrastructure",
     "links": [
       {
@@ -149,7 +165,7 @@
   },
   {
     "name": "CiteGuild",
-    "description": "A searchable network of member articles that helps AI content agents discover relevant sources to cite.",
+    "description": "Find articles to cite from a network of independent publishers.",
     "category": "Editorial source network",
     "links": [
       {
@@ -166,7 +182,7 @@
   },
   {
     "name": "AI Steering",
-    "description": "Choose the right context files for coding agents, with practical guidance, references, and examples.",
+    "description": "A field guide to the files that give coding agents repository context.",
     "category": "Repository context library",
     "links": [
       {
@@ -182,7 +198,7 @@
   },
   {
     "name": "Djass",
-    "description": "Generate production-ready Django SaaS codebases with deployment paths and agent instructions.",
+    "description": "Generate a Django SaaS codebase with the modules you need.",
     "category": "Django SaaS generator",
     "links": [
       {
@@ -216,7 +232,7 @@
   },
   {
     "name": "Staleaway",
-    "description": "Scheduled page review reminders for every sitemap, sent as practical email digests.",
+    "description": "Get a reminder when a page on your site is due for review.",
     "category": "Website maintenance",
     "links": [
       {
@@ -323,7 +339,7 @@
   },
   {
     "name": "Ask HN Digest",
-    "description": "Summaries of the most engaging Ask HN discussions for readers who want the signal.",
+    "description": "Read summaries of popular Ask HN discussions.",
     "category": "Newsletter",
     "links": [
       {
@@ -336,7 +352,7 @@
   },
   {
     "name": "LevReview",
-    "description": "Review collection workflows for operators who need better customer proof.",
+    "description": "Collect and manage customer reviews.",
     "category": "Review collection",
     "links": [
       {
@@ -349,7 +365,7 @@
   },
   {
     "name": "ReviewGate",
-    "description": "AI pre-merge checks for agent-written pull requests, preserved in a public read-only repository.",
+    "description": "Run automated code checks before merging a pull request.",
     "category": "AI code review",
     "links": [
       {
@@ -362,7 +378,7 @@
   },
   {
     "name": "TuxSEO",
-    "description": "Programmatic SEO tooling, now archived and available as a public read-only repository.",
+    "description": "Build and publish pages for programmatic SEO.",
     "category": "SEO tooling",
     "links": [
       {
@@ -375,7 +391,7 @@
   },
   {
     "name": "OSIG",
-    "description": "Open-source social image generation utility, now archived and available as a public read-only repository.",
+    "description": "Generate social preview images from templates.",
     "category": "Social images",
     "links": [
       {
@@ -388,7 +404,7 @@
   },
   {
     "name": "StatusHen",
-    "description": "Uptime monitoring and status page product, preserved in a public repository.",
+    "description": "Monitor uptime and publish a status page.",
     "category": "Uptime monitoring",
     "links": [
       {

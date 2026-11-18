@@ -7,20 +7,20 @@
     <title>{% block title %}LVTD{% endblock %}</title>
     <meta
       name="description"
-      content="{% block description %}LVTD helps founders and teams design, build, and ship practical software products, automations, and growth tooling.{% endblock %}"
+      content="{% block description %}Software, browser games, research, and writing from LVTD, LLC.{% endblock %}"
     />
     <meta
       name="theme-color"
-      content="#f8ecef"
+      content="#faf9f5"
       data-theme-color
-      data-light-color="#f8ecef"
-      data-dark-color="#1a1216"
+      data-light-color="#faf9f5"
+      data-dark-color="#20231f"
     />
     <link rel="canonical" href="{{ canonical_url }}" />
     <meta property="og:site_name" content="LVTD" />
     <meta property="og:type" content="{% block og_type %}website{% endblock %}" />
-    <meta property="og:title" content="{% block og_title %}LVTD - Product engineering for founders and teams{% endblock %}" />
-    <meta property="og:description" content="{% block og_description %}LVTD helps founders and teams design, build, and ship practical software products, automations, and growth tooling.{% endblock %}" />
+    <meta property="og:title" content="{% block og_title %}LVTD - Independent software studio{% endblock %}" />
+    <meta property="og:description" content="{% block og_description %}Software, browser games, research, and writing from LVTD, LLC.{% endblock %}" />
     <meta property="og:url" content="{{ canonical_url }}" />
     {% block og_image_meta %}
     <meta property="og:image" content="{{ site_url }}{% static 'images/brand/lvtd-fire-heart.png' %}" />
@@ -30,8 +30,8 @@
     <meta property="og:image:alt" content="LVTD fire heart logo" />
     {% endblock %}
     <meta name="twitter:card" content="{% block twitter_card %}summary{% endblock %}" />
-    <meta name="twitter:title" content="{% block twitter_title %}LVTD - Product engineering for founders and teams{% endblock %}" />
-    <meta name="twitter:description" content="{% block twitter_description %}LVTD helps founders and teams design, build, and ship practical software products, automations, and growth tooling.{% endblock %}" />
+    <meta name="twitter:title" content="{% block twitter_title %}LVTD - Independent software studio{% endblock %}" />
+    <meta name="twitter:description" content="{% block twitter_description %}Software, browser games, research, and writing from LVTD, LLC.{% endblock %}" />
     {% block twitter_image_meta %}
     <meta name="twitter:image" content="{{ site_url }}{% static 'images/brand/lvtd-fire-heart.png' %}" />
     <meta name="twitter:image:alt" content="LVTD fire heart logo" />
@@ -90,31 +90,30 @@
   </head>
   <body class="antialiased">
     <a class="skip-link" href="#main-content">Skip to content</a>
-    <div class="site-ambient" aria-hidden="true"></div>
-    <div class="site-frame" aria-hidden="true">
-      <div class="site-frame-inner"></div>
-    </div>
-
-    <div class="site-content isolate">
-      <main id="main-content" class="site-container site-main">
+    <div class="site-container">
+      <header class="masthead">
+        <a class="wordmark" href="{% url 'home' %}" aria-label="LVTD home"><img src="{% static 'images/brand/favicon-32.png' %}" alt="" width="28" height="28"> LVTD</a>
+        <nav aria-label="Primary navigation">
+          {% with route=request.resolver_match.url_name %}
+          <a href="{% url 'projects' %}" {% if route == 'projects' %}aria-current="page"{% endif %}>Projects</a>
+          <a href="{% url 'games' %}" {% if route == 'games' %}aria-current="page"{% endif %}>Games</a>
+          <a href="{% url 'research' %}" {% if route == 'research' %}aria-current="page"{% elif route == 'ai-steering' or route == 'jev-benchmark' or route == 'jev-question' %}aria-current="location"{% endif %}>Research</a>
+          <a href="{% url 'blog-list' %}" {% if route == 'blog-list' %}aria-current="page"{% elif route == 'blog-detail' %}aria-current="location"{% endif %}>Blog</a>
+          {% endwith %}
+        </nav>
+      </header>
+      <main id="main-content" tabindex="-1">
         {% block content %}{% endblock %}
       </main>
-
-      <footer class="site-container pb-10">
-        <div class="footer-inner">
-          <p>&copy; 2026 LVTD, LLC. AI product engineering, MVPs, and managed services.</p>
-          <div class="footer-links">
-            <a href="{% url 'projects' %}">Projects</a>
-            <a href="{% url 'research' %}">Research</a>
-            <a href="{% url 'blog-list' %}">Writing</a>
-            <a href="https://github.com/LVTD-LLC">GitHub</a>
-            <a href="{% url 'terms-of-service' %}">Terms</a>
-            <a href="{% url 'privacy-policy' %}">Privacy</a>
-            <a href="mailto:rasul@lvtd.dev?subject=Project%20inquiry">rasul@lvtd.dev</a>
-          </div>
+      <footer class="footer-inner">
+        <p>&copy; {% now "Y" %} LVTD, LLC</p>
+        <div class="footer-links">
+          <a href="https://github.com/LVTD-LLC">GitHub</a>
+          <a href="mailto:rasul@lvtd.dev">Email</a>
+          <a href="{% url 'terms-of-service' %}">Terms</a>
+          <a href="{% url 'privacy-policy' %}">Privacy</a>
         </div>
       </footer>
     </div>
-
   </body>
 </html>

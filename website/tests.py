@@ -10,45 +10,30 @@ from website.models import BlogPost
 
 
 class HomePageTests(TestCase):
-    @override_settings(
-        MVP_DEPOSIT_CHECKOUT_URL="https://example.com/pay",
-        MVP_DEPOSIT_AMOUNT="$100",
-        MVP_FINAL_PRICE="$5,000",
-    )
-    def test_homepage_loads(self) -> None:
-        client = Client()
-        response = client.get(reverse("home"))
+    @patch("website.views.catalogue")
+    def test_homepage_shows_work_and_released_games(self, catalogue: Mock) -> None:
+        catalogue.return_value = {"demo": {"title": "Demo game", "slug": "demo"}}
+        response = self.client.get(reverse("home"))
+        self.assertContains(response, 'href="/demo/"')
+        for name in (
+            "ShipRust",
+            "TastefulKit",
+            "Drape",
+            "Jev Benchmark",
+            "AI Steering",
+        ):
+            self.assertContains(response, name)
+        for route in ("projects", "games", "research", "blog-list"):
+            self.assertContains(response, f'href="{reverse(route)}"')
+        self.assertNotContains(response, "deposit")
+        self.assertNotContains(response, "OpenClaw")
+        self.assertNotContains(response, "buy.stripe.com")
 
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "LVTD, LLC")
-        self.assertContains(response, "From idea to credible software.")
-        self.assertContains(response, "One builder. One complete first release.")
-        self.assertContains(response, "A focused MVP, done for you.")
-        self.assertContains(response, "Reserve implementation with a $100 deposit.")
-        self.assertContains(response, "$5,000")
-        self.assertContains(response, "Reserve your MVP")
-        self.assertContains(response, "Reserve OpenClaw setup")
-        self.assertContains(response, reverse("projects"))
-        self.assertNotContains(response, 'class="project-card')
-        self.assertNotContains(response, 'href="#work"')
-        self.assertContains(response, "Have an MVP in mind?")
-        self.assertNotContains(response, "data-uidotsh-pick")
-        self.assertNotContains(response, "data-uidotsh-option")
-        self.assertNotContains(response, "https://ui.sh/ui-picker.js")
-
-    def test_homepage_has_hosted_openclaw_actions(self) -> None:
-        client = Client()
-        response = client.get(reverse("home"))
-
-        self.assertContains(response, reverse("hosted-openclaw-checkout"))
-        self.assertContains(response, reverse("hosted-openclaw-learn-more"))
-
-    def test_homepage_has_blog_link(self) -> None:
-        client = Client()
-        response = client.get(reverse("home"))
-
-        self.assertContains(response, reverse("blog-list"))
-        self.assertContains(response, "Read notes")
+    @patch("website.views.catalogue", return_value={})
+    def test_homepage_still_works_without_the_arcade(self, catalogue: Mock) -> None:
+        response = self.client.get(reverse("home"))
+        self.assertContains(response, "Browse the arcade")
+        self.assertContains(response, "Drape")
 
     def test_homepage_has_legal_links(self) -> None:
         client = Client()
@@ -59,18 +44,18 @@ class HomePageTests(TestCase):
         self.assertContains(response, "Terms")
         self.assertContains(response, "Privacy")
 
-    def test_shared_shell_has_no_header_and_uses_system_theme(self) -> None:
-        client = Client()
-        response = client.get(reverse("home"))
-
-        self.assertContains(response, "prefers-color-scheme: dark")
-        self.assertNotContains(response, "<header")
-        self.assertNotContains(response, 'aria-label="Homepage"')
-        self.assertNotContains(response, 'aria-label="Primary navigation"')
-        self.assertNotContains(response, 'id="theme-toggle"')
-        self.assertNotContains(response, "localStorage")
-        self.assertNotContains(response, 'class="mobile-menu"')
-        self.assertNotContains(response, "Start a build")
+    def test_shared_navigation_marks_current_section(self) -> None:
+        for route, label in (
+            ("projects", "Projects"),
+            ("research", "Research"),
+            ("blog-list", "Blog"),
+        ):
+            with self.subTest(route=route):
+                response = self.client.get(reverse(route))
+                self.assertContains(response, 'aria-label="Primary navigation"')
+                self.assertContains(response, f'aria-current="page">{label}</a>')
+                self.assertContains(response, "prefers-color-scheme: dark")
+                self.assertContains(response, 'href="#main-content"')
 
     @override_settings(SITE_URL="https://lvtd.test")
     def test_homepage_has_shared_seo_metadata(self) -> None:
@@ -97,9 +82,8 @@ class ProjectsPageTests(TestCase):
         response = self.client.get(reverse("projects"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "<h1", count=1)
-        self.assertContains(response, "<strong>ReviewGate</strong>", count=1)
-        self.assertContains(response, "<table", count=3)
-        self.assertContains(response, "<img", count=24)
+        self.assertContains(response, "Drape")
+        self.assertContains(response, 'class="directory"', count=3)
         self.assertContains(
             response,
             '<link rel="canonical" href="https://lvtd.test/projects/" />',
@@ -139,9 +123,9 @@ class ProjectsPageTests(TestCase):
             'id="client-work"', 1
         )
         client_work, archived = remaining.split('id="archive"', 1)
-        self.assertIn("<strong>Meliora Advisory</strong>", client_work)
-        self.assertNotIn("<strong>Meliora Advisory</strong>", active)
-        self.assertNotIn("<strong>Meliora Advisory</strong>", archived)
+        self.assertIn(">Meliora Advisory</a>", client_work)
+        self.assertNotIn(">Meliora Advisory</a>", active)
+        self.assertNotIn(">Meliora Advisory</a>", archived)
         self.assertIn("https://meliora-advisory.com/", client_work)
         self.assertIn("Website build only", client_work)
         self.assertContains(response, 'href="#client-work"')
@@ -152,16 +136,16 @@ class ProjectsPageTests(TestCase):
             "Talent Leads",
             "Tech Job Alerts",
         ):
-            self.assertNotIn(f"<strong>{name}</strong>", active)
-            self.assertIn(f"<strong>{name}</strong>", archived)
-        self.assertIn("<strong>Is It Keto</strong>", active)
+            self.assertNotIn(f">{name}</a>", active)
+            self.assertIn(f">{name}</a>", archived)
+        self.assertIn(">Is It Keto</a>", active)
         self.assertNotIn(": Website", archived)
         self.assertNotContains(response, "gettalentleads.com")
         self.assertNotContains(response, "gettjalerts.com")
         self.assertContains(response, "https://browseawesome.com/")
         self.assertNotContains(response, "https://awesome.lvtd.dev/")
-        self.assertNotContains(response, "<strong>AI Steering</strong>")
-        self.assertNotContains(response, "<strong>Jev Benchmark</strong>")
+        self.assertNotContains(response, ">AI Steering</a>")
+        self.assertNotContains(response, ">Jev Benchmark</a>")
         self.assertContains(response, reverse("research"))
         self.assertContains(response, "https://citeguild.com/")
         self.assertNotContains(response, "https://citeguild.app/")
@@ -189,11 +173,9 @@ class ResearchPageTests(TestCase):
     def test_research_catalog(self) -> None:
         response = self.client.get(reverse("research"))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "<table", count=1)
-        self.assertContains(response, '<th scope="row">', count=2)
-        self.assertNotContains(response, "<img")
-        self.assertContains(response, "<strong>Jev Benchmark</strong>")
-        self.assertContains(response, "<strong>AI Steering</strong>")
+        self.assertContains(response, 'class="directory"', count=1)
+        self.assertContains(response, ">Jev Benchmark</a>")
+        self.assertContains(response, ">AI Steering</a>")
         self.assertContains(response, f'href="{reverse("jev-benchmark")}"')
         self.assertContains(response, f'href="{reverse("ai-steering")}"')
         self.assertContains(response, "https://github.com/LVTD-LLC/ai-steering")
@@ -331,7 +313,7 @@ class CrawlEndpointTests(TestCase):
         self.assertIn("<lastmod>2026-06-12</lastmod>", content)
         self.assertIn("<loc>https://lvtd.test/blog/</loc>", content)
         self.assertIn("<loc>https://lvtd.test/projects/</loc>", content)
-        self.assertIn("<loc>https://lvtd.test/services/hosted-openclaw/</loc>", content)
+        self.assertNotIn("hosted-openclaw", content)
         self.assertIn("<loc>https://lvtd.test/tos/</loc>", content)
         self.assertIn("<loc>https://lvtd.test/privacy/</loc>", content)
         self.assertIn(
@@ -426,48 +408,13 @@ class BlogPagesTests(TestCase):
         self.assertEqual(response.status_code, 404)
 
 
-class HostedOpenClawPagesTests(TestCase):
-    @override_settings(HOSTED_OPENCLAW_DEPOSIT_AMOUNT="$150")
-    def test_learn_more_page_loads(self) -> None:
-        client = Client()
-        response = client.get(reverse("hosted-openclaw-learn-more"))
-
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Hosted OpenClaw Service")
-        self.assertContains(
-            response, "Private OpenClaw, deployed and operated for your workflows."
+class RetiredOfferTests(TestCase):
+    def test_offer_and_checkout_are_removed(self):
+        self.assertEqual(self.client.get("/services/hosted-openclaw/").status_code, 404)
+        self.assertEqual(
+            self.client.post("/services/hosted-openclaw/checkout/").status_code, 404
         )
-        self.assertContains(response, "Best fit")
-        self.assertContains(response, "Frequently asked questions")
-        self.assertContains(response, "$150 deposit")
-        self.assertContains(response, "Reserve OpenClaw setup")
-        self.assertContains(response, '"@type": "Service"')
-        self.assertContains(response, '"@type": "FAQPage"')
-
-
-class HostedOpenClawCheckoutTests(TestCase):
-    @override_settings(
-        STRIPE_API_KEY="sk_test",
-        HOSTED_OPENCLAW_DEPOSIT_PRICE_ID="price_test_123",
-        STRIPE_CONTEXT_ACCOUNT="",
-    )
-    @patch("website.views.stripe.checkout.Session.create")
-    def test_checkout_redirects_to_stripe(self, mock_create: Mock) -> None:
-        mock_create.return_value = SimpleNamespace(
-            url="https://checkout.stripe.com/c/test"
-        )
-
-        client = Client()
-        response = client.post(reverse("hosted-openclaw-checkout"))
-
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response["Location"], "https://checkout.stripe.com/c/test")
-        self.assertEqual(mock_create.call_count, 1)
-
-        kwargs = mock_create.call_args.kwargs
-        self.assertEqual(kwargs["line_items"][0]["price"], "price_test_123")
-        self.assertEqual(kwargs["metadata"]["flow"], "hosted_openclaw_deposit")
-        self.assertEqual(kwargs["metadata"]["price_id"], "price_test_123")
+        self.assertNotContains(self.client.get("/blog/what-lvtd-builds/"), "OpenClaw")
 
 
 class StripeWebhookTests(TestCase):

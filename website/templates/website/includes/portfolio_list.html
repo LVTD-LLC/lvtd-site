@@ -1,0 +1,18 @@
+{% load static %}
+<ul class="directory">
+  {% for entry in entries %}
+    <li>
+      {% if entry.logo %}<img class="entry-logo" src="{% static entry.logo %}" width="42" height="42" loading="lazy" alt="">{% endif %}
+      <div class="entry-copy">
+        <h3><a href="{% if entry.links.0.route %}{% url entry.links.0.route %}{% else %}{{ entry.links.0.url }}{% endif %}">{{ entry.name }}</a></h3>
+        <p>{{ entry.description }}</p>
+        {% if entry.category == "Website build only" %}<small>{{ entry.category }}</small>{% endif %}
+      </div>
+      <div class="entry-links">
+        {% for link in entry.links|slice:"1:" %}
+          <a href="{% if link.route %}{% url link.route %}{% else %}{{ link.url }}{% endif %}" aria-label="{{ entry.name }}: {{ link.label }}">{{ link.label }} <span aria-hidden="true">{% if link.route %}&rarr;{% else %}&nearr;{% endif %}</span></a>
+        {% endfor %}
+      </div>
+    </li>
+  {% endfor %}
+</ul>

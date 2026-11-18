@@ -56,10 +56,8 @@ uv run python manage.py qcluster
 - `DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS`: set to `true` only when all subdomains support HTTPS.
 - `DJANGO_SECURE_HSTS_PRELOAD`: set to `true` only when the domain is ready for HSTS preload requirements.
 - `DATABASE_URL`: PostgreSQL connection string (defaults to local SQLite when unset).
-- `MVP_DEPOSIT_CHECKOUT_URL`: Stripe checkout/payment link for the MVP deposit CTA.
-- `MVP_DEPOSIT_AMOUNT`: display text for the deposit amount (default `$100`).
 - `MVP_FINAL_PRICE`: display text for the final MVP service price (default `$5,000`).
-- `HOSTED_OPENCLAW_DEPOSIT_PRICE_ID`: Stripe price id for Hosted OpenClaw $100 deposit checkout.
+- `HOSTED_OPENCLAW_DEPOSIT_PRICE_ID`: historical price ID used to recognize completed deposits in the webhook.
 - `STRIPE_API_KEY`: Stripe secret API key used to retrieve events by id.
 - `STRIPE_CONTEXT_ACCOUNT`: optional Stripe connected account id for event retrieval.
 - `STRIPE_MVP_DEPOSIT_PAYMENT_LINK_ID`: payment link id to match for the MVP deposit.

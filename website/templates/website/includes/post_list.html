@@ -1,0 +1,8 @@
+<ul class="small-list posts">
+  {% for post in posts %}
+    <li><a href="{% url 'blog-detail' post.slug %}">
+      <span>{{ post.title }}</span>
+      <time datetime="{{ post.published_at|date:'Y-m-d' }}">{{ post.published_at|date:"M j, Y" }}</time>
+    </a></li>
+  {% empty %}<li>No published posts yet.</li>{% endfor %}
+</ul>

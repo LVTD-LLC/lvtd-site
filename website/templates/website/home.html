@@ -1,208 +1,44 @@
 {% extends "website/base.html" %}
 {% load static %}
-
-{% block title %}LVTD - High-quality MVP development for founders{% endblock %}
-{% block description %}LVTD scopes, builds, and launches focused MVPs for founders and small teams.{% endblock %}
-{% block og_title %}LVTD - High-quality MVP development for founders{% endblock %}
-{% block og_description %}LVTD scopes, builds, and launches focused MVPs for founders and small teams.{% endblock %}
-{% block twitter_title %}LVTD - High-quality MVP development for founders{% endblock %}
-{% block twitter_description %}LVTD scopes, builds, and launches focused MVPs for founders and small teams.{% endblock %}
-{% block structured_data %}
-  {{ block.super }}
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      "name": "LVTD",
-      "url": "{{ site_url }}/",
-      "description": "AI product engineering, MVP builds, automations, and hosted infrastructure for founders and small teams.",
-      "email": "rasul@lvtd.dev",
-      "sameAs": [
-        "https://github.com/LVTD-LLC"
-      ],
-      "founder": {
-        "@type": "Person",
-        "name": "Rasul Kireev"
-      },
-      "serviceType": [
-        "MVP product builds",
-        "Automation and internal tools",
-        "Marketing and content systems",
-        "Technical audits and debugging",
-        "Hosted OpenClaw service"
-      ],
-      "areaServed": "Worldwide"
-    }
-  </script>
-{% endblock %}
-
+{% block title %}LVTD - Software, games &amp; experiments{% endblock %}
 {% block content %}
-  <section class="home-hero hero-proof hero-wide">
-    <div class="hero-copy">
-      <h1 class="hero-title">From idea to credible software.</h1>
-      <p class="hero-text">
-        LVTD scopes, builds, and launches focused MVPs. Fast, finished, and ready for users.
-      </p>
-      <div class="hero-actions" aria-label="Primary actions">
-        <a class="btn btn-primary" href="mailto:rasul@lvtd.dev?subject=MVP%20project%20brief">Start your MVP</a>
-        <a class="btn btn-secondary" href="{% url 'projects' %}">See the proof</a>
-      </div>
-    </div>
-    <div class="hero-proof-note">
-      <strong>The studio behind Rowset, TastefulKit, CiteGuild, Djass, and PGSandbox.</strong>
-      <a href="{% url 'projects' %}">View projects <span aria-hidden="true">&rarr;</span></a>
-    </div>
-  </section>
-
-  <section class="service-rail" aria-label="How LVTD works with clients">
-    <div class="service-rail-copy">
-      <h2>One builder. One complete first release.</h2>
-      <p class="service-rail-text">
-        Scope, product, code, deployment, and launch - handled.
-      </p>
-    </div>
-    <dl class="service-rail-list">
-      <div>
-        <dt>MVP build</dt>
-        <dd>A focused product ready for users.</dd>
-      </div>
-      <div>
-        <dt>AI workflow</dt>
-        <dd>Agents connected to real tools and data.</dd>
-      </div>
-      <div>
-        <dt>Internal tool</dt>
-        <dd>Manual work replaced with software.</dd>
-      </div>
-      <div>
-        <dt>Managed service</dt>
-        <dd>Hosting, monitoring, and updates handled.</dd>
-      </div>
-    </dl>
-  </section>
-
-  <section id="services" class="capability-section">
-    <div class="capability-intro">
-      <h2>Bring the messy idea. Leave with working software.</h2>
-      <p>We turn uncertain scope into a focused release.</p>
-    </div>
-
-    <dl class="capability-list">
-      <div class="capability-item">
-        <dt><span>MVPs</span><strong>Ship the first useful version.</strong></dt>
-        <dd>Product, backend, UI, deployment, and analytics.</dd>
-      </div>
-      <div class="capability-item">
-        <dt><span>Tools</span><strong>Replace the manual loop.</strong></dt>
-        <dd>Dashboards, jobs, alerts, and integrations.</dd>
-      </div>
-      <div class="capability-item">
-        <dt><span>Sites</span><strong>Turn attention into action.</strong></dt>
-        <dd>Fast pages, publishing, SEO, and lead capture.</dd>
-      </div>
-      <div class="capability-item">
-        <dt><span>Rescue</span><strong>Fix what is slowing you down.</strong></dt>
-        <dd>Broken jobs, unreliable APIs, fragile deploys, and rough UI.</dd>
-      </div>
-    </dl>
-  </section>
-
-  <section class="offers-section" aria-label="Ways to start">
-    <div class="offer-card offer-card-primary">
-      <h2>A focused MVP, done for you.</h2>
-      <p>
-        Reserve implementation with a {{ mvp_deposit_amount }} deposit. Final price: <strong>{{ mvp_final_price }}</strong>.
-      </p>
-      <div class="offer-actions">
-        {% if mvp_deposit_checkout_url %}
-          <a class="btn btn-secondary" href="{{ mvp_deposit_checkout_url }}">Reserve your MVP</a>
-        {% else %}
-          <a class="btn btn-secondary" href="mailto:rasul@lvtd.dev?subject=MVP%20build%20inquiry">Reserve your MVP</a>
-        {% endif %}
-        <a class="btn btn-secondary" href="#process">See the process</a>
-      </div>
-    </div>
-
-    <div class="offer-card">
-      <h2>Hosted OpenClaw, fully managed.</h2>
-      <p>Private deployment, access, monitoring, updates, and integrations.</p>
-      <div class="offer-actions">
-        <form method="post" action="{% url 'hosted-openclaw-checkout' %}">
-          {% csrf_token %}
-          <button class="btn btn-secondary" type="submit">Reserve OpenClaw setup</button>
-        </form>
-        <a class="btn btn-secondary" href="{% url 'hosted-openclaw-learn-more' %}">See the scope</a>
-      </div>
-    </div>
-  </section>
-
-  <section id="process" class="process-section">
-    <div class="section-head section-head-compact">
-      <div>
-        <h2>Four steps. No theater.</h2>
-      </div>
-      <p>Scope tightly. Ship visibly. Improve from real use.</p>
-    </div>
-
-    <ol class="process-list" role="list">
-      <li>
-        <span>01</span>
-        <strong>Map the job</strong>
-        <p>Choose the user, problem, and first useful release.</p>
-      </li>
-      <li>
-        <span>02</span>
-        <strong>Build the core</strong>
-        <p>Create the product, data, and deployment path.</p>
-      </li>
-      <li>
-        <span>03</span>
-        <strong>Finish the edges</strong>
-        <p>Test states, errors, speed, and handoff.</p>
-      </li>
-      <li>
-        <span>04</span>
-        <strong>Ship</strong>
-        <p>Launch, learn, and choose the next move.</p>
-      </li>
-    </ol>
-  </section>
-
-  <section class="writing-section">
-    <div class="section-head section-head-compact">
-      <div>
-        <h2>Notes from shipping.</h2>
-      </div>
-      <a class="btn btn-secondary" href="{% url 'blog-list' %}">Read notes</a>
-    </div>
-
-    {% if latest_blog_posts %}
-      <div class="article-grid">
-        {% for post in latest_blog_posts %}
-          <article class="article-card">
-            <time datetime="{{ post.published_at|date:'Y-m-d' }}">{{ post.published_at|date:"M j, Y" }}</time>
-            <h3>
-              <a href="{% url 'blog-detail' slug=post.slug %}">{{ post.title }}</a>
-            </h3>
-            <p>{{ post.summary }}</p>
-          </article>
-        {% endfor %}
-      </div>
-    {% else %}
-      <div class="article-empty">
-        <p>Posts are coming soon. Explore <a class="text-link" href="{% url 'projects' %}">our projects</a> in the meantime.</p>
-      </div>
-    {% endif %}
-  </section>
-
-  <section class="closing-panel">
+  <header class="studio-intro">
     <div>
-      <h2>Have an MVP in mind?</h2>
-      <p>Send the idea. A short brief is enough.</p>
+      <h1>Software, games<br><em>&amp; experiments.</em></h1>
+      <p>The work of LVTD, LLC, an independent software studio.</p>
     </div>
-    <div class="closing-actions">
-      <a class="btn btn-secondary" href="mailto:rasul@lvtd.dev?subject=Project%20brief">Send your brief</a>
-      <a class="btn btn-secondary" href="https://github.com/LVTD-LLC">See GitHub</a>
-    </div>
+    <img class="staircourt" src="{% static 'images/prints/staircourt.svg' %}" width="385" height="326" alt="">
+  </header>
+  <section class="shelf" aria-labelledby="projects-heading">
+    <div class="shelf-head"><h2 id="projects-heading">Projects &amp; apps</h2><a href="{% url 'projects' %}">All projects <span aria-hidden="true">&rarr;</span></a></div>
+    <ul class="featured">
+      {% for entry in featured %}
+        <li><a href="{{ entry.links.0.url }}">
+          <img class="print" src="{% static entry.cover %}" width="400" height="200" alt="">
+          <h3>{{ entry.name }} <span aria-hidden="true">&nearr;</span></h3>
+          <p>{{ entry.description }}</p>
+        </a></li>
+      {% endfor %}
+    </ul>
   </section>
+  <div class="paired-shelves">
+    <section class="shelf" aria-labelledby="games-heading">
+      <div class="shelf-head"><h2 id="games-heading">Games</h2><a href="{% url 'games' %}">All games <span aria-hidden="true">&rarr;</span></a></div>
+      <ul class="small-list">{% for game in games %}
+        <li><a href="/{{ game.slug }}/"><span lang="{{ game.language }}">{{ game.title }}</span><small>{{ game.category }}</small></a></li>
+      {% empty %}<li><a href="{% url 'games' %}">Browse the arcade <span aria-hidden="true">&rarr;</span></a></li>{% endfor %}</ul>
+    </section>
+    <section class="shelf" aria-labelledby="research-heading">
+      <div class="shelf-head"><h2 id="research-heading">Research</h2><a href="{% url 'research' %}">All research <span aria-hidden="true">&rarr;</span></a></div>
+      <ul class="small-list">{% for entry in research_entries %}
+        <li><a href="{% url entry.links.0.route %}">{{ entry.name }} <small>{{ entry.category }}</small></a></li>
+      {% endfor %}</ul>
+    </section>
+  </div>
+  {% if latest_blog_posts %}
+    <section class="shelf" aria-labelledby="blog-heading">
+      <div class="shelf-head"><h2 id="blog-heading">Blog</h2><a href="{% url 'blog-list' %}">All posts <span aria-hidden="true">&rarr;</span></a></div>
+      {% include "website/includes/post_list.html" with posts=latest_blog_posts only %}
+    </section>
+  {% endif %}
 {% endblock %}
