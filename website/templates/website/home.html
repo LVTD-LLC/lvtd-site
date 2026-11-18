@@ -13,9 +13,9 @@
     <div class="shelf-head"><h2 id="projects-heading">Projects &amp; apps</h2><a href="{% url 'projects' %}">All projects <span aria-hidden="true">&rarr;</span></a></div>
     <ul class="featured">
       {% for entry in featured %}
-        <li><a href="{{ entry.links.0.url }}">
+        <li><a href="{% url 'project-detail' entry.slug %}">
           <img class="print" src="{% static entry.cover %}" width="400" height="200" alt="">
-          <h3>{{ entry.name }} <span aria-hidden="true">&nearr;</span></h3>
+          <h3>{{ entry.name }} <span aria-hidden="true">&rarr;</span></h3>
           <p>{{ entry.description }}</p>
         </a></li>
       {% endfor %}

@@ -1,0 +1,26 @@
+{% extends "website/base.html" %}
+{% load static %}
+{% block title %}{{ project.name }} - LVTD Projects{% endblock %}
+{% block description %}{{ project.description }}{% endblock %}
+{% block og_title %}{{ project.name }} - LVTD Projects{% endblock %}
+{% block og_description %}{{ project.description }}{% endblock %}
+{% block twitter_title %}{{ project.name }} - LVTD Projects{% endblock %}
+{% block twitter_description %}{{ project.description }}{% endblock %}
+{% block content %}
+  <article class="project-profile">
+    <a class="profile-back" href="{% url 'projects' %}">&larr; All projects</a>
+    <header class="index-intro motif-tiles">
+      <img class="profile-logo" src="{% static project.logo %}" width="72" height="72" alt="">
+      <h1>{{ project.name }}</h1>
+    </header>
+    <div class="profile-body">
+      <p class="profile-lead">{{ project.description }}</p>
+      <p>{{ project.overview }}</p>
+      <div class="profile-links">
+        {% for link in project.links %}
+          <a href="{% if link.route %}{% url link.route %}{% else %}{{ link.url }}{% endif %}">{% if link.label == "Website" %}{% if link.route == "games" %}Browse the arcade{% else %}Visit {{ project.name }}{% endif %}{% elif link.label == "Repository" %}View repository{% else %}{{ link.label }}{% endif %} <span aria-hidden="true">{% if link.route %}&rarr;{% else %}&nearr;{% endif %}</span></a>
+        {% endfor %}
+      </div>
+    </div>
+  </article>
+{% endblock %}

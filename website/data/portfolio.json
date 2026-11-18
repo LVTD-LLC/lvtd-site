@@ -11,7 +11,9 @@
     ],
     "logo": "images/projects/shiprust.svg",
     "section": "active",
-    "cover": "images/prints/shiprust.svg"
+    "cover": "images/prints/shiprust.svg",
+    "slug": "shiprust",
+    "overview": "Choose the pieces your app needs, from sign-in and background jobs to billing and a blog. ShipRust generates a Rust repository you can download, run locally, and deploy yourself. The pages are rendered on the server with Axum and Maud, and application data lives in Postgres."
   },
   {
     "name": "TastefulKit",
@@ -29,7 +31,9 @@
     ],
     "logo": "images/projects/tastefulkit.svg",
     "section": "active",
-    "cover": "images/prints/tastefulkit.svg"
+    "cover": "images/prints/tastefulkit.svg",
+    "slug": "tastefulkit",
+    "overview": "Compare landing pages in pairs to work out which designs you like. When you're ready to build, you can search the library for a specific layout or component. The MCP integration lets a coding agent retrieve a reference, its screenshot, and the accompanying design notes where available."
   },
   {
     "name": "Drape",
@@ -43,7 +47,9 @@
     ],
     "logo": "images/projects/drape.webp",
     "section": "active",
-    "cover": "images/prints/drape.svg"
+    "cover": "images/prints/drape.svg",
+    "slug": "drape",
+    "overview": "Start with photos of the clothes you own. Save them to your wardrobe, review item details, and group pieces into looks you can find again later. The repository includes native iPhone and Android apps, with local wardrobe storage and a separate backend for image processing."
   },
   {
     "name": "nitpick",
@@ -60,7 +66,9 @@
       }
     ],
     "logo": "images/projects/nitpick.png",
-    "section": "active"
+    "section": "active",
+    "slug": "nitpick",
+    "overview": "A diff can look reasonable until you read the code that calls it. nitpick sends the changed files and nearby code to a second model for review. Run it from the command line or hook it into a coding agent to get findings while the changes are still fresh."
   },
   {
     "name": "Built with Rust",
@@ -77,7 +85,9 @@
       }
     ],
     "logo": "images/projects/built-with-rust.svg",
-    "section": "active"
+    "section": "active",
+    "slug": "built-with-rust",
+    "overview": "Browse finished websites, apps, and developer tools to see where people are using Rust. The weekly newsletter follows new projects and Rust news. The directory is itself written in Rust, and its implementation is available alongside the projects it features."
   },
   {
     "name": "Built with Bend",
@@ -94,7 +104,9 @@
       }
     ],
     "logo": "images/projects/built-with-bend.svg",
-    "section": "active"
+    "section": "active",
+    "slug": "built-with-bend",
+    "overview": "Browse what people are making with Bend 2, from small experiments to games and tools. Submissions are reviewed by a person, and entries link to the build and its source so you can try it and see how it works. A weekly newsletter collects discoveries from the directory."
   },
   {
     "name": "LVTD Games",
@@ -111,7 +123,9 @@
       }
     ],
     "logo": "images/projects/lvtd-games.svg",
-    "section": "active"
+    "section": "active",
+    "slug": "lvtd-games",
+    "overview": "The arcade includes a Russian five-letter word puzzle, a two-player city race, chess against Jev, and a playable version of Conway's Game of Life. Each game opens directly in the browser and has its own controls. The collection and the games are developed together in a public repository."
   },
   {
     "name": "Jev Benchmark",
@@ -144,7 +158,9 @@
       }
     ],
     "logo": "images/projects/rowset.png",
-    "section": "active"
+    "section": "active",
+    "slug": "rowset",
+    "overview": "An agent can record findings in a table during one session and pick up the same rows in the next. Rowset provides private datasets for this kind of work, with tools to query, update, and export records through MCP, REST, or the command line. You can also run it yourself."
   },
   {
     "name": "PGSandbox",
@@ -161,7 +177,9 @@
       }
     ],
     "logo": "images/projects/pgsandbox.svg",
-    "section": "active"
+    "section": "active",
+    "slug": "pgsandbox",
+    "overview": "Give a coding agent its own temporary Postgres database to try a migration, check a query, or reproduce a database bug. Each sandbox has a scoped role and an expiry time. The agent works against real Postgres and can discard the database when the experiment is over."
   },
   {
     "name": "CiteGuild",
@@ -178,7 +196,9 @@
       }
     ],
     "logo": "images/projects/citeguild.svg",
-    "section": "active"
+    "section": "active",
+    "slug": "citeguild",
+    "overview": "Publishers make their articles discoverable to writing agents. An agent working on a draft can search by subject, read a matching excerpt, and follow the original link to check whether it supports the passage. The search is available through MCP, a command-line tool, and an API."
   },
   {
     "name": "AI Steering",
@@ -211,7 +231,9 @@
       }
     ],
     "logo": "images/projects/djass.svg",
-    "section": "active"
+    "section": "active",
+    "slug": "djass",
+    "overview": "Choose the modules for a Django app, including authentication, billing, and background jobs. Djass packages those choices into a repository with deployment defaults and project instructions for the next developer or coding agent. The downloadable agent skills let you start that process from your editor."
   },
   {
     "name": "Browse Awesome",
@@ -224,11 +246,13 @@
       },
       {
         "label": "Repository",
-        "url": "https://github.com/LVTD-LLC/awesome"
+        "url": "https://github.com/LVTD-LLC/browse-awesome"
       }
     ],
     "logo": "images/projects/awesome.svg",
-    "section": "active"
+    "section": "active",
+    "slug": "browse-awesome",
+    "overview": "Awesome lists collect recommendations across thousands of GitHub repositories. Browse Awesome brings those recommendations into one search and shows recent stars and commits, so you can tell which projects have been getting attention. A weekly digest highlights new discoveries."
   },
   {
     "name": "Staleaway",
@@ -245,7 +269,9 @@
       }
     ],
     "logo": "images/projects/staleaway.svg",
-    "section": "active"
+    "section": "active",
+    "slug": "staleaway",
+    "overview": "Add a sitemap and choose how often you want to revisit the pages. Staleaway sends a small batch of links by email when they're due, giving you a manageable reading list for checking old instructions, links, and copy."
   },
   {
     "name": "Talent Leads",
@@ -275,7 +301,9 @@
       }
     ],
     "logo": "images/projects/built-with-django.png",
-    "section": "active"
+    "section": "active",
+    "slug": "built-with-django",
+    "overview": "Find projects people have shipped with Django and follow the links to try them. Alongside the showcase, the site publishes practical guides, Django jobs, and community resources. The directory itself is a Django application with a public codebase."
   },
   {
     "name": "Tech Job Alerts",
@@ -305,7 +333,9 @@
       }
     ],
     "logo": "images/projects/is-it-keto.png",
-    "section": "active"
+    "section": "active",
+    "slug": "is-it-keto",
+    "overview": "Browse by food category or look up the particular product in your kitchen. There are entries for everyday ingredients such as olive oil as well as brand-specific foods like unsweetened vanilla almond milk. Each entry addresses that product's place in a keto diet."
   },
   {
     "name": "rasulkireev.com",
@@ -322,7 +352,9 @@
       }
     ],
     "logo": "images/projects/rasulkireev-com.png",
-    "section": "active"
+    "section": "active",
+    "slug": "rasul-kireev",
+    "overview": "The site brings together book reviews, programming tutorials, project ideas, and the Tuesday Letter. Readers can move between a short personal note and a longer technical article in the same collection. The public Astro repository shows how those pieces fit together."
   },
   {
     "name": "Meliora Advisory",
@@ -335,7 +367,9 @@
       }
     ],
     "logo": "images/projects/meliora-advisory.png",
-    "section": "client"
+    "section": "client",
+    "slug": "meliora-advisory",
+    "overview": "Meliora advises industrial and business services firms on acquisitions, sales, and valuations. Its website brings the firm's services together with transaction histories, quarterly reports, and notes on due diligence, so prospective clients can explore its work before getting in touch."
   },
   {
     "name": "Ask HN Digest",

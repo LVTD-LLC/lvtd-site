@@ -5,6 +5,7 @@ from unittest.mock import Mock, patch
 import stripe
 from django.test import Client, TestCase, override_settings
 from django.urls import reverse
+from django.utils.html import escape
 
 from website.models import BlogPost
 
@@ -77,95 +78,53 @@ class HomePageTests(TestCase):
 
 
 class ProjectsPageTests(TestCase):
-    @override_settings(SITE_URL="https://lvtd.test")
-    def test_projects_catalog(self) -> None:
+    def test_projects_catalog(self):
         response = self.client.get(reverse("projects"))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "<h1", count=1)
-        self.assertContains(response, "Drape")
-        self.assertContains(response, 'class="directory"', count=3)
-        self.assertContains(
-            response,
-            '<link rel="canonical" href="https://lvtd.test/projects/" />',
-            html=True,
-        )
-        content = response.content.decode()
-        self.assertLess(content.index('id="active"'), content.index('id="archive"'))
-        for project_name in (
-            "ShipRust",
-            "Rowset",
-            "PGSandbox",
-            "ReviewGate",
-            "CiteGuild",
-            "Djass",
-            "Browse Awesome",
-            "Ask HN Digest",
-            "Staleaway",
-            "Talent Leads",
-            "Built with Django",
-            "LevReview",
-            "Tech Job Alerts",
-            "Is It Keto",
-            "TastefulKit",
-            "nitpick",
-            "Built with Rust",
-            "Built with Bend",
-            "LVTD Games",
-            "rasulkireev.com",
-            "Meliora Advisory",
-            "OSIG",
-            "StatusHen",
-            "TuxSEO",
-        ):
-            self.assertContains(response, project_name)
-
-        active, remaining = content.split('id="active"', 1)[1].split(
-            'id="client-work"', 1
-        )
-        client_work, archived = remaining.split('id="archive"', 1)
-        self.assertIn(">Meliora Advisory</a>", client_work)
-        self.assertNotIn(">Meliora Advisory</a>", active)
-        self.assertNotIn(">Meliora Advisory</a>", archived)
-        self.assertIn("https://meliora-advisory.com/", client_work)
-        self.assertIn("Website build only", client_work)
+        self.assertContains(response, "Projects &amp; apps")
+        self.assertNotContains(response, "archive")
+        self.assertNotContains(response, "ReviewGate")
+        self.assertNotContains(response, "Jev Benchmark")
         self.assertContains(response, 'href="#client-work"')
-        for name in (
-            "Ask HN Digest",
-            "LevReview",
-            "ReviewGate",
-            "Talent Leads",
-            "Tech Job Alerts",
-        ):
-            self.assertNotIn(f">{name}</a>", active)
-            self.assertIn(f">{name}</a>", archived)
-        self.assertIn(">Is It Keto</a>", active)
-        self.assertNotIn(": Website", archived)
-        self.assertNotContains(response, "gettalentleads.com")
-        self.assertNotContains(response, "gettjalerts.com")
-        self.assertContains(response, "https://browseawesome.com/")
-        self.assertNotContains(response, "https://awesome.lvtd.dev/")
-        self.assertNotContains(response, ">AI Steering</a>")
-        self.assertNotContains(response, ">Jev Benchmark</a>")
-        self.assertContains(response, reverse("research"))
-        self.assertContains(response, "https://citeguild.com/")
-        self.assertNotContains(response, "https://citeguild.app/")
-        self.assertNotContains(response, "https://skills.lvtd.dev")
-        self.assertContains(response, "https://pgsandbox.dev/")
-        self.assertNotContains(response, "https://pgsandbox-mcp.lvtd.dev/")
-        self.assertContains(response, "https://github.com/LVTD-LLC/pgsandbox")
-        self.assertContains(response, "https://github.com/rasulkireev/apw")
-        self.assertContains(response, "Website build only", count=2)
+        client_projects = response.context["client_entries"]
+        self.assertIn("Meliora Advisory", [entry["name"] for entry in client_projects])
         self.assertContains(response, "LVTD does not own or operate the business.")
-        self.assertNotContains(response, "FileBridge")
-        self.assertNotContains(response, "https://filebridge.lvtd.dev")
-        self.assertNotContains(response, "Cleanapp")
-        self.assertContains(response, "https://github.com/LVTD-LLC")
-        self.assertContains(response, "https://github.com/LVTD-LLC/TuxSEO")
-        self.assertContains(response, "https://github.com/LVTD-LLC/osig")
-        self.assertContains(response, "https://github.com/LVTD-LLC/reviewgate")
-        self.assertNotContains(response, "https://osig.app?ref=lvtd.dev")
-        self.assertNotContains(response, "https://statushen.com")
-        self.assertContains(response, "https://isitketo.org/")
+        self.assertNotContains(response, "https://meliora-advisory.com/")
+        self.assertNotContains(response, "https://github.com/LVTD-LLC/pgsandbox")
+
+    @override_settings(SITE_URL="https://lvtd.test")
+    def test_each_listed_project_has_a_unique_profile_and_outbound_links(self):
+        index = self.client.get(reverse("projects"))
+        entries = index.context["active_entries"] + index.context["client_entries"]
+        self.assertEqual(len(entries), len({entry["slug"] for entry in entries}))
+        sitemap = self.client.get(reverse("sitemap"))
+        for entry in entries:
+            with self.subTest(project=entry["name"]):
+                url = reverse("project-detail", args=[entry["slug"]])
+                self.assertContains(index, f'href="{url}"', count=1)
+                self.assertContains(sitemap, f"<loc>https://lvtd.test{url}</loc>")
+                detail = self.client.get(url)
+                self.assertContains(detail, entry["name"])
+                self.assertEqual(
+                    detail.context["project"]["overview"], entry["overview"]
+                )
+                self.assertContains(detail, escape(entry["overview"]))
+                self.assertContains(
+                    detail, f'rel="canonical" href="https://lvtd.test{url}"'
+                )
+                self.assertContains(detail, 'aria-current="location">Projects</a>')
+                for link in entry["links"]:
+                    target = link.get("url") or reverse(link["route"])
+                    self.assertContains(detail, f'href="{escape(target)}"')
+
+    def test_featured_projects_open_their_profiles(self):
+        page = self.client.get(reverse("home"))
+        for slug in ("shiprust", "tastefulkit", "drape"):
+            self.assertContains(page, f'href="/projects/{slug}/"')
+        self.assertNotContains(page, "https://shiprust.com/")
+
+    def test_unlisted_project_profiles_return_404(self):
+        for slug in ("unknown-project", "archive", "reviewgate", "jev-benchmark"):
+            self.assertEqual(self.client.get(f"/projects/{slug}/").status_code, 404)
 
 
 class ResearchPageTests(TestCase):
