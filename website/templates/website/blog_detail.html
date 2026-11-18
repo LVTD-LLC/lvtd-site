@@ -35,11 +35,10 @@
 {% block content %}
   <article class="mx-auto max-w-4xl py-12 sm:py-16">
     <header>
-      <a class="btn btn-secondary" href="{% url 'blog-list' %}">Back to blog</a>
-      <p class="section-kicker mt-8">{{ post.published_at|date:"M j, Y" }} &middot; Rasul Kireev</p>
       <h1 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl ink">
         {{ post.title }}
       </h1>
+      <p class="post-meta">{{ post.published_at|date:"M j, Y" }} &middot; Rasul Kireev</p>
       <p class="mt-5 max-w-3xl text-base leading-8 muted">{{ post.summary }}</p>
     </header>
 

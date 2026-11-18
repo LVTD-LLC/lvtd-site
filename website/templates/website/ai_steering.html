@@ -12,9 +12,8 @@
 {% endblock %}
 {% block content %}
   <section class="py-12 sm:py-16">
-    <a class="text-sm muted underline" href="{% url 'home' %}">Back to LVTD</a>
-    <p class="section-kicker mt-8">AI Steering / Open source</p>
-    <h1 class="mt-4 max-w-4xl text-4xl font-bold tracking-tight sm:text-5xl">Give your coding agent the context it needs.</h1>
+    <a class="text-sm muted underline" href="{% url 'research' %}">Research</a>
+    <h1 class="mt-4 max-w-4xl text-4xl font-bold tracking-tight sm:text-5xl">AI Steering</h1>
     <p class="hero-text mt-5">Choose the right files for your repository. Explore what belongs in each one, when to use it, and examples worth studying.</p>
     <div class="hero-actions">
       <a class="btn btn-primary" href="#catalog">Browse the catalog</a>
@@ -24,7 +23,6 @@
   </section>
   <section id="catalog" class="steering-catalog pb-16" aria-label="Steering file catalog">
     <aside class="steering-index">
-      <p class="section-kicker">11 file patterns</p>
       <nav aria-label="Steering files">
         {% for section in catalog.sections %}
           <h2 class="mt-6 text-sm font-semibold">{{ section.title }}</h2>
@@ -67,7 +65,6 @@
     </div>
   </section>
   <section id="install" class="surface-muted p-6 sm:p-10 mb-16">
-    <p class="section-kicker">Reusable workflow</p>
     <h2 class="mt-3 text-3xl font-bold">Install the catalog as an agent skill.</h2>
     <p class="mt-4 max-w-3xl muted">The skill helps an agent choose, write, and audit steering files without copying this catalog into every repository.</p>
     <h3 class="mt-6 font-semibold">Skills CLI</h3>

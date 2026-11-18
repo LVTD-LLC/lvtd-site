@@ -75,11 +75,10 @@ This file explains where things belong in `lvtd-site`.
 
 - `base.html` owns the document shell, metadata defaults, navigation, theme
   toggle, Plausible script, footer, and block definitions.
-- `home.html` owns the main LVTD homepage, service offer cards,
-  process, writing preview, and closing CTA.
-- `projects.html` owns the active project catalog and archive of earlier work.
-- `research.html` lists research entries without logos; both pages share `includes/portfolio_table.html` and `website/data/portfolio.json`. Logo provenance is recorded in `docs/portfolio-logos.md`.
-- `hosted_openclaw.html` owns the service detail page for Hosted OpenClaw.
+- `home.html` features work from the project directory, arcade, research index, and blog.
+- `projects.html` and `research.html` use `includes/portfolio_list.html` and
+  `website/data/portfolio.json`. Project logo provenance is recorded in `docs/portfolio-logos.md`.
+- `games.html` lists the published games from the games service manifest.
 - `blog_list.html` and `blog_detail.html` own public writing pages.
 - `terms.html` and `privacy.html` own legal copy.
 

@@ -9,7 +9,6 @@ Before suggesting substantial changes, use the root steering files as context:
 - `STRUCTURE.md` for file placement.
 - `DESIGN.md` for UI and copy direction.
 
-Prefer small, idiomatic Django and Tailwind edits. Keep service copy specific to
-LVTD's product engineering, AI workflow, MVP, automation, and managed
-infrastructure work. Do not invent customers, metrics, guarantees, or public
-links.
+Prefer small, idiomatic Django and Tailwind edits. Keep projects, games, research,
+and writing discoverable. Preserve source links, ownership credits, and released
+game URLs.

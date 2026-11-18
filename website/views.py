@@ -8,13 +8,12 @@ import requests
 import stripe
 from django.conf import settings
 from django.http import HttpRequest, HttpResponse, JsonResponse
-from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST
 from django.views.generic import DetailView, ListView, TemplateView, View
 
+from website.games import catalogue
 from website.models import BlogPost, StripeWebhookEvent
 
 
@@ -28,7 +27,6 @@ def robots_txt(request: HttpRequest) -> HttpResponse:
         "Allow: /",
         "Disallow: /admin/",
         "Disallow: /api/",
-        "Disallow: /services/hosted-openclaw/checkout/",
         f"Sitemap: {_absolute_url(reverse('sitemap'))}",
     ]
     return HttpResponse("\n".join(lines) + "\n", content_type="text/plain")
@@ -47,12 +45,6 @@ def sitemap_xml(request: HttpRequest) -> HttpResponse:
         (reverse("blog-list"), settings.SITE_LASTMOD, "weekly", "0.7"),
         (reverse("ai-steering"), settings.SITE_LASTMOD, "monthly", "0.7"),
         (reverse("jev-benchmark"), settings.SITE_LASTMOD, "weekly", "0.7"),
-        (
-            reverse("hosted-openclaw-learn-more"),
-            settings.SITE_LASTMOD,
-            "monthly",
-            "0.8",
-        ),
         (reverse("terms-of-service"), settings.SITE_LASTMOD, "yearly", "0.3"),
         (reverse("privacy-policy"), settings.SITE_LASTMOD, "yearly", "0.3"),
     ]
@@ -76,21 +68,6 @@ def sitemap_xml(request: HttpRequest) -> HttpResponse:
     return HttpResponse(xml_bytes, content_type="application/xml")
 
 
-class HomePageView(TemplateView):
-    template_name = "website/home.html"
-
-    def get_context_data(self, **kwargs: object) -> dict[str, object]:
-        context = super().get_context_data(**kwargs)
-        context["mvp_deposit_checkout_url"] = settings.MVP_DEPOSIT_CHECKOUT_URL
-        context["mvp_deposit_amount"] = settings.MVP_DEPOSIT_AMOUNT
-        context["mvp_final_price"] = settings.MVP_FINAL_PRICE
-        context["hosted_openclaw_deposit_amount"] = (
-            settings.HOSTED_OPENCLAW_DEPOSIT_AMOUNT
-        )
-        context["latest_blog_posts"] = BlogPost.objects.filter(is_published=True)[:3]
-        return context
-
-
 class PortfolioView(TemplateView):
     def get_context_data(self, **kwargs: object) -> dict[str, object]:
         context = super().get_context_data(**kwargs)
@@ -100,6 +77,19 @@ class PortfolioView(TemplateView):
             context[f"{section}_entries"] = [
                 entry for entry in entries if entry["section"] == section
             ]
+        return context
+
+
+class HomePageView(PortfolioView):
+    template_name = "website/home.html"
+
+    def get_context_data(self, **kwargs: object) -> dict[str, object]:
+        context = super().get_context_data(**kwargs)
+        context["featured"] = [
+            entry for entry in context["active_entries"] if "cover" in entry
+        ]
+        context["games"] = list(catalogue().values())[:3]
+        context["latest_blog_posts"] = BlogPost.objects.filter(is_published=True)[:3]
         return context
 
 
@@ -143,63 +133,12 @@ class BlogDetailView(DetailView):
         return BlogPost.objects.filter(is_published=True)
 
 
-class HostedOpenClawLearnMoreView(TemplateView):
-    template_name = "website/hosted_openclaw.html"
-
-    def get_context_data(self, **kwargs: object) -> dict[str, object]:
-        context = super().get_context_data(**kwargs)
-        context["hosted_openclaw_deposit_amount"] = (
-            settings.HOSTED_OPENCLAW_DEPOSIT_AMOUNT
-        )
-        return context
-
-
 class TermsOfServiceView(TemplateView):
     template_name = "website/terms.html"
 
 
 class PrivacyPolicyView(TemplateView):
     template_name = "website/privacy.html"
-
-
-@require_POST
-def hosted_openclaw_checkout(request: HttpRequest) -> HttpResponse:
-    if not settings.STRIPE_API_KEY or not settings.HOSTED_OPENCLAW_DEPOSIT_PRICE_ID:
-        return HttpResponse("Stripe is not configured for checkout yet.", status=503)
-
-    stripe.api_key = settings.STRIPE_API_KEY
-
-    success_url = (
-        request.build_absolute_uri(reverse("home"))
-        + "?hosted_openclaw_checkout=success"
-    )
-    cancel_url = (
-        request.build_absolute_uri(reverse("home")) + "?hosted_openclaw_checkout=cancel"
-    )
-
-    stripe_kwargs: dict[str, str] = {}
-    if settings.STRIPE_CONTEXT_ACCOUNT:
-        stripe_kwargs["stripe_account"] = settings.STRIPE_CONTEXT_ACCOUNT
-
-    try:
-        session = stripe.checkout.Session.create(
-            mode="payment",
-            line_items=[
-                {"price": settings.HOSTED_OPENCLAW_DEPOSIT_PRICE_ID, "quantity": 1}
-            ],
-            success_url=success_url,
-            cancel_url=cancel_url,
-            customer_creation="always",
-            metadata={
-                "flow": "hosted_openclaw_deposit",
-                "price_id": settings.HOSTED_OPENCLAW_DEPOSIT_PRICE_ID,
-            },
-            **stripe_kwargs,
-        )
-    except Exception:
-        return HttpResponse("Unable to start Stripe Checkout right now.", status=503)
-
-    return redirect(session.url, code=303)
 
 
 @method_decorator(csrf_exempt, name="dispatch")

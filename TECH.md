@@ -16,7 +16,7 @@ This file is the technical source of truth for agents working in `lvtd-site`.
 - WhiteNoise for static file serving.
 - Gunicorn for production web serving.
 - django-q2 for optional background workers.
-- Stripe for checkout and webhook-driven deposit follow-up.
+- Stripe for legacy webhook-driven deposit follow-up.
 - Mailgun for outbound follow-up emails.
 - Plausible for analytics script loading in the base template.
 - CapRover for deployment.
@@ -27,7 +27,7 @@ This file is the technical source of truth for agents working in `lvtd-site`.
 - `package.json`: Tailwind build and watch scripts.
 - `config/settings.py`: environment-driven Django settings.
 - `config/urls.py`: root URL includes `website.urls`.
-- `website/views.py`: page views, sitemap/robots, Stripe checkout, webhook, and
+- `website/views.py`: page views, sitemap/robots, legacy Stripe webhook, and
   Mailgun sending.
 - `website/models.py`: `BlogPost` and `StripeWebhookEvent`.
 - `website/templates/website/`: Django templates for the public site.
@@ -81,11 +81,8 @@ Required production settings come from environment variables. Important groups:
 
 - Django: `DJANGO_SECRET_KEY`, `DJANGO_DEBUG`, `DJANGO_ALLOWED_HOSTS`,
   `DJANGO_CSRF_TRUSTED_ORIGINS`, `SITE_URL`, `DATABASE_URL`.
-- MVP deposit: `MVP_DEPOSIT_CHECKOUT_URL`, `MVP_DEPOSIT_AMOUNT`,
-  `MVP_FINAL_PRICE`, `STRIPE_MVP_DEPOSIT_PAYMENT_LINK_ID`,
-  `STRIPE_MVP_DEPOSIT_FALLBACK_AMOUNT`.
-- Hosted OpenClaw deposit: `HOSTED_OPENCLAW_DEPOSIT_AMOUNT`,
-  `HOSTED_OPENCLAW_DEPOSIT_PRICE_ID`.
+- Historical deposit fulfillment: `MVP_FINAL_PRICE`, `STRIPE_MVP_DEPOSIT_PAYMENT_LINK_ID`,
+  and `HOSTED_OPENCLAW_DEPOSIT_PRICE_ID` identify or describe past purchases.
 - Stripe: `STRIPE_API_KEY`, `STRIPE_CONTEXT_ACCOUNT`.
 - Mailgun: `MAILGUN_API_KEY`, `MAILGUN_DOMAIN`, `MAILGUN_FROM_EMAIL`,
   `MAILGUN_REPLY_TO_EMAIL`.

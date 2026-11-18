@@ -13,16 +13,9 @@ These are repository-wide instructions for AI coding agents working on
 
 ## Project Summary
 
-`lvtd-site` is the public Django website for LVTD, LLC. It markets LVTD as a
-product lab and an AI-native product engineering service, shows shipped projects,
-publishes writing, and supports deposit-led service flows such as MVP builds and
-Hosted OpenClaw.
-
-The product direction is to lean into "agency as a service" and
-"service-as-software": paid services delivered by an accountable engineer,
-supported by reusable software, agent workflows, deployment patterns, and project
-playbooks. Keep LVTD's active projects visible as proof, not as a distraction
-from the service business.
+LVTD's public Django site is a directory of software, browser games, research,
+and writing. Use the project registry and released game manifest as sources.
+Keep client credits, archives, deep links, and legacy payment fulfillment intact.
 
 ## Working Rules
 
@@ -63,17 +56,9 @@ also verify the relevant page in a browser when feasible.
 
 ## Product Guardrails
 
-- Make LVTD's service offer concrete: who it helps, what LVTD handles, what the
-  client receives, and how to start.
-- Pair service claims with proof from shipped projects, writing, code, process,
-  price/deposit signals, or operational details.
-- Preserve the founder-builder voice. Write direct, specific copy.
-- Avoid generic "AI agency", "digital transformation", "10x growth", and
-  template consultancy language.
-- Do not imply fully autonomous AI delivery. LVTD sells accountable engineering
-  supported by software and agent workflows.
-- Keep project listings credible. Do not add fake metrics, clients, logos, or
-  links.
+- Use one short description per project and clear links to the work and its source.
+- Preserve attribution and archive status. Publish only real destinations.
+- Keep the studio voice direct. Avoid promotional labels and sales calls to action.
 
 ## Technical Guardrails
 

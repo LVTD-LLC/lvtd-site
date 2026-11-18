@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-18
+
+- Rebuild lvtd.dev around the project directory, arcade, research, and blog. Retire the public service pages and checkout.
+
 ## 2026-11-17 - Games catalogue
 
 - List released games at /games/ and serve each registered game at its own top-level URL.
